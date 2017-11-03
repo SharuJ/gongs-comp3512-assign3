@@ -40,10 +40,12 @@ function listImprints() /* programmatically loop though imprints and display eac
             echo ($row["Imprint"]);
             echo ("</li></a>");
         }
+        
         $pdo = null;
     }
     catch (PDOException $e) {
         die($e->getMessage());
+        
     }
 }
 function listBooks() /* programmatically loop though books and display each book as <li> element. */ 
@@ -91,6 +93,13 @@ function listBooks() /* programmatically loop though books and display each book
             $result->bindParam(':i', $i);
         }
         $result->execute();
+       
+        
+        if ($result->rowCount() > 0)
+        {
+            
+               
+        
         while ($row = $result->fetch()) //loop through the data
             {
             echo ("<a href='single-book.php?isbn=");
@@ -104,10 +113,19 @@ function listBooks() /* programmatically loop though books and display each book
             echo ("<b>Imprint:</b> " . $row["Imprint"]);
             echo ("<hr>");
         }
+        
+        }
+        
+        else
+        {
+            echo ("No book found that matches filters");
+        }
+        
         $pdo = null;
     }
     catch (PDOException $e) {
         die($e->getMessage());
+        echo ("No book found that fits those filters");
     }
 }
 ?>

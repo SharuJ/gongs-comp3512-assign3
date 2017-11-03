@@ -21,18 +21,21 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightGrayish">
-                            <h2 class="mdl-card__title-text">Name</h2> </div>
-                        <div class="mdl-card__supporting-text"> Stephen Johnson </div>
+                            <h2 class="mdl-card__title-text">About this Site</h2> </div>
+                        <div class="mdl-card__supporting-text"> This is a hypothetical site created as an assignmennt for COMP 3512 at Mount Royal University taught by Randy Connolly. </div>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedBlue">
-                            <h2 class="mdl-card__title-text">Course</h2> </div>
-                        <div class="mdl-card__supporting-text"> COMP 3512 - Web II: Web Application & Development </div>
+                            <h2 class="mdl-card__title-text">Link to GitHub</h2> </div>
+                        <div class="mdl-card__supporting-text">Click <a href="https://github.com/SharuJ/gongs-comp3512-assign2"> here </a> to view our GitHub page</div>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedPink">
-                            <h2 class="mdl-card__title-text">Date</h2> </div>
-                        <div class="mdl-card__supporting-text"> October 21, 2017 </div>
+                            <h2 class="mdl-card__title-text">Group Members</h2> </div>
+                        <div class="mdl-card__supporting-text"> Sharunitha Jaisankar </div>
+                        <div class="mdl-card__supporting-text"> Stephen Johnson </div>
+                        <div class="mdl-card__supporting-text"> Yasaswani Sai Polasu </div>
+                        <div class="mdl-card__supporting-text"> Alex Serban </div>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightPeriwinkle">

@@ -13,7 +13,10 @@
 <div class="mdl-tooltip" for="tt2">Messages</div>                     
                  
 <label id="tt3" class="material-icons mdl-badge mdl-badge--overlap" data-badge="4">notifications</label> 
- <div class="mdl-tooltip" for="tt3">Notifications</div>           
+ <div class="mdl-tooltip" for="tt3">Notifications</div>      
+ 
+<label id="tt4" class="material-icons mdl-badge mdl-badge--overlap" >power_settings_new</label> 
+ <div class="mdl-tooltip" for="tt4">Logout</div> 
                   
         <label class="mdl-button mdl-js-button mdl-button--icon"
                for="fixed-header-drawer-exp">
