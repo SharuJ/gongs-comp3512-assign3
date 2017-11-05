@@ -87,32 +87,24 @@ function displayAuthor()
         echo ("No authors found that matches request. Try clicking on an book from the Books page.");
     }
 }
-function displayUni()
+
+function orderNations()
 {
     try {
         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = 'select Name from Books
-                    INNER JOIN AdoptionBooks ON Books.BookID = AdoptionBooks.BookID
-                    INNER JOIN Adoptions ON AdoptionBooks.AdoptionID = Adoptions.AdoptionID
-                    INNER JOIN Universities ON Adoptions.UniversityID = Universities.UniversityID                    
-                    where ISBN10 =:isbn';
-        $isbn   = $_GET['isbn'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':isbn', $isbn);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ($row["Name"] . "<br>");
-            }
-        } else
-            echo ("NO UNIVERSITIES FOUND");
+        $sql    = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
+                    LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
+                    GROUP BY CountryCode ORDER BY count desc limit 15;";
+        $result = $pdo->query($sql);
+        while ($row = $result->fetch()) {
+            echo ('<tr><td>' . $row["CountryName"]);
+            echo ('</td><td>' . $row["count"] . '</td></tr>');
+        }
         $pdo = null;
     }
     catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No universities found that matches request. Try clicking on an book from the Books page.");
+        die($e->getMessage());
     }
 }
 ?>
@@ -140,11 +132,18 @@ function displayUni()
             <section class="page-content">
                 <div class="mdl-grid">
                     <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--6-col mdl-shadow--2dp">
+                    <div class="mdl-cell mdl-cell--4-col mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightPeriwinkle">
-                            <h2 class="mdl-card__title-text"><?php displayName() ?></h2> </div>
+                            <h2 class="mdl-card__title-text">Top 15 Countries</h2> </div>
                         <div class="mdl-card__supporting-text">
-                            <?php displayInfo() ?> </div>
+                            <table class="mdl-data-table" style="width:100%">
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Visitors</th>
+                                </tr>
+                                <?php orderNations() ?>
+                            </table>
+                            </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
                     <div class="mdl-cell mdl-cell--6-col">

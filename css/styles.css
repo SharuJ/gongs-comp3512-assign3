@@ -137,4 +137,9 @@ main header h4 {
 #midnightBlue
 {
   background-color: #311c47 !important; 
+} 
+
+#map {
+ height: 400px;
+ width: 100%;
 }

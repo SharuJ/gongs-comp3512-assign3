@@ -51,7 +51,32 @@ function displayInfo() /* display requested univeristy information */
                 echo ($row["Address"] . "<br>");
                 echo ($row["City"] . ", " . $row["State"] . ", " . ($row["Zip"]) . "<br>");
                 echo ($row["Website"] . "<br>");
-                echo ($row["Latitude"] . ", " . $row["Longitude"]);
+                //echo ($row["Latitude"] . ", " . $row["Longitude"]);
+                ?>
+                  
+    <div id="map"></div>
+    <script>
+    
+      function initMap() {
+          var latitude = parseFloat("<?php echo $row['Latitude']; ?>");
+          var longitude = parseFloat("<?php echo $row['Longitude']; ?>");
+        var uluru = {lat: latitude, lng: longitude };
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgOg-dKVI4dgMyBcTKOWj3xxS1jKipA3E&callback=initMap">
+    </script>
+   
+                
+<?php
             }
         } else
             echo ("No univeristy found that matches request. Try clicking on an university from the list.");
@@ -126,7 +151,14 @@ function dropStates()
                         <div class="mdl-card__title" id="lightPeriwinkle">
                             <h2 class="mdl-card__title-text">University Details</h2> </div>
                         <div class="mdl-card__supporting-text">
-                            <?php displayInfo(); ?> </div>
+                            <?php displayInfo(); ?> 
+                            
+                            </div>  
+                            
+                             
+                            
+                            
+                            
                     </div>
                     <!-- / mdl-cell + mdl-card -->
                 </div>
