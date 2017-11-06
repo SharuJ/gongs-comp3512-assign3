@@ -62,7 +62,7 @@ function displayInfo() /* display requested univeristy information */
           var longitude = parseFloat("<?php echo $row['Longitude']; ?>");
         var uluru = {lat: latitude, lng: longitude };
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
+          zoom: 12,
           center: uluru
         });
         var marker = new google.maps.Marker({

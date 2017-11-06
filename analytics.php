@@ -45,11 +45,25 @@ function countCountries()
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql    = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
                     LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-                    GROUP BY CountryCode ORDER BY count desc limit 15;";
+                    GROUP BY CountryCode";
         $result = $pdo->query($sql);
-        while ($row = $result->fetch()) {
-            echo ($row["count"] . "<br>");
-        }
+        echo ($result->rowCount());
+        $pdo = null;
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+function countToDos()
+{
+    try {
+        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql    = "select DateBy from EmployeeToDo 
+                    WHERE DateBy BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
+        $result = $pdo->query($sql);
+        echo ($result->rowCount());
         $pdo = null;
     }
     catch (PDOException $e) {
@@ -104,7 +118,7 @@ function countCountries()
                             <h2 class="mdl-card__title-text mdl-color-text--white">Visits</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-                            <i class="material-icons small valign">wc</i>   
+                            <i class="material-icons">wc</i>   
                             <b><?php countVisits() ?></b>
                         </div>
                     </div>
@@ -116,8 +130,32 @@ function countCountries()
                             <h2 class="mdl-card__title-text mdl-color-text--white">Unique Countries</h2>
                         </div>
                         <div class="mdl-card__supporting-text">
-                            <i class="material-icons small valign">wc</i>   
+                            <i class="material-icons">public</i>   
                             <b><?php countCountries() ?></b>
+                        </div>
+                    </div>
+                    <!-- / mdl-cell + mdl-card -->
+                
+                    <!-- mdl-cell + mdl-card -->
+                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
+                        <div class="mdl-card__title" id="fireBrick">
+                            <h2 class="mdl-card__title-text mdl-color-text--white">Total Employee To-Dos</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <i class="material-icons">done_all</i>   
+                            <b><?php countToDos() ?></b>
+                        </div>
+                    </div>
+                    <!-- / mdl-cell + mdl-card -->
+                
+                    <!-- mdl-cell + mdl-card -->
+                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
+                        <div class="mdl-card__title" id="fireBrick">
+                            <h2 class="mdl-card__title-text mdl-color-text--white">Total Employee To-Dos</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <i class="material-icons">done_all</i>   
+                            <b><?php countMessages() ?></b>
                         </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->

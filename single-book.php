@@ -1,6 +1,6 @@
 <?php
 require_once("config.php");
-function displayName()
+function displayName() /* display requested book title */ 
 {
     try {
         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
@@ -22,7 +22,7 @@ function displayName()
         echo ("No book found that matches request. Try clicking on an book from the Books page.");
     }
 }
-function displayInfo() /* display requested employees information */ 
+function displayInfo() /* display requested book information */ 
 {
     try {
         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
@@ -84,8 +84,8 @@ function displayInfo() /* display requested employees information */
             echo ("<b>ISBN10:</b> " . $row["ISBN10"] . "<br>");
             echo ("<b>ISBN13:</b> " . $row["ISBN13"] . "<br>");
             echo ("<b>Copyright year:</b> " . $row["CopyrightYear"] . "<br>");
-            echo ("<b>Subcategory:</b> " . $row["SubcategoryName"] . "<br>");
-            echo ("<b>Imprint:</b> " . $row["Imprint"] . "<br>");
+            echo ('<b>Subcategory:</b> <a href="browse-books.php?sub=' . $row["SubcategoryName"] . '">' . $row["SubcategoryName"] . '</a><br>');
+            echo ('<b>Imprint:</b> <a href="browse-books.php?imp=' . $row["Imprint"] . '">' . $row["Imprint"] . '</a><br>');
             echo ("<b>Production status:</b> " . $row["Status"] . "<br>");
             echo ("<b>Binding type:</b> " . $row["BindingType"] . "<br>");
             echo ("<b>Trim size:</b> " . $row["TrimSize"] . "<br>");
