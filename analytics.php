@@ -78,44 +78,33 @@ function countVisits()
                     </div>
                     <!-- / mdl-cell + mdl-card -->
                     
+                    
                     <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--8-col">
-                        <!-- mdl-cell + mdl-card -->
-                        <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
-                            <div class="mdl-card__title" id="lightGrayish">
-                                <h2 class="mdl-card__title-text">June 2017 Totals</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text mdl-cell--12-col">
-                                            
-                                <!-- mdl-cell + mdl-card -->
-                                <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
-                                    <div class="mdl-card__title" id="fireBrick">
-                                        <h2 class="mdl-card__title-text mdl-color-text--white">Visits</h2>
-                                    </div>
-                                    <div class="mdl-card__supporting-text">
-                                        <i class="material-icons small valign">wc</i>   
-                                        <b><?php countVisits() ?></b>
-                                    </div>
-                                </div>
-                                <!-- / mdl-cell + mdl-card -->
-                                
-                                <!-- mdl-cell + mdl-card -->
-                                <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
-                                    <div class="mdl-card__title" id="fireBrick">
-                                        <h2 class="mdl-card__title-text mdl-color-text--white">Unique Countries</h2>
-                                    </div>
-                                    <div class="mdl-card__supporting-text">
-                                        <i class="material-icons small valign">wc</i>   
-                                        <b><?php countVisits() ?></b>
-                                    </div>
-                                </div>
-                                <!-- / mdl-cell + mdl-card -->
-                              
-                            </div>
+                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
+                        <div class="mdl-card__title" id="fireBrick">
+                            <h2 class="mdl-card__title-text mdl-color-text--white">Visits</h2>
                         </div>
-                        <!-- / mdl-cell + mdl-card -->
+                        <div class="mdl-card__supporting-text">
+                            <i class="material-icons small valign">wc</i>   
+                            <b><?php countVisits() ?></b>
+                        </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
+                    
+                    <!-- mdl-cell + mdl-card -->
+                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
+                        <div class="mdl-card__title" id="fireBrick">
+                            <h2 class="mdl-card__title-text mdl-color-text--white">Unique Countries</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <i class="material-icons small valign">wc</i>   
+                            <b><?php countVisits() ?></b>
+                        </div>
+                    </div>
+                    <!-- / mdl-cell + mdl-card -->
+                    
+                    
+
                 </div>
                 <!-- / mdl-grid -->
             </section>
