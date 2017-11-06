@@ -56,8 +56,7 @@ function listBooks() /* programmatically loop though books and display each book
         $sql = "select ISBN10, Title, CopyrightYear, SubcategoryName, Imprint from Books
                     LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID 
                     LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID";
-        $sub = $_GET['sub'];
-        $imp = $_GET['imp'];
+                    
         //sub filter
         if (!empty($_GET['sub']) && empty($_GET['imp'])) {
             $sql .= " WHERE SubcategoryName =:s";
@@ -67,17 +66,19 @@ function listBooks() /* programmatically loop though books and display each book
             $sql .= " WHERE Imprint =:i";
         }
         //both filter
-            elseif (!empty($_GET['sub']) && !empty($_GET['imp'])) {
+        elseif (!empty($_GET['sub']) && !empty($_GET['imp'])) {
             $sql .= " WHERE SubcategoryName =:s";
             $sql .= " AND Imprint =:i";
         }
         //no filter
-        else {
+        else 
             //add nothing
-        }
+        
         $sql .= " order by Title LIMIT 20";
+        
         $s      = $_GET['sub'];
         $i      = $_GET['imp'];
+        
         $result = $pdo->prepare($sql);
         //sub filter
         if (!empty($_GET['sub']) && empty($_GET['imp'])) {
@@ -92,6 +93,7 @@ function listBooks() /* programmatically loop though books and display each book
             $result->bindParam(':s', $s);
             $result->bindParam(':i', $i);
         }
+        
         $result->execute();
        
         
@@ -106,7 +108,7 @@ function listBooks() /* programmatically loop though books and display each book
             echo ("<a href='single-book.php?isbn=");
             echo ($row["ISBN10"]);
             echo ("'>");
-            echo ('<center><img id="dimmer" onclick="dim();" src="/book-images/thumb/' . $row["ISBN10"] . '.jpg" alt="book cover"></center><br>');
+            echo ('<center><img src="/book-images/thumb/' . $row["ISBN10"] . '.jpg" alt="book cover"></center><br>');
             echo ("<b>" . $row["Title"] . "</b><br>");
             echo ("</a>"); 
             echo ("<b>Year:</b> " . $row["CopyrightYear"] . "<br>");

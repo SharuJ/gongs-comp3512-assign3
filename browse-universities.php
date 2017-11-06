@@ -138,7 +138,7 @@ function dropStates()
                         <div class="mdl-card__supporting-text">
                             <form method="GET"> State:
                                 <select name="st">
-                                    <option value="all">ALL STATES</option>');
+                                    <option value="all">ALL STATES</option>
                                     <?php dropStates(); ?> </select>
                                 <input type="submit" value="Filter"> </form>
                             <ul class="demo-list-item mdl-list">

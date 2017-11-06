@@ -5,12 +5,56 @@ function listName() /* programmatically loop though employees and display each n
     try {
         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select EmployeeID, FirstName, LastName from Employees order by LastName";
-        $result = $pdo->query($sql);
+        $sql    = "select EmployeeID, FirstName, LastName from Employees";
+        
+
+        //last name filter
+        if (!empty($_GET['ln']) && empty($_GET['city']))
+            $sql .= ' WHERE LastName LIKE :l';
+        
+        //city filter
+        elseif (!empty($_GET['city']) && empty($_GET['ln']))
+            $sql .= ' WHERE City = :c';
+        
+        //both filter
+        elseif (!empty($_GET['ln']) && !empty($_GET['city'])) {
+            $sql .= " WHERE LastName LIKE :l";
+            $sql .= " AND City = :c";
+        }
+        
+        //no filter
+        else
+            //add nothing
+        
+        $sql .= ' order by LastName';
+        
+        $l = $_GET['ln'] . "%";
+        $c = $_GET['city'];
+        
+        $result = $pdo->prepare($sql);
+        
+        //last name filter
+        if (!empty($_GET['ln']) && empty($_GET['city']))
+            $result->bindParam(':l', $l);
+        
+        //city filter
+        elseif (!empty($_GET['city']) && empty($_GET['ln']))
+            $result->bindParam(':c', $c);
+        
+        //both filter
+        else
+        {
+            $result->bindParam(':l', $l);
+            $result->bindParam(':c', $c);
+        }
+
+        $result->execute();
         while ($row = $result->fetch()) //loop through the data
             {
             echo ("<a href='browse-employees.php?id=");
             echo ($row["EmployeeID"]);
+            echo ("&ln=" . $_GET['ln']);
+            echo ("&city=" . $_GET['city']);
             echo ("'><li>");
             echo ($row["FirstName"] . " ");
             echo ($row["LastName"]);
@@ -152,6 +196,28 @@ function messages() /* retrieve for selected employee; if none, display message 
         echo ("No employee found that matches request. Try clicking on an employee from the list.");
     }
 }
+
+function dropCities()
+{
+    try {
+        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql    = "select City from Employees group by City order by City";
+        $result = $pdo->query($sql);
+        while ($row = $result->fetch()) {
+            echo ('<option value="' . $row["City"] . '"');
+            //show selected value
+            if ($_GET['city'] == $row["City"])
+                echo ('selected="selected"');
+            echo (">" . $row["City"] . "</option>");
+        }
+        $pdo = null;
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -166,7 +232,21 @@ function messages() /* retrieve for selected employee; if none, display message 
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
     <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <link rel="stylesheet" href="css/styles.css"> </head>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script type="text/javascript">
+        function appear()
+        {
+            var x = document.getElementById("filter");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+    
+</head>
 
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
@@ -176,40 +256,64 @@ function messages() /* retrieve for selected employee; if none, display message 
         <main class="mdl-layout__content mdl-color--grey-50">
             <section class="page-content">
                 <div class="mdl-grid">
+                   
+                <div class="mdl-cell mdl-cell--6-col">
+                       
                     <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--3-col card-lesson mdl-card  mdl-shadow--2dp">
+                    <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card">
+                        <div class="mdl-card__title" id="fadedBlue" onclick="appear()">
+                            <h2 class="mdl-card__title-text">Filter (click me)</h2> </div>
+                        <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter" style="display: none;>
+                            <form method="get">
+                                Last name: <input name="ln"> <br>
+                                City: <select name="city">
+                                    <option value="">ALL CITIES</option>
+                                    <?php dropCities(); ?> </select>
+                                </select>
+                                <input type="submit">
+                            </form>
+                        </div>
+                    </div>
+                    <!-- / mdl-cell + mdl-card --> 
+
+                    <!-- mdl-cell + mdl-card -->
+                    <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedPink">
                             <h2 class="mdl-card__title-text">Employees</h2> </div>
                         <div class="mdl-card__supporting-text">
                             <ul class="demo-list-item mdl-list">
-                                <?php listName(); ?> </ul>
+                                <?php listName(); ?>
+                            </ul>
                         </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
-                    <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--9-col card-lesson mdl-card  mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="lightPeriwinkle">
-                            <h2 class="mdl-card__title-text">Employee Details</h2> </div>
-                        <div class="mdl-card__supporting-text">
-                            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                                <div class="mdl-tabs__tab-bar"> <a href="#address-panel" class="mdl-tabs__tab is-active">Address</a> <a href="#todo-panel" class="mdl-tabs__tab">To Do</a> <a href="#messages-panel" class="mdl-tabs__tab">Messages</a> </div>
-                                <div class="mdl-tabs__panel is-active" id="address-panel">
-                                    <?php displayInfo(); ?> </div>
-                                <div class="mdl-tabs__panel" id="todo-panel">
-                                    <?php toDo(); ?> </tbody>
-                                    </table>
-                                </div>
-                                <div class="mdl-tabs__panel" id="messages-panel">
-                                        <?php
-                                            messages();
-                                        ?>
-                                    </div>
+                    
+                </div>
+                
+                <!-- mdl-cell + mdl-card -->
+                <div class="mdl-cell mdl-cell--6-col card-lesson mdl-card  mdl-shadow--2dp">
+                    <div class="mdl-card__title" id="lightPeriwinkle">
+                        <h2 class="mdl-card__title-text">Employee Details</h2> </div>
+                    <div class="mdl-card__supporting-text">
+                        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                            <div class="mdl-tabs__tab-bar"> <a href="#address-panel" class="mdl-tabs__tab is-active">Address</a> <a href="#todo-panel" class="mdl-tabs__tab">To Do</a> <a href="#messages-panel" class="mdl-tabs__tab">Messages</a> </div>
+                            <div class="mdl-tabs__panel is-active" id="address-panel">
+                                <?php displayInfo(); ?> </div>
+                            <div class="mdl-tabs__panel" id="todo-panel">
+                                <?php toDo(); ?> </tbody>
+                                </table>
+                            </div>
+                            <div class="mdl-tabs__panel" id="messages-panel">
+                                    <?php
+                                        messages();
+                                    ?>
                                 </div>
                             </div>
                         </div>
-                        <!-- / mdl-cell + mdl-card -->
                     </div>
-                    <!-- / mdl-grid -->
+                    <!-- / mdl-cell + mdl-card -->
+                </div>
+                <!-- / mdl-grid -->
 
                 </section>
             </main>
