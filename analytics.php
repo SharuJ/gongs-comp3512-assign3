@@ -38,6 +38,25 @@ function countVisits()
     }
 }
 
+function countCountries()
+{
+    try {
+        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql    = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
+                    LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
+                    GROUP BY CountryCode ORDER BY count desc limit 15;";
+        $result = $pdo->query($sql);
+        while ($row = $result->fetch()) {
+            echo ($row["count"] . "<br>");
+        }
+        $pdo = null;
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -98,13 +117,11 @@ function countVisits()
                         </div>
                         <div class="mdl-card__supporting-text">
                             <i class="material-icons small valign">wc</i>   
-                            <b><?php countVisits() ?></b>
+                            <b><?php countCountries() ?></b>
                         </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
-                    
-                    
-
+                
                 </div>
                 <!-- / mdl-grid -->
             </section>
