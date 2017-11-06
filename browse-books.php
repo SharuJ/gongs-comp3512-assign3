@@ -102,26 +102,30 @@ function listBooks() /* programmatically loop though books and display each book
         
         while ($row = $result->fetch()) //loop through the data
             {
+            
             echo ("<a href='single-book.php?isbn=");
             echo ($row["ISBN10"]);
             echo ("'>");
-            echo ('<center><img id="ThumbCover" src="/book-images/thumb/' . $row["ISBN10"] . '.jpg" alt="book cover"></center><br>');
+            echo ('<center><img id="dimmer" onclick="dim();" src="/book-images/thumb/' . $row["ISBN10"] . '.jpg" alt="book cover"></center><br>');
             echo ("<b>" . $row["Title"] . "</b><br>");
-            echo ("</a>");
+            echo ("</a>"); 
             echo ("<b>Year:</b> " . $row["CopyrightYear"] . "<br>");
             echo ("<b>Subcategory:</b> " . $row["SubcategoryName"] . "<br>");
             echo ("<b>Imprint:</b> " . $row["Imprint"]);
             echo ("<hr>");
-        }
         
-        }
+            
+            }
         
+            
+        }
         else
         {
             echo ("No book found that matches filters");
         }
         
         $pdo = null;
+    
     }
     catch (PDOException $e) {
         die($e->getMessage());
@@ -129,6 +133,7 @@ function listBooks() /* programmatically loop though books and display each book
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

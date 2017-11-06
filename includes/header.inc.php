@@ -1,4 +1,4 @@
-<header class="mdl-layout__header" id="fireBrick">
+  <header class="mdl-layout__header" id="fireBrick">
     <div class="mdl-layout__header-row">
      <h1 class="mdl-layout-title"><span>CRM</span> Admin</h1>
  
@@ -23,9 +23,9 @@
           <i class="material-icons">search</i>
         </label>
         <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" name="sample"
-                 id="fixed-header-drawer-exp">
+          <input class="mdl-textfield__input" type="text" name="sample" onkeyup="myFunction()" id="fixed-header-drawer-exp">
         </div>
+        
         
       </div>
     </div>
