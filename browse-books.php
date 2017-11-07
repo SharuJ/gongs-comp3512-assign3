@@ -1,28 +1,41 @@
 <?php
+
 require_once("config.php");
+
+$empDb = new EmployeeGateway($connection);
+$subDb = new SubcategoryGateway($connection);
+$impDb = new ImprintGateway($connection);
+
 function listSubs() /* programmatically loop though subcategories and display each subcategory as <li> element. */ 
 {
-    echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select SubcategoryName from Subcategories order by SubcategoryName";
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) //loop through the data
-            {
-            echo ("<a href='?sub=");
-            echo ($row["SubcategoryName"]);
-            echo ("&imp=" . $_GET['imp']);
-            echo ("'><li>");
-            echo ($row["SubcategoryName"]);
-            echo ("</li></a>");
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    // echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
+    // try {
+    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //     $sql    = "select SubcategoryName from Subcategories order by SubcategoryName";
+    //     $result = $pdo->query($sql);
+    //     while ($row = $result->fetch()) //loop through the data
+        
+        
+        
+    //     {
+    //         echo ("<a href='?sub=");
+    //         echo ($row["SubcategoryName"]);
+    //         echo ("&imp=" . $_GET['imp']);
+    //         echo ("'><li>");
+    //         echo ($row["SubcategoryName"]);
+    //         echo ("</li></a>");
+    //     }
+    //     $pdo = null;
+    // }
+    // catch (PDOException $e) {
+    //     die($e->getMessage());
+    // }
+    
+
+
 }
+
 function listImprints() /* programmatically loop though imprints and display each imprint as <li> element. */ 
 {
     echo ('<a href="?sub=' . $_GET['sub'] . '&imp="><li>ALL IMPRINTS</li></a>');
@@ -167,7 +180,25 @@ function listBooks() /* programmatically loop though books and display each book
                                 <h2 class="mdl-card__title-text">Filter by Imprint: <?php echo($_GET['imp']) ?></h2> </div>
                             <div class="mdl-card__supporting-text">
                                 <ul class="demo-list-item mdl-list">
-                                    <?php listImprints() ?> </ul>
+                                    <?php 
+                                    listImprints(); 
+                                    
+                                    $imprints = $impDb->getAll("Imprint");
+                                foreach ($imprints as $row)
+                                {
+                                    echo ("<a href='?sub=");
+                                echo ($_GET['sub']);
+                                echo ("&imp=" . $row["Imprint"]);
+                                echo ("'><li>");
+                                echo ($row["Imprint"]);
+                                echo ("</li></a>");
+                                }
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    ?> </ul>
                             </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->
@@ -177,7 +208,27 @@ function listBooks() /* programmatically loop though books and display each book
                                 <h2 class="mdl-card__title-text">Filter by Subcategory: <?php echo($_GET['sub']) ?> </h2> </div>
                             <div class="mdl-card__supporting-text">
                                 <ul class="demo-list-item mdl-list">
-                                    <?php listSubs() ?> </ul>
+                                    <?php 
+                                    
+                                    listSubs(); 
+                                    
+        
+                                    
+                                    // i am so fuckin lost
+                                    // this should work (works now)
+                                    $subcategories = $subDb->getAll("SubcategoryName");
+                                    foreach ($subcategories as $row)
+                                    {
+                                        echo ("<a href='?sub=");
+                                        echo ($row["SubcategoryName"]);
+                                        echo ("&imp=" . $_GET['imp']);
+                                        echo ("'><li>");
+                                        echo ($row["SubcategoryName"]);
+                                        echo ("</li></a>");
+                                    }                                    
+                                    
+                                    
+                                    ?> </ul>
                             </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->
@@ -189,7 +240,13 @@ function listBooks() /* programmatically loop though books and display each book
                             <div class="mdl-card__title" id="fadedPink">
                                 <h2 class="mdl-card__title-text">Books</h2> </div>
                             <div class="mdl-card__supporting-text">
-                                <?php listBooks() ?> </div>
+                                <?php 
+                                
+                                listBooks();
+                                
+                                
+                                
+                                ?> </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->
                     </div>

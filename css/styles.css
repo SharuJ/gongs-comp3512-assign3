@@ -235,3 +235,7 @@ main header h4 {
 .material-icons {
     vertical-align: middle;
 }
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: grey;
+}

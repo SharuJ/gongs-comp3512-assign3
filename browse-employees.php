@@ -1,200 +1,213 @@
 <?php
+
 require_once("config.php");
+
+$empDb = new EmployeeGateway($connection);
+$empToDoDb = new EmployeeToDoGateway($connection);
 function listName() /* programmatically loop though employees and display each name as <li> element. */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select EmployeeID, FirstName, LastName from Employees";
-        
+    // try {
+    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //     $sql    = "select EmployeeID, FirstName, LastName from Employees";
 
-        //last name filter
-        if (!empty($_GET['ln']) && empty($_GET['city']))
-            $sql .= ' WHERE LastName LIKE :l';
+    //     //last name filter
+    //     if (!empty($_GET['ln']) && empty($_GET['city']))
+    //         $sql .= ' WHERE LastName LIKE :l';
         
-        //city filter
-        elseif (!empty($_GET['city']) && empty($_GET['ln']))
-            $sql .= ' WHERE City = :c';
+    //     //city filter
+    //     elseif (!empty($_GET['city']) && empty($_GET['ln']))
+    //         $sql .= ' WHERE City = :c';
         
-        //both filter
-        elseif (!empty($_GET['ln']) && !empty($_GET['city'])) {
-            $sql .= " WHERE LastName LIKE :l";
-            $sql .= " AND City = :c";
-        }
+    //     //both filter
+    //     elseif (!empty($_GET['ln']) && !empty($_GET['city'])) {
+    //         $sql .= " WHERE LastName LIKE :l";
+    //         $sql .= " AND City = :c";
+    //     }
         
-        //no filter
-        else
-            //add nothing
+    //     //no filter
+    //     else
+    //         //add nothing
         
-        $sql .= ' order by LastName';
+    //     $sql .= ' order by LastName';
         
-        $l = $_GET['ln'] . "%";
-        $c = $_GET['city'];
+    //     $l = $_GET['ln'] . "%";
+    //     $c = $_GET['city'];
         
-        $result = $pdo->prepare($sql);
+    //     $result = $pdo->prepare($sql);
         
-        //last name filter
-        if (!empty($_GET['ln']) && empty($_GET['city']))
-            $result->bindParam(':l', $l);
+    //     //last name filter
+    //     if (!empty($_GET['ln']) && empty($_GET['city']))
+    //         $result->bindParam(':l', $l);
         
-        //city filter
-        elseif (!empty($_GET['city']) && empty($_GET['ln']))
-            $result->bindParam(':c', $c);
+    //     //city filter
+    //     elseif (!empty($_GET['city']) && empty($_GET['ln']))
+    //         $result->bindParam(':c', $c);
         
-        //both filter
-        else
-        {
-            $result->bindParam(':l', $l);
-            $result->bindParam(':c', $c);
-        }
+    //     //both filter
+    //     else
+    //     {
+    //         $result->bindParam(':l', $l);
+    //         $result->bindParam(':c', $c);
+    //     }
 
-        $result->execute();
-        while ($row = $result->fetch()) //loop through the data
-            {
-            echo ("<a href='browse-employees.php?id=");
-            echo ($row["EmployeeID"]);
-            echo ("&ln=" . $_GET['ln']);
-            echo ("&city=" . $_GET['city']);
-            echo ("'><li>");
-            echo ($row["FirstName"] . " ");
-            echo ($row["LastName"]);
-            echo ("</li></a>");
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    //     $result->execute();
+    //     while ($row = $result->fetch()) //loop through the data
+    //         {
+    //         echo ("<a href='browse-employees.php?id=");
+    //         echo ($row["EmployeeID"]);
+    //         echo ("&ln=" . $_GET['ln']);
+    //         echo ("&city=" . $_GET['city']);
+    //         echo ("'><li>");
+    //         echo ($row["FirstName"] . " ");
+    //         echo ($row["LastName"]);
+    //         echo ("</li></a>");
+    //     }
+    //     $pdo = null;
+    // }
+    // catch (PDOException $e) {
+    //     die($e->getMessage());
+    // }
+    
+
+    
 }
+
 function displayInfo() /* display requested employees information */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select FirstName, LastName, Address, City, Region, Country, Postal, Email from Employees where EmployeeID=:id";
-        $id     = $_GET['id'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':id', $id);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ("<h4>" . $row["FirstName"] . " ");
-                echo ($row["LastName"] . "</h4>");
-                echo ($row["Address"] . "<br>");
-                echo ($row["City"] . ", " . $row["Region"] . "<br>");
-                echo ($row["Country"] . ", " . $row["Postal"] . "<br>");
-                echo ($row["Email"]);
-            }
-        } else
-            echo ("No employee found that matches request. Try clicking on an employee from the list.");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No employee found that matches request. Try clicking on an employee from the list.");
-    }
+//     try {
+//         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+//         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//         $sql    = "select FirstName, LastName, Address, City, Region, Country, Postal, Email from Employees where EmployeeID=:id";
+//     //$id = $_GET['employeeid'];
+//   // $empDb = new EmployeeGateway($connection);
+//     //echo $id;
+//         // $result =$empDb->getByKey($id);
+        
+//         $result = $pdo->prepare($sql);
+//         $result->bindValue(':id', $id);
+//         $result->execute();
+//         if ($result->rowCount() > 0) {
+//             while ($row = $result->fetch()) //loop through the data
+//                 {
+//                 echo ("<h4>" . $row["FirstName"] . " ");
+//                 echo ($row["LastName"] . "</h4>");
+//                 echo ($row["Address"] . "<br>");
+//                 echo ($row["City"] . ", " . $row["Region"] . "<br>");
+//                 echo ($row["Country"] . ", " . $row["Postal"] . "<br>");
+//                 echo ($row["Email"]);
+//             }
+//         } else
+//             echo ("Click on an employee from the list");
+//         $pdo = null;
+//     }
+//     catch (PDOException $e) {
+//         //die($e->getMessage());
+//         echo ("Click on an employee from the list");
+//     }
 }
+
 function toDo() /* retrieve for selected employee; if none, display message to that effect */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select DateBy, Status, Priority, Description from EmployeeToDo where EmployeeID=:id order by DateBy ";
-        $id     = $_GET['id'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':id', $id);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            echo ('<table class="mdl-data-table mdl-shadow--2dp">
-                    <thead>
-                    <tr>
-                    <th class="mdl-data-table__cell--non-numeric ">Date</th>
-                    <th class="mdl-data-table__cell--non-numeric ">Status</th>
-                    <th class="mdl-data-table__cell--non-numeric ">Priority</th>
-                    <th class="mdl-data-table__cell--non-numeric ">Content</th>
-                    </tr>
-                    </thead>
-                    <tbody>');
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ("<tr>");
-                echo ('<td>');
-                $date = strtotime($row["DateBy"]);
-                echo (date("Y-M-d ", $date));
-                echo ("</td>");
-                echo ('<td>');
-                echo ($row["Status"]);
-                echo ("</td>");
-                echo ("<td>");
-                echo ($row["Priority"]);
-                echo ("</td>");
-                echo ('<td>');
-                echo (substr($row["Description"], 0, 40));
-                echo ("</td>");
-                echo ("</tr>");
-            }
-        } else
-            echo ("No employee found that matches request. Try clicking on an employee from the list.");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No employee found that matches request. Try clicking on an employee from the list.");
-    }
+    // try {
+    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //     $sql    = "select DateBy, Status, Priority, Description from EmployeeToDo where EmployeeID=:id order by DateBy ";
+    //     $id     = $_GET['id'];
+    //     $result = $pdo->prepare($sql);
+    //     $result->bindValue(':id', $id);
+    //     $result->execute();
+    //     if ($result->rowCount() > 0) {
+    //         echo ('<table class="mdl-data-table mdl-shadow--2dp">
+    //                 <thead>
+    //                 <tr>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Date</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Status</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Priority</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Content</th>
+    //                 </tr>
+    //                 </thead>
+    //                 <tbody>');
+    //         while ($row = $result->fetch()) //loop through the data
+    //             {
+    //             echo ("<tr>");
+    //             echo ('<td>');
+    //             $date = strtotime($row["DateBy"]);
+    //             echo (date("Y-M-d ", $date));
+    //             echo ("</td>");
+    //             echo ('<td>');
+    //             echo ($row["Status"]);
+    //             echo ("</td>");
+    //             echo ("<td>");
+    //             echo ($row["Priority"]);
+    //             echo ("</td>");
+    //             echo ('<td>');
+    //             echo (substr($row["Description"], 0, 40));
+    //             echo ("</td>");
+    //             echo ("</tr>");
+    //         }
+    //     } else
+    //         echo ("No employee found that matches request. Try clicking on an employee from the list.");
+    //     $pdo = null;
+    // }
+    // catch (PDOException $e) {
+    //     //die($e->getMessage());
+    //     echo ("No employee found that matches request. Try clicking on an employee from the list.");
+    // }
 }
+
 function messages() /* retrieve for selected employee; if none, display message to that effect */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "SELECT MessageDate, Category, Content, FirstName, LastName
-                    FROM EmployeeMessages 
-                    LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID 
-                    WHERE EmployeeMessages.EmployeeID=:id
-                    ORDER BY MessageDate";
-        $id     = $_GET['id'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':id', $id);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            echo ('<table class="mdl-data-table mdl-shadow--2dp">
-                    <thead>
-                    <tr>
-                    <th class="mdl-data-table__cell--non-numeric ">Date</th>
-                    <th class="mdl-data-table__cell--non-numeric ">Category</th>
-                    <th class="mdl-data-table__cell--non-numeric ">From</th>
-                    <th class="mdl-data-table__cell--non-numeric ">Message</th>
-                    </tr>
-                    </thead>
-                    <tbody>');
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ("<tr>");
-                echo ('<td>');
-                $date = strtotime($row["MessageDate"]);
-                echo (date("Y-M-d ", $date));
-                echo ("</td>");
-                echo ('<td>');
-                echo ($row["Category"]);
-                echo ("</td>");
-                echo ("<td>");
-                echo ($row["FirstName"] . " " . $row["LastName"]);
-                echo ("</td>");
-                echo ('<td>');
-                $message40 = substr($row["Content"], 0, 40);
-                echo ($message40);
-                echo ("</td>");
-                echo ("</tr>");
-            }
-        } else
-            echo ("No employee found that matches request. Try clicking on an employee from the list.");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No employee found that matches request. Try clicking on an employee from the list.");
-    }
+    // try {
+    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //     $sql    = "SELECT MessageDate, Category, Content, FirstName, LastName
+    //                 FROM EmployeeMessages 
+    //                 LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID 
+    //                 WHERE EmployeeMessages.EmployeeID=:id
+    //                 ORDER BY MessageDate";
+    //     $id     = $_GET['id'];
+    //     $result = $pdo->prepare($sql);
+    //     $result->bindValue(':id', $id);
+    //     $result->execute();
+    //     if ($result->rowCount() > 0) {
+    //         echo ('<table class="mdl-data-table mdl-shadow--2dp">
+    //                 <thead>
+    //                 <tr>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Date</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Category</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">From</th>
+    //                 <th class="mdl-data-table__cell--non-numeric ">Message</th>
+    //                 </tr>
+    //                 </thead>
+    //                 <tbody>');
+    //         while ($row = $result->fetch()) //loop through the data
+    //             {
+    //             echo ("<tr>");
+    //             echo ('<td>');
+    //             $date = strtotime($row["MessageDate"]);
+    //             echo (date("Y-M-d ", $date));
+    //             echo ("</td>");
+    //             echo ('<td>');
+    //             echo ($row["Category"]);
+    //             echo ("</td>");
+    //             echo ("<td>");
+    //             echo ($row["FirstName"] . " " . $row["LastName"]);
+    //             echo ("</td>");
+    //             echo ('<td>');
+    //             $message40 = substr($row["Content"], 0, 40);
+    //             echo ($message40);
+    //             echo ("</td>");
+    //             echo ("</tr>");
+    //         }
+    //     } else
+    //         echo ("No employee found that matches request. Try clicking on an employee from the list.");
+    //     $pdo = null;
+    // }
+    // catch (PDOException $e) {
+    //     //die($e->getMessage());
+    //     echo ("No employee found that matches request. Try clicking on an employee from the list.");
+    // }
 }
 
 function dropCities()
@@ -257,13 +270,13 @@ function dropCities()
             <section class="page-content">
                 <div class="mdl-grid">
                    
-                <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-cell mdl-cell--3-col">
                        
                     <!-- mdl-cell + mdl-card -->
                     <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card">
                         <div class="mdl-card__title" id="fadedBlue" onclick="appear()">
                             <h2 class="mdl-card__title-text">Filter (click me)</h2> </div>
-                        <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter" style="display: none;>
+                        <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter" style="display: none">
                             <form method="get">
                                 Last name: <input name="ln"> <br>
                                 City: <select name="city">
@@ -282,7 +295,18 @@ function dropCities()
                             <h2 class="mdl-card__title-text">Employees</h2> </div>
                         <div class="mdl-card__supporting-text">
                             <ul class="demo-list-item mdl-list">
-                                <?php listName(); ?>
+                                <?php 
+                                
+                                listName(); 
+                                
+                                    $employees = $empDb->getAll("LastName");
+    
+                                    foreach ($employees as $row) {
+                                    echo '<li><a href=?employeeid=' . $row['EmployeeID'] . '>' . $row['FirstName'] . ' ' . $row['LastName'] . '</a></li>';
+                                    }
+
+
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -291,16 +315,86 @@ function dropCities()
                 </div>
                 
                 <!-- mdl-cell + mdl-card -->
-                <div class="mdl-cell mdl-cell--6-col card-lesson mdl-card  mdl-shadow--2dp">
+                <div class="mdl-cell mdl-cell--9-col card-lesson mdl-card  mdl-shadow--2dp">
                     <div class="mdl-card__title" id="lightPeriwinkle">
                         <h2 class="mdl-card__title-text">Employee Details</h2> </div>
                     <div class="mdl-card__supporting-text">
                         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                             <div class="mdl-tabs__tab-bar"> <a href="#address-panel" class="mdl-tabs__tab is-active">Address</a> <a href="#todo-panel" class="mdl-tabs__tab">To Do</a> <a href="#messages-panel" class="mdl-tabs__tab">Messages</a> </div>
                             <div class="mdl-tabs__panel is-active" id="address-panel">
-                                <?php displayInfo(); ?> </div>
+                                <?php 
+                                
+                                if (isset($_GET["employeeid"])){
+                                $id = $_GET["employeeid"];
+                                
+                              
+                                
+                                 $row = $empDb->getByKey($id);
+                                 
+                                        echo ("<h4>" . $row["FirstName"] . " ");
+                                            echo ($row["LastName"] . "</h4>");
+                                            echo ($row["Address"] . "<br>");
+                                            echo ($row["City"] . ", " . $row["Region"] . "<br>");
+                                            echo ($row["Country"] . ", " . $row["Postal"] . "<br>");
+                                            echo ($row["Email"]); 
+                                }
+                                else {
+                                  echo ("Click on an employee from the list"); 
+                                }                              
+                                
+                                ?> </div>
                             <div class="mdl-tabs__panel" id="todo-panel">
-                                <?php toDo(); ?> </tbody>
+                                <?php //toDo(); 
+                                
+                                    
+                                    
+                                    
+                                    
+                echo ('<table class="mdl-data-table mdl-shadow--2dp">
+                     <thead>
+                     <tr>
+                    <th class="mdl-data-table__cell--non-numeric ">Date</th>
+               <th class="mdl-data-table__cell--non-numeric ">Status</th>
+                     <th class="mdl-data-table__cell--non-numeric ">Priority</th>
+                     <th class="mdl-data-table__cell--non-numeric ">Content</th>
+                     </tr>
+                     </thead>
+                     <tbody>');
+                     
+                //   if (isset($_GET["employeeid"])){
+                //                 $id = $_GET["employeeid"];
+                                
+                              
+                                
+                //                  $rows = $empToDoDb->getByKey($id);
+                //                  print_r($row);
+                //     foreach($rows as $row) {
+                //         foreach ($row as $coloum){
+                //         echo $col;
+                 
+                //  echo ("<tr>");
+                //  echo ('<td>');
+                // $date = strtotime($col);
+                // echo (date("Y-M-d ", $date));
+                //  echo ("</td>");
+                //  echo ('<td>');
+                //  echo ($row["Status"]);
+                //  echo ("</td>");
+                //  echo ("<td>");
+                //  echo ($row["Priority"]);
+                //  echo ("</td>");
+                //  echo ('<td>');
+                //  echo (substr($row["Description"], 0, 40));
+                //   echo ("</td>");
+                //  echo ("</tr>");
+                //         }
+                //     }                
+                //  }
+                //                 else {
+                //                   echo ("Click on an employee from the list"); 
+                //                 }                             
+                                    
+                              ?> </tbody>
                                 </table>
                             </div>
                             <div class="mdl-tabs__panel" id="messages-panel">

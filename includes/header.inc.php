@@ -22,7 +22,7 @@
                for="fixed-header-drawer-exp">
           <i class="material-icons">search</i>
         </label>
-        <div class="mdl-textfield__expandable-holder mdl-color-text--white">
+        <div class="mdl-textfield__expandable-holder mdl-color-text--black">
           <form action="browse-employees.php" method="get">
            <input class="mdl-textfield__input mdl-color-text--white" type="search" name="ln" id="fixed-header-drawer-exp" placeholder="Enter last name">
           </form>
