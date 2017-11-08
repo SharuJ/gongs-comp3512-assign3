@@ -168,17 +168,17 @@ function displayToDo() /* retrieve for selected employee; if none, display messa
                  echo ("<tr>");
                        
                 
-                 echo ('<td>');
+                 echo ('<td class="mdl-data-table__cell--non-numeric">');
               $date = strtotime($row["DateBy"]);
                echo (date("Y-M-d ", $date));
                  echo ("</td>");
-                 echo ('<td>');
+                 echo ('<td class="mdl-data-table__cell--non-numeric">');
                  echo ($row["Status"]);
                  echo ("</td>");
-                 echo ("<td>");
+                 echo ('<td class="mdl-data-table__cell--non-numeric">');
                  echo ($row["Priority"]);
                  echo ("</td>");
-                 echo ('<td>');
+                 echo ('<td class="mdl-data-table__cell--non-numeric">');
                  echo (substr($row["Description"], 0, 40));
                   echo ("</td>");
                  echo ("</tr>");
@@ -188,7 +188,7 @@ function displayToDo() /* retrieve for selected employee; if none, display messa
     
 }
 
-function messages() /* retrieve for selected employee; if none, display message to that effect */ 
+function displayMessages() /* retrieve for selected employee; if none, display message to that effect */ 
 {
     // try {
     //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
@@ -239,7 +239,37 @@ function messages() /* retrieve for selected employee; if none, display message 
     // catch (PDOException $e) {
     //     //die($e->getMessage());
     //     echo ("No employee found that matches request. Try clicking on an employee from the list.");
-    // }
+    // } 
+    
+    
+     include "includes/config.php";
+    
+    $messagesDb = new MessagesGateway($connection);
+    $message = $messagesDb->getMessages($_GET['employeeid']);  
+    
+     foreach ($message as $row)
+                                {
+                   
+                   
+                 echo ("<tr>");
+                echo ('<td class="mdl-data-table__cell--non-numeric">');
+                $date = strtotime($row["MessageDate"]);
+                echo (date("Y-M-d ", $date));
+                echo ("</td>");
+                echo ('<td class="mdl-data-table__cell--non-numeric">');
+                echo ($row["Category"]);
+                echo ("</td>");
+                echo ('<td class="mdl-data-table__cell--non-numeric">');
+                echo ($row["FirstName"] . " " . $row["LastName"]);
+                echo ("</td>");
+                echo ('<td class="mdl-data-table__cell--non-numeric">');
+                $message40 = substr($row["Content"], 0, 40);
+                echo ($message40);
+                echo ("</td>");
+                echo ("</tr>");
+                       
+                    }         
+    
 }
 
 function dropCities()
@@ -400,8 +430,23 @@ function dropCities()
                             </div>
                             <div class="mdl-tabs__panel" id="messages-panel">
                                     <?php
-                                        messages();
-                                    ?>
+                                    
+                                     echo ('<table class="mdl-data-table mdl-shadow--2dp">
+                     <thead>
+                     <tr>
+                    <th class="mdl-data-table__cell--non-numeric ">Date</th>
+               <th class="mdl-data-table__cell--non-numeric ">Category</th>
+                     <th class="mdl-data-table__cell--non-numeric ">From</th>
+                     <th class="mdl-data-table__cell--non-numeric ">Message</th>
+                     </tr>
+                     </thead>
+                     <tbody>');
+                     
+                          displayMessages();                           
+                                    
+                              ?> </tbody>
+                                </table>
+                                      
                                 </div>
                             </div>
                         </div>

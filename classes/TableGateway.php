@@ -94,7 +94,21 @@ abstract class TableGateway {
         //$sql = "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo WHERE EmployeeID=:$key ORDER BY DateBy";
           $sql = $this->getAllToDo();
           $sql.= ' WHERE EmployeeID = "'.$key.'"';
-         echo ($sql);
+          $sql.= ' ORDER BY DateBy';
+         //echo ($sql);
+         
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
+        
+    }
+    
+    // for messages
+    public function getMessages($key){
+       
+          $sql = $this->getAllMessages();
+          $sql.= ' WHERE EmployeeMessages.EmployeeID= "'.$key.'"';
+           $sql.= ' ORDER BY MessageDate';
+         //echo ($sql);
          
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();

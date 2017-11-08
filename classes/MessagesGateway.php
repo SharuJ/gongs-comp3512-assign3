@@ -11,19 +11,21 @@ class MessagesGateway extends TableGateway {
     }
     
     protected function getOrderFields() {
-        return "DateBy";
+        return "MessageDate";
     }
     
     protected function getPrimaryKeyName() {
-        return "ToDoID";
+        return "MessageID";
     }
     
     protected function getForeignKeyName() {
             return "EmployeeID";
     }
     
-    protected function getAllToDo(){
-         return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";
+    protected function getAllMessages(){
+        
+         return "SELECT MessageDate, Category, Content, FirstName, LastName FROM EmployeeMessages LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID";
+         
     }
    
 }

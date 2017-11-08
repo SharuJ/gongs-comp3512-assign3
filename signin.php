@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML> 
 <html> 
 <head>
@@ -36,8 +37,8 @@
 	  	<div class="mdl-card__supporting-text">
 				<form method="POST" action="login.php">
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="text" id="username" />
-						<label class="mdl-textfield__label" for="username">Username</label>
+						<input class="mdl-textfield__input" name="user" type="text" id="username" />
+						<label class="mdl-textfield__label" name="pass" for="username">Username</label>
 					</div>
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="password" id="userpass" />
@@ -46,7 +47,7 @@
 				</form>
 			</div>
 			<div class="mdl-card__actions mdl-card--border">
-				<button class="mdl-button mdl-js-button" id="lightPeriwinkle">Log in</button>
+				<button class="mdl-button mdl-js-button" id="lightPeriwinkle"><input name="submit" type="submit" value=" Login "></button>
 			</div>
 		</div>
      </div>          
