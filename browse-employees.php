@@ -107,7 +107,7 @@ function displayInfo() /* display requested employees information */
 //     }
 }
 
-function toDo() /* retrieve for selected employee; if none, display message to that effect */ 
+function displayToDo() /* retrieve for selected employee; if none, display message to that effect */ 
 {
     // try {
     //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
@@ -159,7 +159,33 @@ function toDo() /* retrieve for selected employee; if none, display message to t
     include "includes/config.php";
     
     $empToDoDb = new EmployeeToDoGateway($connection);
-    $books = $empToDoDb->getBooks($_GET['sub'], $_GET['imp']);
+    $todo = $empToDoDb->getToDo($_GET['employeeid']);  
+    
+     foreach ($todo as $row)
+                                {
+                   
+                   
+                 echo ("<tr>");
+                       
+                
+                 echo ('<td>');
+              $date = strtotime($row["DateBy"]);
+               echo (date("Y-M-d ", $date));
+                 echo ("</td>");
+                 echo ('<td>');
+                 echo ($row["Status"]);
+                 echo ("</td>");
+                 echo ("<td>");
+                 echo ($row["Priority"]);
+                 echo ("</td>");
+                 echo ('<td>');
+                 echo (substr($row["Description"], 0, 40));
+                  echo ("</td>");
+                 echo ("</tr>");
+                       
+                    }                
+    
+    
 }
 
 function messages() /* retrieve for selected employee; if none, display message to that effect */ 
@@ -367,40 +393,7 @@ function dropCities()
                      </thead>
                      <tbody>');
                      
-                  if (isset($_GET["employeeid"])){
-                                $id = $_GET["employeeid"];
-                                
-                              
-                                
-                                 $rows = $empToDoDb->getAllToDo($id);
-                                // print_r($rows);
-                    foreach ($rows as $row)
-                                {
-                   
-                    // print_r($row);
-                 echo ("<tr>");
-                       
-                
-                 echo ('<td>');
-              //  $date = strtotime($row["DateBy"]);
-             //   echo (date("Y-M-d ", $date));
-                 echo ("</td>");
-                 echo ('<td>');
-                 echo ($row["Status"]);
-                 echo ("</td>");
-                 echo ("<td>");
-                 echo ($row["Priority"]);
-                 echo ("</td>");
-                 echo ('<td>');
-                 echo (substr($row["Description"], 0, 40));
-                  echo ("</td>");
-                 echo ("</tr>");
-                        //}
-                    }                
-                 }
-                                else {
-                                  echo ("Click on an employee from the list"); 
-                                }                             
+                          displayToDo();                           
                                     
                               ?> </tbody>
                                 </table>

@@ -1,66 +1,44 @@
 <?php
 
-require_once("includes/config.php");
-
-$empDb = new EmployeeGateway($connection);
-$subDb = new SubcategoryGateway($connection);
-$impDb = new ImprintGateway($connection);
-
 function listSubs() /* programmatically loop though subcategories and display each subcategory as <li> element. */ 
 {
-    // echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
-    // try {
-    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //     $sql    = "select SubcategoryName from Subcategories order by SubcategoryName";
-    //     $result = $pdo->query($sql);
-    //     while ($row = $result->fetch()) //loop through the data
-        
-        
-        
-    //     {
-    //         echo ("<a href='?sub=");
-    //         echo ($row["SubcategoryName"]);
-    //         echo ("&imp=" . $_GET['imp']);
-    //         echo ("'><li>");
-    //         echo ($row["SubcategoryName"]);
-    //         echo ("</li></a>");
-    //     }
-    //     $pdo = null;
-    // }
-    // catch (PDOException $e) {
-    //     die($e->getMessage());
-    // }
+    echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
     
-
+    include "includes/config.php";
+    $subDb = new SubcategoryGateway($connection);
+    
+    $subcategories = $subDb->getAll("SubcategoryName");
+    foreach ($subcategories as $row)
+    {
+        echo ("<a href='?sub=");
+        echo ($row["SubcategoryName"]);
+        echo ("&imp=" . $_GET['imp']);
+        echo ("'><li>");
+        echo ($row["SubcategoryName"]);
+        echo ("</li></a>");
+    }             
 
 }
 
 function listImprints() /* programmatically loop though imprints and display each imprint as <li> element. */ 
 {
-    // echo ('<a href="?sub=' . $_GET['sub'] . '&imp="><li>ALL IMPRINTS</li></a>');
-    // try {
-    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //     $sql    = "select Imprint from Imprints order by Imprint";
-    //     $result = $pdo->query($sql);
-    //     while ($row = $result->fetch()) //loop through the data
-    //         {
-    //         echo ("<a href='?sub=");
-    //         echo ($_GET['sub']);
-    //         echo ("&imp=" . $row["Imprint"]);
-    //         echo ("'><li>");
-    //         echo ($row["Imprint"]);
-    //         echo ("</li></a>");
-    //     }
-        
-    //     $pdo = null;
-    // }
-    // catch (PDOException $e) {
-    //     die($e->getMessage());
-        
-    // }
+    echo ('<a href="?sub=' . $_GET['sub'] . '&imp="><li>ALL IMPRINTS</li></a>');
+    
+    include "includes/config.php";
+    $impDb = new ImprintGateway($connection);
+    
+    $imprints = $impDb->getAll("Imprint");
+    foreach ($imprints as $row)
+    {
+        echo ("<a href='?sub=");
+        echo ($_GET['sub']);
+        echo ("&imp=" . $row["Imprint"]);
+        echo ("'><li>");
+        echo ($row["Imprint"]);
+        echo ("</li></a>");
+    }
 }
+
 function listBooks() /* programmatically loop though books and display each book as <li> element. */ 
 {
     include "includes/config.php";
@@ -80,95 +58,9 @@ function listBooks() /* programmatically loop though books and display each book
         echo ("<b>Imprint:</b> " . $row["Imprint"]);
         echo ("<hr>");
     }
-    
-    
-    
-    // try {
-    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //     $sql = "select ISBN10, Title, CopyrightYear, SubcategoryName, Imprint from Books
-    //                 LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID 
-    //                 LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID";
-                    
-    //     //sub filter
-    //     if (!empty($_GET['sub']) && empty($_GET['imp'])) {
-    //         $sql .= " WHERE SubcategoryName =:s";
-    //     }
-    //     //imp filter
-    //     elseif (!empty($_GET['imp']) && empty($_GET['sub'])) {
-    //         $sql .= " WHERE Imprint =:i";
-    //     }
-    //     //both filter
-    //     elseif (!empty($_GET['sub']) && !empty($_GET['imp'])) {
-    //         $sql .= " WHERE SubcategoryName =:s";
-    //         $sql .= " AND Imprint =:i";
-    //     }
-    //     //no filter
-    //     else 
-    //         //add nothing
-        
-    //     $sql .= " order by Title LIMIT 20";
-        
-    //     $s      = $_GET['sub'];
-    //     $i      = $_GET['imp'];
-        
-    //     $result = $pdo->prepare($sql);
-    //     //sub filter
-    //     if (!empty($_GET['sub']) && empty($_GET['imp'])) {
-    //         $result->bindParam(':s', $s);
-    //     }
-    //     //imp filter
-    //     elseif (!empty($_GET['imp']) && empty($_GET['sub'])) {
-    //         $result->bindParam(':i', $i);
-    //     }
-    //     //both filter
-    //     else {
-    //         $result->bindParam(':s', $s);
-    //         $result->bindParam(':i', $i);
-    //     }
-        
-    //     $result->execute();
-       
-        
-    //     if ($result->rowCount() > 0)
-    //     {
-            
-               
-        
-    //         while ($row = $result->fetch()) //loop through the data
-    //             {
-                
-    //             echo ("<a href='single-book.php?isbn=");
-    //             echo ($row["ISBN10"]);
-    //             echo ("'>");
-    //             echo ('<center><img src="/book-images/thumb/' . $row["ISBN10"] . '.jpg" alt="book cover"></center><br>');
-    //             echo ("<b>" . $row["Title"] . "</b><br>");
-    //             echo ("</a>"); 
-    //             echo ("<b>Year:</b> " . $row["CopyrightYear"] . "<br>");
-    //             echo ("<b>Subcategory:</b> " . $row["SubcategoryName"] . "<br>");
-    //             echo ("<b>Imprint:</b> " . $row["Imprint"]);
-    //             echo ("<hr>");
-            
-                
-    //             }
-        
-            
-    //     }
-    //     else
-    //     {
-    //         echo ("No book found that matches filters");
-    //     }
-        
-    //     $pdo = null;
-    
-    // }
-    // catch (PDOException $e) {
-    //     die($e->getMessage());
-    //     echo ("No book found that fits those filters");
-    // }
 }
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -198,15 +90,12 @@ function listBooks() /* programmatically loop though books and display each book
                         <!-- mdl-cell + mdl-card -->
                         <div class="mdl-cell mdl-cell--12-col  mdl-shadow--2dp">
                             <div class="mdl-card__title" id="fadedPink">
-                                <h2 class="mdl-card__title-text">Books</h2> </div>
+                                <h2 class="mdl-card__title-text">Books</h2>
+                            </div>
                             <div class="mdl-card__supporting-text">
-                                <?php 
+                                <?php listBooks(); ?>
+                            </div>
                                 
-                                listBooks();
-                                
-                                
-                                
-                                ?> </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->
                     </div>
@@ -219,25 +108,8 @@ function listBooks() /* programmatically loop though books and display each book
                                 <h2 class="mdl-card__title-text">Filter by Imprint: <?php echo($_GET['imp']) ?></h2> </div>
                             <div class="mdl-card__supporting-text">
                                 <ul class="demo-list-item mdl-list">
-                                    <?php 
-                                    // listImprints(); 
-                                    echo ('<a href="?sub=' . $_GET['sub'] . '&imp="><li>ALL IMPRINTS</li></a>');
-                                    $imprints = $impDb->getAll("Imprint");
-                                foreach ($imprints as $row)
-                                {
-                                    echo ("<a href='?sub=");
-                                echo ($_GET['sub']);
-                                echo ("&imp=" . $row["Imprint"]);
-                                echo ("'><li>");
-                                echo ($row["Imprint"]);
-                                echo ("</li></a>");
-                                }
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    ?> </ul>
+                                    <?php listImprints(); ?> 
+                                </ul>
                             </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->
@@ -247,29 +119,8 @@ function listBooks() /* programmatically loop though books and display each book
                                 <h2 class="mdl-card__title-text">Filter by Subcategory: <?php echo($_GET['sub']) ?> </h2> </div>
                             <div class="mdl-card__supporting-text">
                                 <ul class="demo-list-item mdl-list">
-                                    
-                                    
-                                    <?php 
-                                    echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
-                                    listSubs(); 
-                                    
-        
-                                    
-                   
-                                    $subcategories = $subDb->getAll("SubcategoryName");
-                                    //$subcategories = $subDb->getSubs("SubcategoryName");
-                                    foreach ($subcategories as $row)
-                                    {
-                                        echo ("<a href='?sub=");
-                                        echo ($row["SubcategoryName"]);
-                                        echo ("&imp=" . $_GET['imp']);
-                                        echo ("'><li>");
-                                        echo ($row["SubcategoryName"]);
-                                        echo ("</li></a>");
-                                    }                                    
-                                    
-                                    
-                                    ?> </ul>
+                                    <?php listSubs(); ?>
+                                </ul>
                             </div>
                         </div>
                         <!-- / mdl-cell + mdl-card -->

@@ -93,7 +93,7 @@ abstract class TableGateway {
      public function getToDo($key){
         //$sql = "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo WHERE EmployeeID=:$key ORDER BY DateBy";
           $sql = $this->getAllToDo();
-          $sql.= 'WHERE EmployeeID = "'.$key.'"';
+          $sql.= ' WHERE EmployeeID = "'.$key.'"';
          echo ($sql);
          
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
