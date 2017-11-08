@@ -1,11 +1,13 @@
 <?php
-class EmployeeToDoGateway extends AbstractTableGateway {
+class EmployeeToDoGateway extends TableGateway {
     public function __construct($connect) {
         parent::__construct($connect);
     }
     
     protected function getSelectStatement() {
-        return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";
+        return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";   
+        
+       
     }
     
     protected function getOrderFields() {
@@ -17,16 +19,11 @@ class EmployeeToDoGateway extends AbstractTableGateway {
     }
     
     protected function getForeignKeyName() {
-            return "ToDoID";
+            return "EmployeeID";
     }
     
-    protected function getAllToDo($key){
-         $sql = "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo WHERE Employee=:$key";
-         
-         
-        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
-        return $statement->fetchAll();
-        
+    protected function getAllToDo(){
+         return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";
     }
    
 }

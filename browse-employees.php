@@ -1,9 +1,9 @@
 <?php
 
-require_once("config.php");
+require_once("includes/config.php");
 
 $empDb = new EmployeeGateway($connection);
-$empToDoDb = new EmployeeToDoGateway($connection);
+
 function listName() /* programmatically loop though employees and display each name as <li> element. */ 
 {
     // try {
@@ -153,7 +153,13 @@ function toDo() /* retrieve for selected employee; if none, display message to t
     // catch (PDOException $e) {
     //     //die($e->getMessage());
     //     echo ("No employee found that matches request. Try clicking on an employee from the list.");
-    // }
+    // } 
+    
+    
+    include "includes/config.php";
+    
+    $empToDoDb = new EmployeeToDoGateway($connection);
+    $books = $empToDoDb->getBooks($_GET['sub'], $_GET['imp']);
 }
 
 function messages() /* retrieve for selected employee; if none, display message to that effect */ 
@@ -297,7 +303,7 @@ function dropCities()
                             <ul class="demo-list-item mdl-list">
                                 <?php 
                                 
-                                listName(); 
+                                // listName(); 
                                 
                                     $employees = $empDb->getAll("LastName");
     
@@ -361,38 +367,40 @@ function dropCities()
                      </thead>
                      <tbody>');
                      
-                //   if (isset($_GET["employeeid"])){
-                //                 $id = $_GET["employeeid"];
+                  if (isset($_GET["employeeid"])){
+                                $id = $_GET["employeeid"];
                                 
                               
                                 
-                //                  $rows = $empToDoDb->getByKey($id);
-                //                  print_r($row);
-                //     foreach($rows as $row) {
-                //         foreach ($row as $coloum){
-                //         echo $col;
-                 
-                //  echo ("<tr>");
-                //  echo ('<td>');
-                // $date = strtotime($col);
-                // echo (date("Y-M-d ", $date));
-                //  echo ("</td>");
-                //  echo ('<td>');
-                //  echo ($row["Status"]);
-                //  echo ("</td>");
-                //  echo ("<td>");
-                //  echo ($row["Priority"]);
-                //  echo ("</td>");
-                //  echo ('<td>');
-                //  echo (substr($row["Description"], 0, 40));
-                //   echo ("</td>");
-                //  echo ("</tr>");
-                //         }
-                //     }                
-                //  }
-                //                 else {
-                //                   echo ("Click on an employee from the list"); 
-                //                 }                             
+                                 $rows = $empToDoDb->getAllToDo($id);
+                                // print_r($rows);
+                    foreach ($rows as $row)
+                                {
+                   
+                    // print_r($row);
+                 echo ("<tr>");
+                       
+                
+                 echo ('<td>');
+              //  $date = strtotime($row["DateBy"]);
+             //   echo (date("Y-M-d ", $date));
+                 echo ("</td>");
+                 echo ('<td>');
+                 echo ($row["Status"]);
+                 echo ("</td>");
+                 echo ("<td>");
+                 echo ($row["Priority"]);
+                 echo ("</td>");
+                 echo ('<td>');
+                 echo (substr($row["Description"], 0, 40));
+                  echo ("</td>");
+                 echo ("</tr>");
+                        //}
+                    }                
+                 }
+                                else {
+                                  echo ("Click on an employee from the list"); 
+                                }                             
                                     
                               ?> </tbody>
                                 </table>

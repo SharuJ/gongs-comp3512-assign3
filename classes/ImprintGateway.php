@@ -1,5 +1,5 @@
 <?php
-class ImprintGateway extends AbstractTableGateway {
+class ImprintGateway extends TableGateway {
     public function __construct($connect) {
         parent::__construct($connect);
     }

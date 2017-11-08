@@ -1,5 +1,5 @@
 <?php
-class EmployeeGateway extends AbstractTableGateway {
+class EmployeeGateway extends TableGateway {
     public function __construct($connect) {
         parent::__construct($connect);
     }

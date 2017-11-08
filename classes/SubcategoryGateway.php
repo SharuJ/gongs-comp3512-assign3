@@ -1,5 +1,5 @@
 <?php
-class SubcategoryGateway extends AbstractTableGateway {
+class SubcategoryGateway extends TableGateway {
     public function __construct($connect) {
         parent::__construct($connect);
     }
@@ -18,10 +18,6 @@ class SubcategoryGateway extends AbstractTableGateway {
     
     protected function getForeignKeyName() {
             return "SubcategoryID";
-    }
-    
-    protected function getSubs() {
-        return "select SubcategoryName from Subcategories order by SubcategoryName";
     }
 }
 ?>
