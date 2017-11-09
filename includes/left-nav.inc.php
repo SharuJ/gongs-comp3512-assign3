@@ -1,7 +1,7 @@
 <div class="mdl-layout__drawer mdl-color--blue-grey-800 mdl-color-text--blue-grey-50" id="lightPeriwinkle">
    <div class="profile" id="midnightBlue">
        <img src="images/profile.jpg" class="avatar">
-       <h4>Yasaswani S. Jaisankar</h4>           
+       <h4> Alfredo</h4>           
        <span>rconnolly@mtroyal.ca</span>
    </div>
 

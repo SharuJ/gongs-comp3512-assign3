@@ -5,9 +5,7 @@ class MessagesGateway extends TableGateway {
     }
     
     protected function getSelectStatement() {
-        return "SELECT MessageID, EmployeeID, ContactID, MessageDate, Category, MessageDate, Category, Content FROM EmployeeMessages";   
-        
-       
+        return "SELECT MessageDate, Category, Content, FirstName, LastName FROM EmployeeMessages LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID";   
     }
     
     protected function getOrderFields() {
@@ -22,11 +20,9 @@ class MessagesGateway extends TableGateway {
             return "EmployeeID";
     }
     
-    protected function getAllMessages(){
-        
-         return "SELECT MessageDate, Category, Content, FirstName, LastName FROM EmployeeMessages LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID";
-         
+    protected function orderStatement() {
+        return " order by MessageDate";
     }
-   
+    
 }
 ?>

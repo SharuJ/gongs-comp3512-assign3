@@ -6,8 +6,6 @@ class EmployeeToDoGateway extends TableGateway {
     
     protected function getSelectStatement() {
         return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";   
-        
-       
     }
     
     protected function getOrderFields() {
@@ -22,9 +20,8 @@ class EmployeeToDoGateway extends TableGateway {
             return "EmployeeID";
     }
     
-    protected function getAllToDo(){
-         return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";
+    protected function orderStatement() {
+        return " order by DateBy";
     }
-   
 }
 ?>

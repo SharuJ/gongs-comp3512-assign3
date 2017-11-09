@@ -67,56 +67,39 @@ abstract class TableGateway {
         return $statement->fetch();
     }
     
-    // for BROWSE BOOKS listing books with filter
-    public function getBooks($sub, $imp)
+    // used to list BOOKS, EMPLOYEES and UNIs with UP TO TWO FITLERS!
+    public function findWithFilter($filter1, $value1, $filter2, $value2)
     {
-        //get everything from books, plus subcategory name and imprint
-        $sql = $this->getAllInfo();
+        $sql = $this->getSelectStatement();
 
-        //sub filter
-        if (!empty($sub) && empty($imp))
-            $sql .= ' WHERE SubcategoryName = "' . $sub . '"';
-        //imp filter
-        elseif (!empty($imp) && empty($sub))
-            $sql .= ' WHERE Imprint = "' . $imp . '"';
-        //both filter
-        elseif (!empty($sub) && !empty($imp))
-            $sql .= ' WHERE SubcategoryName = "' . $sub . '" AND Imprint = "' . $imp . '"';
-                    
-        $sql .= " order by Title LIMIT 20";
+        //first filter
+        if (!empty($value1) && empty($value2))
+            $sql .= ' WHERE ' . $filter1 . ' "' . $value1 . '"';
+        //second filter
+        elseif (!empty($value2) && empty($value1))
+            $sql .= ' WHERE ' . $filter2 . ' "' . $value2 . '"';
+        //both filters
+        elseif (!empty($value1) && !empty($value2))
+            $sql .= ' WHERE ' . $filter1 . ' "' . $value1 . '" AND ' . $filter2 . ' "' . $value2 . '"';
+        
+        $sql .= $this->orderStatement();
         
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
-    }
+    } 
     
-    // for ToDos
-     public function getToDo($key){
-        //$sql = "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo WHERE EmployeeID=:$key ORDER BY DateBy";
-          $sql = $this->getAllToDo();
-          $sql.= ' WHERE EmployeeID = "'.$key.'"';
-          $sql.= ' ORDER BY DateBy';
-         //echo ($sql);
-         
-        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
-        return $statement->fetchAll();
-        
-    }
-    
-    // for messages
-    public function getMessages($key){
+                               // drop   ,   last name
+    public function findCities(){
        
-          $sql = $this->getAllMessages();
-          $sql.= ' WHERE EmployeeMessages.EmployeeID= "'.$key.'"';
-           $sql.= ' ORDER BY MessageDate';
+          $sql = $this->getSelectStatement();
+          //  there is a city , there is no last name
+         
+          $sql .= ' group by City order by City';
          //echo ($sql);
          
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
         
     }
-    
-    
-    
-    
 }
 ?>

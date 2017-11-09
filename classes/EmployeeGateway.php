@@ -17,7 +17,12 @@ class EmployeeGateway extends TableGateway {
     }
     
     protected function getForeignKeyName() {
-            return "EmployeeID";
+        return "EmployeeID";
     }
+    
+    protected function orderStatement() {
+        return " order by LastName";
+    }
+    
 }
 ?>

@@ -44,7 +44,7 @@ function listBooks() /* programmatically loop though books and display each book
     include "includes/config.php";
     $bookDb = new BookGateway($connection);
     
-    $books = $bookDb->getBooks($_GET['sub'], $_GET['imp']);
+    $books = $bookDb->findWithFilter("SubcategoryName = ", $_GET['sub'], "Imprint = ", $_GET['imp']);
     foreach ($books as $row)
     {
         echo ("<a href='single-book.php?isbn=");
