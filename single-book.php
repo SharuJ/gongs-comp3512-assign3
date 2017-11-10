@@ -1,5 +1,6 @@
 <?php
 require_once("includes/config.php");
+session_start();
 function displayName() /* display requested book title */ 
 {
     try {
@@ -158,6 +159,10 @@ function displayUni()
         //die($e->getMessage());
         echo ("No universities found that matches request. Try clicking on an book from the Books page.");
     }
+}
+if(!$isset($_SESSION['username'])){
+    
+    header(location: "login.php");
 }
 ?>
 

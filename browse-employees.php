@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 function listName() /* programmatically loop though employees and display each name as <li> element. */ 
 {
     include "includes/config.php";
@@ -126,6 +126,10 @@ function dropCities()
             echo (">" . $row["City"] . "</option>");
         }  
    
+}
+if(!$isset($_SESSION['username'])){
+    
+    header(location: "login.php");
 }
 
 ?>

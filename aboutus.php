@@ -34,7 +34,7 @@
                             <h2 class="mdl-card__title-text">Group Members</h2> </div>
                         <div class="mdl-card__supporting-text"> Sharunitha Jaisankar </div>
                         <div class="mdl-card__supporting-text"> Stephen Johnson </div>
-                        <div class="mdl-card__supporting-text"> Yasaswani Sai Polasu </div>
+                        <div class="mdl-card__supporting-text"> Yasaswani Sai Polasu </div> 
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightPeriwinkle">

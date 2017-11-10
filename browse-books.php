@@ -1,5 +1,8 @@
 <?php
 
+session_start();
+
+
 function listSubs() /* programmatically loop though subcategories and display each subcategory as <li> element. */ 
 {
     echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
@@ -58,6 +61,11 @@ function listBooks() /* programmatically loop though books and display each book
         echo ("<b>Imprint:</b> " . $row["Imprint"]);
         echo ("<hr>");
     }
+}
+
+if(!$isset($_SESSION['username'])){
+    
+    header(location: "login.php");
 }
 
 ?>

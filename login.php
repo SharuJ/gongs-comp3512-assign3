@@ -4,23 +4,25 @@
 $ID = $_POST['user'];
 $password = $_POST['pass'];
 
-function signin()
-{
-  session_start();
-  
-  if(!empty($_POST['user']))
-  {
-    $sql = "Select * from UsersLogin where UserName =" . $_POST['user'] . " AND Password =" . $_POST['pass'] ;
-    $row   = $result->fetch();
-    if (!empty($row['UserName']) && !empty($row['Password']))
-    {
-      $_SESSION['username'] = $row['Password'];
-      echo "Successfully logged in";
-    } else {
-      echo "Try again";
+   // do we have to use a user gateway class?
+   $sql = "Select Salt, Password, FirstName, LastName, Email from UsersLogin join Users where UsersLogin.UserID = Users.UserID and UserLogin=".$ID;
+      $row   = $result->fetch();
+     $concat = md5($pasword.$row['Salt']) ;
+     
+     if (!empty($row['UserName']) && !empty($row['Password'])){
+    if ($concat == $row['Password']){
+      
+       $_SESSION['username'] = $ID;
+       
+       $_SESSION['firstName'] = $row['FirstName'];
+       $_SESSION['lastName'] = $row['LastName'];
+       $_SESSION['userEmail'] = $row['Email'];
+       
+    
     }
-  }
-}
+     }
+     
+
 if (isset($_POST['submit']))
 {
   signin();

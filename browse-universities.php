@@ -1,5 +1,6 @@
 <?php
 require_once("includes/config.php");
+session_start();
 function listName() /* programmatically loop though universities and display each university as <li> element. */ 
 {
     try {
@@ -107,6 +108,11 @@ function dropStates()
         die($e->getMessage());
     }
 }
+if(!$isset($_SESSION['username'])){
+    
+    header(location: "login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
