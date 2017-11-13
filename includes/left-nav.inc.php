@@ -1,7 +1,27 @@
+<?php
+function dispUN(){
+try{
+    $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $un = $_POST['username'];
+    $query = "Select * from Users where UserName='$un'";
+    $result = $pdo-> query ($query);
+    $row = $result->fetch();
+    echo ($row['UserName']);
+    $pdo = null; // Closing Connection
+}
+catch (PDOException $e)
+        {
+            die($e->getMessage());
+        }
+}
+
+?>
+
 <div class="mdl-layout__drawer mdl-color--blue-grey-800 mdl-color-text--blue-grey-50" id="lightPeriwinkle">
    <div class="profile" id="midnightBlue">
        <img src="images/profile.jpg" class="avatar">
-       <h4> Alfredo</h4>           
+       <h4> <?php dispUN(); ?></h4>           
        <span>rconnolly@mtroyal.ca</span>
    </div>
 

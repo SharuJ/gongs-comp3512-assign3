@@ -63,10 +63,10 @@ function listBooks() /* programmatically loop though books and display each book
     }
 }
 
-if(!$isset($_SESSION['username'])){
+// if(!isset($_SESSION['username'])){
     
-    header(location: "login.php");
-}
+//     header("location: login.php");
+// }
 
 ?>
 

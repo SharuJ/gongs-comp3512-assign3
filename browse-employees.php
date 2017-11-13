@@ -1,8 +1,11 @@
+
 <?php
 session_start();
+include "session.php";
 function listName() /* programmatically loop though employees and display each name as <li> element. */ 
 {
     include "includes/config.php";
+    include "session.php"; 
     $empDb = new EmployeeGateway($connection);
     
     $ln = $_GET['ln'] . "%";
@@ -127,10 +130,10 @@ function dropCities()
         }  
    
 }
-if(!$isset($_SESSION['username'])){
+// if(!isset($_SESSION['username'])) {
     
-    header(location: "login.php");
-}
+//     header("location: login.php");
+// }
 
 ?>
 
@@ -166,6 +169,7 @@ if(!$isset($_SESSION['username'])){
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <?php include 'includes/header.inc.php'; ?>
         <?php include 'includes/left-nav.inc.php'; ?>
+        <?php include "session.php"; ?>
         <main class="mdl-layout__content mdl-color--grey-50">
             <section class="page-content">
                 <div class="mdl-grid">

@@ -108,10 +108,10 @@ function dropStates()
         die($e->getMessage());
     }
 }
-if(!$isset($_SESSION['username'])){
+// if(!isset($_SESSION['username'])){
     
-    header(location: "login.php");
-}
+//     header("location: login.php");
+// }
 
 ?>
 

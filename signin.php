@@ -1,3 +1,12 @@
+<?php
+include('login.php'); 
+
+if(isset($_SESSION['login_user'])){
+header("location: index.php");
+header("location: browse-employees.php");
+}
+?>
+
 
 <!DOCTYPE HTML> 
 <html> 
@@ -6,19 +15,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-
     <link rel="stylesheet" href="css/styles.css">
-    
-    
     <script   src="https://code.jquery.com/jquery-1.7.2.min.js" ></script>
-       
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    
 </head>
-
 <body id="body-color"> 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header" id="fireBrick">
@@ -29,27 +31,29 @@
 
   <main class="mdl-layout__content">
     <section class="page-content">
-    <div id="Sign-In"></div>
-                  <div class="mdl-card mdl-shadow--6dp">
+    
+      <div class="mdl-cell mdl-cell--2-col card-lesson mdl-card  mdl-shadow--2dp">
 			<div class="mdl-card__title" id="lightPeriwinkle">
 				<h2 class="mdl-card__title-text">Login</h2>
 			</div>
 	  	<div class="mdl-card__supporting-text">
-				<form method="POST" action="login.php">
-					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" name="user" type="text" id="username" />
-						<label class="mdl-textfield__label" name="pass" for="username">Username</label>
-					</div>
-					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="password" id="userpass" />
-						<label class="mdl-textfield__label" for="userpass">Password</label>
-					</div>
-				</form>
+				<form action="" method="post">
+                                <label>Username :</label>
+                                <input id="username" name="username" placeholder="Enter Username" type="text" required >
+                                <hr>
+                                <label>Password :</label>
+                                <input id="password" name="password" placeholder="**********" type="password" required >
+                                <hr>
+                                <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
+                                <!--<input name="submit" type="submit" value=" Login ">-->
+                                <span><?php echo $error; ?></span>
+                            </form>
 			</div>
-			<div class="mdl-card__actions mdl-card--border">
-				<button class="mdl-button mdl-js-button" id="lightPeriwinkle"><input name="submit" type="submit" value=" Login "></button>
-			</div>
+			<!--<div class="mdl-card__actions mdl-card--border">-->
+				<!--<button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>-->
+			<!--</div>-->
 		</div>
+		
      </div>          
                  
                 
