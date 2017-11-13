@@ -89,7 +89,7 @@ abstract class TableGateway {
     } 
     
                                // drop   ,   last name
-    public function findCities(){
+    public function findCities() {
        
           $sql = $this->getSelectStatement();
           //  there is a city , there is no last name

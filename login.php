@@ -1,21 +1,25 @@
-<script>function setBackground(e){
-    if (e.type == "focus") {
-        e.target.style.backgroundColor = "BBE9EB";
-    }
-    else if (e.type == "blur") {
-        e.target.style.backgroundColor = "white";
-    }
-}
+<script>
 
-window.addEventListener("load",	function(){
-				var	cssSelector	=	"input[name=username],input[name=password]";
-				var	fields	=	document.querySelectorAll(cssSelector);
-				for	(var i=0; i<fields.length; i++)
-				{
-								fields[i].addEventListener("focus",	setBackground);
-								fields[i].addEventListener("blur",	setBackground);
-				}
-}); </script>
+    function setBackground(e){
+        if (e.type == "focus") {
+            e.target.style.backgroundColor = "BBE9EB";
+        }
+        else if (e.type == "blur") {
+            e.target.style.backgroundColor = "white";
+        }
+    }
+    
+    window.addEventListener("load",	function(){
+    				var	cssSelector	=	"input[name=username],input[name=password]";
+    				var	fields	=	document.querySelectorAll(cssSelector);
+    				for	(var i=0; i<fields.length; i++)
+    				{
+    								fields[i].addEventListener("focus",	setBackground);
+    								fields[i].addEventListener("blur",	setBackground);
+    				}
+    }); 
+
+</script>
 <?php
 include 'includes/config.php';
 include "session.php";

@@ -1,48 +1,27 @@
 <?php
-require_once("includes/config.php");
 session_start();
+
 function displayName() /* display requested book title */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = 'select Title from Books where ISBN10=:isbn';
-        $isbn   = $_GET['isbn'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':isbn', $isbn);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            $row = $result->fetch();
-            echo ($row["Title"]);
-        } else
-            echo ("NO BOOK FOUND");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No book found that matches request. Try clicking on an book from the Books page.");
-    }
+    include "includes/config.php";
+    $bookDb = new BookGateway($connection);
+    
+    $book = $bookDb->findWithFilter("ISBN10 = ", $_GET['isbn'], null, null);
+    foreach ($book as $row)
+        echo ($row["Title"]);
 }
+
 function displayInfo() /* display requested book information */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = 'select ISBN10, ISBN13, CopyrightYear, SubcategoryName, Imprint, Status, BindingType, TrimSize, PageCountsEditorialEst, Description 
-                    from Books
-                    LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID 
-                    LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID 
-                    LEFT JOIN Statuses ON Books.ProductionStatusID = Statuses.StatusID 
-                    LEFT JOIN BindingTypes ON Books.BindingTypeID = BindingTypes.BindingTypeID 
-                    where ISBN10=:isbn';
-        $isbn   = $_GET['isbn'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':isbn', $isbn);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            $row = $result->fetch();
-            echo ('<center><img id = "bookCover" src="/book-images/medium/' . $row["ISBN10"] . '.jpg" alt="book cover" ><br></center>');
- ?>
+    include "includes/config.php";
+    $bookDb = new BookGateway($connection);
+
+    $book = $bookDb->findWithFilter("ISBN10 = ", $_GET['isbn'], null, null);
+    foreach ($book as $row)
+    {    
+        echo ('<center><img id = "bookCover" src="/book-images/medium/' . $row["ISBN10"] . '.jpg" alt="book cover" ><br></center>');
+
+?>
         
        <div id="myModal" class="modal">
           <!--<span class="close">&times;</span>-->
@@ -51,119 +30,72 @@ function displayInfo() /* display requested book information */
         </div>
         
         <script> 
-        
-        // Get the modal
-        var modal = document.getElementById('myModal');
-        
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById('bookCover');
-        var modalImg = document.getElementById("img01");
-        
-        img.onclick = function(){
-            modal.style.display = "block";
-            modalImg.src = this.src;
+            // Get the modal
+            var modal = document.getElementById('myModal');
             
-        }
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementById("img01");
-        //document.getElementsByID("close")[0];
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() { 
-            modal.style.display = "none";
-        }
-        
-        
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById('bookCover');
+            var modalImg = document.getElementById("img01");
+            
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                
+            }
+            
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("img01");
+            //document.getElementsByID("close")[0];
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() { 
+                modal.style.display = "none";
+            }
         </script>
-        
-        
-            
-            
-            
+ 
  <?php
-            echo ("<b>ISBN10:</b> " . $row["ISBN10"] . "<br>");
-            echo ("<b>ISBN13:</b> " . $row["ISBN13"] . "<br>");
-            echo ("<b>Copyright year:</b> " . $row["CopyrightYear"] . "<br>");
-            echo ('<b>Subcategory:</b> <a href="browse-books.php?sub=' . $row["SubcategoryName"] . '">' . $row["SubcategoryName"] . '</a><br>');
-            echo ('<b>Imprint:</b> <a href="browse-books.php?imp=' . $row["Imprint"] . '">' . $row["Imprint"] . '</a><br>');
-            echo ("<b>Production status:</b> " . $row["Status"] . "<br>");
-            echo ("<b>Binding type:</b> " . $row["BindingType"] . "<br>");
-            echo ("<b>Trim size:</b> " . $row["TrimSize"] . "<br>");
-            echo ("<b>Pages:</b> " . $row["PageCountsEditorialEst"] . "<br>");
-            echo ("<b>Description:</b> " . $row["Description"]);
-        } else
-            echo ("NO BOOK FOUND");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No book found that matches request. Try clicking on an book from the Books page.");
+        echo ("<br><b>ISBN10:</b> " . $row["ISBN10"] . "<br>");
+        echo ("<b>ISBN13:</b> " . $row["ISBN13"] . "<br>");
+        echo ("<b>Copyright year:</b> " . $row["CopyrightYear"] . "<br>");
+        echo ('<b>Subcategory:</b> <a href="browse-books.php?sub=' . $row["SubcategoryName"] . '">' . $row["SubcategoryName"] . '</a><br>');
+        echo ('<b>Imprint:</b> <a href="browse-books.php?imp=' . $row["Imprint"] . '">' . $row["Imprint"] . '</a><br>');
+        echo ("<b>Production status:</b> " . $row["Status"] . "<br>");
+        echo ("<b>Binding type:</b> " . $row["BindingType"] . "<br>");
+        echo ("<b>Trim size:</b> " . $row["TrimSize"] . "<br>");
+        echo ("<b>Pages:</b> " . $row["PageCountsEditorialEst"] . "<br>");
+        echo ("<b>Description:</b> " . $row["Description"]);
     }
 }
 function displayAuthor()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = 'select FirstName, LastName from Books
-                    INNER JOIN BookAuthors ON Books.BookID = BookAuthors.BookId
-                    INNER JOIN Authors ON BookAuthors.AuthorId = Authors.AuthorID
-                    where ISBN10 =:isbn order by BookAuthors.Order';
-        $isbn   = $_GET['isbn'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':isbn', $isbn);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ($row["FirstName"] . " " . $row["LastName"] . "<br>");
-            }
-        } else
-            echo ("NO AUTHORS FOUND");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No authors found that matches request. Try clicking on an book from the Books page.");
-    }
+    include "includes/config.php";
+    $authorDb = new AuthorGateway($connection);
+
+    $authors = $authorDb->findWithFilter("ISBN10 = ", $_GET['isbn'], null, null);
+    foreach ($authors as $row)
+        echo ($row["FirstName"] . " " . $row["LastName"] . "<br>");
 }
+
 function displayUni()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = 'select * from Books
-                    INNER JOIN AdoptionBooks ON Books.BookID = AdoptionBooks.BookID
-                    INNER JOIN Adoptions ON AdoptionBooks.AdoptionID = Adoptions.AdoptionID
-                    INNER JOIN Universities ON Adoptions.UniversityID = Universities.UniversityID                    
-                    where ISBN10 =:isbn';
-        $isbn   = $_GET['isbn'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':isbn', $isbn);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) //loop through the data
-                {
-                    echo ("<a href='browse-universities.php?id="); 
-                    echo ($row["UniversityID"]); //needs to UniveristyID
-                    echo ("'><li>");
-                echo ($row["Name"] . "<br>");
-                echo ("</li></a>");
-            }
-        } else
-            echo ("NO UNIVERSITIES FOUND");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No universities found that matches request. Try clicking on an book from the Books page.");
+    include "includes/config.php";
+    $adoptionDb = new AdoptionGateway($connection);
+    $adopters = $adoptionDb->findWithFilter("ISBN10 = ", $_GET['isbn'], null, null);
+    foreach ($adopters as $row) //loop through the data
+    {
+        echo ("<a href='browse-universities.php?id="); 
+        echo ($row["UniversityID"]); //needs to UniveristyID
+        echo ("'><li>");
+        echo ($row["Name"] . "<br>");
+        echo ("</li></a>");
     }
 }
-if(!$isset($_SESSION['username'])){
+
+// if(!$isset($_SESSION['username'])){
     
-    header("location: login.php");
-}
+//     header("location: login.php");
+// }
+
 ?>
 
 <!DOCTYPE html>

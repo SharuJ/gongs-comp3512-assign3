@@ -5,7 +5,7 @@ class BookGateway extends TableGateway {
     }
     
     protected function getSelectStatement() {
-        return "select ISBN10, Title, CopyrightYear, SubcategoryName, Imprint from Books LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID";
+        return "select ISBN10, ISBN13, Title, CopyrightYear, SubcategoryName, Imprint, Status, BindingType, TrimSize, PageCountsEditorialEst, Description from Books LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID LEFT JOIN Statuses ON Books.ProductionStatusID = Statuses.StatusID LEFT JOIN BindingTypes ON Books.BindingTypeID = BindingTypes.BindingTypeID";
     }
     
     protected function getOrderFields() {
