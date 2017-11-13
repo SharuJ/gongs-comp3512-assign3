@@ -31,7 +31,7 @@ function displayInfo() /* display requested employees information */
     $empDb = new EmployeeGateway($connection);
     
     if(empty($_GET['id']))
-        echo "Click on an employee from the list";
+        echo "Click on an employee from the list.";
     else
     {
         $employee = $empDb->findWithFilter("EmployeeID =", $_GET['id'], null, null);
@@ -114,20 +114,18 @@ function displayMessages() /* retrieve for selected employee; if none, display m
 
 function dropCities()
 {
-    
     include "includes/config.php";
     $empDb = new EmployeeGateway($connection);
-   
     
-        $cities = $empDb->findCities();
-        foreach ($cities as $row)
-        {
-            echo ('<option value="' . $row["City"] . '"');
-            //show selected value
-            if ($_GET['city'] == $row["City"])
-                echo ('selected="selected"');
-            echo (">" . $row["City"] . "</option>");
-        }  
+    $cities = $empDb->findCities();
+    foreach ($cities as $row)
+    {
+        echo ('<option value="' . $row["City"] . '"');
+        //show selected value
+        if ($_GET['city'] == $row["City"])
+            echo ('selected="selected"');
+        echo (">" . $row["City"] . "</option>");
+    }  
    
 }
 // if(!isset($_SESSION['username'])) {

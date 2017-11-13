@@ -3,111 +3,92 @@ require_once("includes/config.php");
 session_start();
 function listName() /* programmatically loop though universities and display each university as <li> element. */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        if (($_GET['st'] == "all") || empty($_GET['st'])) {
-            $sql = "select UniversityID, Name from Universities order by Name LIMIT 20";
-        } else {
-            //convert from abbreviation
-            $sql    = 'select StateName from States where StateAbbr =:st';
-            $st     = $_GET['st'];
-            $result = $pdo->prepare($sql);
-            $result->bindValue(':st', $st);
-            $result->execute();
-            $row   = $result->fetch();
+    include "includes/config.php";
+    $stateDb = new StateGateway($connection);
+    $uniDb = new UniversityGateway($connection);
+
+    //if (($_GET['st'] != "all") || empty(!$_GET['st'])) {
+    if (!empty($_GET['st'])) {
+        //convert from abbreviation
+        $state = $stateDb->findWithFilter("StateAbbr =", $_GET['st'], null, null);
+        foreach ($state as $row)
             $state = $row["StateName"];
-            $sql   = 'select UniversityID, Name from Universities where State = "' . $state . '" order by Name LIMIT 20';
-        }
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) //loop through the data
-            {
-            echo ("<a href='?id=");
-            echo ($row["UniversityID"]);
-            echo ("&st=" . $_GET['st']);
-            echo ("'><li>");
-            echo ($row["Name"]);
-            echo ("</li></a>");
-        }
-        $pdo = null;
     }
-    catch (PDOException $e) {
-        die($e->getMessage());
+    
+    $uni = $uniDb->findWithFilter("State =", $state, null, null);
+    foreach ($uni as $row) //loop through the data
+    {
+        echo ("<a href='?id=");
+        echo ($row["UniversityID"]);
+        echo ("&st=" . $_GET['st']);
+        echo ("'><li>");
+        echo ($row["Name"]);
+        echo ("</li></a>");
     }
 }
+
 function displayInfo() /* display requested univeristy information */ 
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select Name, Address, City, State, Zip, Website, Latitude, Longitude from Universities where UniversityID=:id";
-        $id     = $_GET['id'];
-        $result = $pdo->prepare($sql);
-        $result->bindValue(':id', $id);
-        $result->execute();
-        if ($result->rowCount() > 0) {
-            while ($row = $result->fetch()) //loop through the data
-                {
-                echo ("<h4>" . $row["Name"] . "</h4>");
-                echo ($row["Address"] . "<br>");
-                echo ($row["City"] . ", " . $row["State"] . ", " . ($row["Zip"]) . "<br>");
-                echo ($row["Website"] . "<br>");
-                //echo ($row["Latitude"] . ", " . $row["Longitude"]);
-                ?>
-                  
-    <div id="map"></div>
-    <script>
+    include "includes/config.php";
+    $uniDb = new UniversityGateway($connection);
     
-      function initMap() {
-          var latitude = parseFloat("<?php echo $row['Latitude']; ?>");
-          var longitude = parseFloat("<?php echo $row['Longitude']; ?>");
-        var uluru = {lat: latitude, lng: longitude };
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgOg-dKVI4dgMyBcTKOWj3xxS1jKipA3E&callback=initMap">
-    </script>
-   
-                
-<?php
-            }
-        } else
-            echo ("No univeristy found that matches request. Try clicking on an university from the list.");
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        //die($e->getMessage());
-        echo ("No univeristy found that matches request. Try clicking on an university from the list.");
+    if(empty($_GET['id']))
+        echo "Click on a university from the list.";
+    else
+    {
+        $uni = $uniDb->findWithFilter("UniversityID =", $_GET['id'], null, null);
+        foreach ($uni as $row) //loop through the data
+        {
+            echo ("<h4>" . $row["Name"] . "</h4>");
+            echo ($row["Address"] . "<br>");
+            echo ($row["City"] . ", " . $row["State"] . ", " . ($row["Zip"]) . "<br>");
+            echo ($row["Website"] . "<br>");
+            //echo ($row["Latitude"] . ", " . $row["Longitude"]);
+            ?>
+            <!-- to html -->
+            <div id="map">
+                <script>
+                //to javascript
+                    function initMap()
+                    {
+                        var latitude = parseFloat("<?php echo $row['Latitude']; ?>");
+                        var longitude = parseFloat("<?php echo $row['Longitude']; ?>");
+                        var uluru = {lat: latitude, lng: longitude };
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 12,
+                        center: uluru
+                        });
+                        var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                        });
+                    }
+                </script>
+                <!-- back to html -->
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgOg-dKVI4dgMyBcTKOWj3xxS1jKipA3E&callback=initMap"></script>
+            </div>
+            <?php
+            //back to php
+        }
     }
 }
+
 function dropStates()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select StateName, StateAbbr from States";
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) {
-            echo ('<option value="' . $row["StateAbbr"] . '"');
-            //show selected value
-            if ($_GET['st'] == $row["StateAbbr"])
-                echo ('selected="selected"');
-            echo (">" . $row["StateName"] . "</option>");
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
+    include "includes/config.php";
+    $stateDb = new StateGateway($connection);
+    
+    $states = $stateDb->getAll();
+    foreach ($states as $row) 
+    {
+        echo ('<option value="' . $row["StateAbbr"] . '"');
+        //show selected value
+        if ($_GET['st'] == $row["StateAbbr"])
+            echo ('selected="selected"');
+        echo (">" . $row["StateName"] . "</option>");
     }
 }
+
 // if(!isset($_SESSION['username'])){
     
 //     header("location: login.php");
