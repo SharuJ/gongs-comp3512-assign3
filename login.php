@@ -22,7 +22,7 @@
 </script>
 <?php
 include 'includes/config.php';
-include "session.php";
+// include "session.php";
 session_start(); // Starting Session
 $error=''; // Variable To Store Error Message
 if (isset($_POST['submit'])) {
@@ -40,24 +40,26 @@ else{
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "select UserID, UserName, Password, Salt, State, DateJoined, DateLastModified from UsersLogin where UserName='$username'";
     $result = $pdo-> query ($sql);
-    while ($row = $result->fetch()){
+    //while ($row = $result->fetch()){
+    $row = $result->fetch();
         $salt = $row['Salt'];
         $pass = md5($_POST['password'].$salt);
         if ($row['Password'] == $pass) {
             $_SESSION['userid']= $row['UserID']; // Initializing Session
-            $sql2 = "select UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email from Users";
+            $sql2 = "select UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email from Users where Email='$username'";
             $result2 = $pdo-> query($sql2);
-            while ($row = $result2->fetch()){
-                $_SESSION['firstname']=$row['FirstName'];
-                $_SESSION['lastname']=$row['LastName'];
-                $_SESSION['email']=$row['Email'];
-            }
+            //while ($row = $result2->fetch()){
+                $row2 = $result2->fetch();
+                $_SESSION['firstname']=$row2['FirstName'];
+                $_SESSION['lastname']=$row2['LastName'];
+                $_SESSION['email']=$row2['Email'];
+            //}
             header("location: index.php"); // Redirecting To Other Page
             
         } else {
             $error = "Incorrect Password or Username";
         }
-    }
+    //}
     $pdo = null; // Closing Connection
     }
 

@@ -3,6 +3,7 @@
 session_start();
 
 
+
 function listSubs() /* programmatically loop though subcategories and display each subcategory as <li> element. */ 
 {
     echo ('<a href="?sub=&imp=' . $_GET['imp'] . '"><li>ALL SUBCATEGORIES</li></a>');
@@ -19,7 +20,8 @@ function listSubs() /* programmatically loop though subcategories and display ea
         echo ("'><li>");
         echo ($row["SubcategoryName"]);
         echo ("</li></a>");
-    }   
+    }             
+
 }
 
 function listImprints() /* programmatically loop though imprints and display each imprint as <li> element. */ 

@@ -1,12 +1,14 @@
-// <?php
+<?php
+include 'config.php';
+session_start();
 // function dispUN(){
 // try{
 //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
 //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //     $un = $_POST['username'];
-//     $query = "Select * from Users where UserName='$un'";
-//     $result = $pdo-> query ($query);
-//     $row = $result->fetch();
+//     $sql = "SELECT UserID, UserName, Email FROM Users WHERE UserName = '" . $_SESSION['username'] . "'";
+//         $result = mysql_query($sql);
+//         $row = mysql_fetch_array($result);
 //     echo ($row['UserName']);
 //     $pdo = null; // Closing Connection
 // }
@@ -16,13 +18,16 @@
 //         }
 // }
 
-// ?>
+?>
 
 <div class="mdl-layout__drawer mdl-color--blue-grey-800 mdl-color-text--blue-grey-50" id="lightPeriwinkle">
    <div class="profile" id="midnightBlue">
        <img src="images/profile.jpg" class="avatar">
-       <h4> Gongs</h4>           
-       <span>rconnolly@mtroyal.ca</span>
+       <h4> <?php
+       echo $_SESSION['firstname']." ".$_SESSION['lastname']; 
+       
+       ?> </h4>           
+       <span> <?php echo $_SESSION['email']; ?> </span>
    </div>
 
 <nav class="mdl-navigation mdl-color-text--black" id="lightPeriwinkle">

@@ -15,7 +15,7 @@
 <label id="tt3" class="material-icons mdl-badge mdl-badge--overlap" data-badge="4">notifications</label> 
  <div class="mdl-tooltip" for="tt3">Notifications</div>      
  
-<a href="signin.php"><label id="tt4" class="material-icons mdl-badge mdl-badge--overlap" >power_settings_new</label></a> 
+<a href="logout.php"><label id="tt4" class="material-icons mdl-badge mdl-badge--overlap" >power_settings_new</label></a> 
  <div class="mdl-tooltip" for="tt4">Logout</div> 
                   
         <label class="mdl-button mdl-js-button mdl-button--icon"

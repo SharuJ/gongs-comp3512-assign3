@@ -1,10 +1,7 @@
 <?php
-include('login.php'); 
-
-if(isset($_SESSION['login_user'])){
-header("location: index.php");
-header("location: browse-employees.php");
-}
+session_start();
+include 'includes/config.php';
+include 'login.php';
 ?>
 
 
@@ -38,6 +35,7 @@ header("location: browse-employees.php");
 			</div>
 	  	<div class="mdl-card__supporting-text">
 				<form action="" method="post">
+				                
                                 <label>Username :</label>
                                 <input id="username" name="username" placeholder="Enter Username" type="text" required >
                                 <hr>
