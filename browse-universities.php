@@ -2,6 +2,10 @@
 require_once("includes/config.php");
 session_start();
 
+if(!isset($_SESSION['email'])){
+    
+    header("Location: signin.php?name='browse-universities'");
+}
 
 
 function listName() /* programmatically loop though universities and display each university as <li> element. */ 
@@ -115,6 +119,11 @@ function dropStates()
     
 //     header("location: login.php");
 // }
+
+if(!isset($_SESSION['email'])){
+    
+    header("Location: signin.php?name=browse-universities");
+}
 
 ?>
 

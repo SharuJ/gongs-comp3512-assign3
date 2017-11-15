@@ -2,6 +2,8 @@
 session_start();
 include 'includes/config.php';
 include 'login.php';
+
+//echo $_GET['name'];
 ?>
 
 
@@ -34,7 +36,7 @@ include 'login.php';
 				<h2 class="mdl-card__title-text">Login</h2>
 			</div>
 	  	<div class="mdl-card__supporting-text">
-				<form action="" method="post">
+				<form action="./login.php?name=<?php echo $_GET['name'] ?>"  method="post">
 				                
                                 <label>Username :</label>
                                 <input id="username" name="username" placeholder="Enter Username" type="text" required >

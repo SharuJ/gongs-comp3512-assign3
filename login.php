@@ -54,8 +54,14 @@ else{
                 $_SESSION['lastname']=$row2['LastName'];
                 $_SESSION['email']=$row2['Email'];
             //}
-            header("location: index.php"); // Redirecting To Other Page
-            
+            if(isset($_GET['name']))
+            {
+                header("Location: ". $_GET['name'].".php"); //browse-employees
+                echo $_GET['name'];
+            }
+            else{
+                header("Location: index.php"); // Redirecting To Other Page
+            }
         } else {
             $error = "Incorrect Password or Username";
         }
