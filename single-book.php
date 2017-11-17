@@ -37,10 +37,10 @@ function displayInfo() /* display requested book information */
             var img = document.getElementById('bookCover');
             var modalImg = document.getElementById("img01");
             
-            img.onclick = function(){
+            img.onclick = function() {
                 modal.style.display = "block";
-                modalImg.src = this.src;
-                
+                modalImg.src = <?php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'" ?>;
+                //alert(modalImg.src);
             }
             
             // Get the <span> element that closes the modal
@@ -51,6 +51,7 @@ function displayInfo() /* display requested book information */
             span.onclick = function() { 
                 modal.style.display = "none";
             }
+            
         </script>
  
  <?php
@@ -121,8 +122,7 @@ function displayUni()
         mdl-layout--fixed-header">
          
         <?php include 'includes/header.inc.php'; ?>
-        <?php include 'includes/left-nav.inc.php'; ?> 
-        
+        <?php include 'includes/left-nav.inc.php'; ?>
         
         <main class="mdl-layout__content mdl-color--grey-50"> 
         

@@ -33,18 +33,18 @@ abstract class TableGateway {
         return $statement->fetchAll();
     }
     
-    // what's this for?
+    // what's this for
     public function getByKey($key) {
         $sql = $this->getSelectStatement() . ' WHERE ' . $this->getPrimaryKeyName() . '=:key';
         $statement = DatabaseHelper::runQuery($this->connection, $sql, array(':key'=> $key));
         return $statement->fetch();
     } 
     
-    // what's this for?
+    // what's this for
     public function getByForeignKey($key) {
         $sql = $this->getSelectStatement() . ' WHERE ' . $this->getForeignKeyName() . '=:key';
         $statement = DatabaseHelper::runQuery($this->connection, $sql, array(':key'=> $key));
-        return $statement->fetch();
+        return $statement->fetchAll();
     }
     
     // Returns all records in the table; pass in true if you want it ascending
@@ -88,7 +88,6 @@ abstract class TableGateway {
         return $statement->fetchAll();
     } 
     
-                               // drop   ,   last name
     public function findCities() {
        
           $sql = $this->getSelectStatement();
@@ -101,5 +100,15 @@ abstract class TableGateway {
         return $statement->fetchAll();
         
     }
+    
+    // public function findUsersLogin(){
+    //     $sql = $this->getSelectStatement();
+        
+    //     $sql.= 'where UserName';
+        
+    //     $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+    //     return $statement->fetchAll();
+        
+    // } 
 }
 ?>

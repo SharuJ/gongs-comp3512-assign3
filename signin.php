@@ -49,15 +49,11 @@ include 'login.php';
                                 <span><?php echo $error; ?></span>
                             </form>
 			</div>
-			<!--<div class="mdl-card__actions mdl-card--border">-->
-				<!--<button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>-->
-			<!--</div>-->
+
 		</div>
 		
      </div>          
-                 
-                
-          
+
       </section>
   </main>
 </div>

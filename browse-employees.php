@@ -1,17 +1,20 @@
 
 <?php
 
-
+require_once("includes/config.php");
 session_start();
 
- 
+if(!isset($_SESSION['email'])){
+    
+    header("Location: signin.php?name='browse-employees'");
+}
 
  
 
 function listName() /* programmatically loop though employees and display each name as <li> element. */ 
 {
     include "includes/config.php";
-    include "session.php"; 
+
     $empDb = new EmployeeGateway($connection);
     
     $ln = $_GET['ln'] . "%";
@@ -161,15 +164,14 @@ if(!isset($_SESSION['email'])){
     <link rel="stylesheet" href="css/styles.css">
     
     <script type="text/javascript">
-        function appear()
-        {
-            var x = document.getElementById("filter");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+        
+        //i  broke this
+    document.getElementById("fadedBlue").addEventListener("click", displayDate);
+    
+    function displayDate() {
+        document.getElementById("filter").innerHTML = Date();
+    }
+        
     </script>
     
 </head>
@@ -178,7 +180,7 @@ if(!isset($_SESSION['email'])){
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <?php include 'includes/header.inc.php'; ?>
         <?php include 'includes/left-nav.inc.php'; ?>
-        <?php include "session.php"; ?>
+        <?php //include "session.php"; ?> 
         <main class="mdl-layout__content mdl-color--grey-50">
             <section class="page-content">
                 <div class="mdl-grid">
@@ -187,9 +189,9 @@ if(!isset($_SESSION['email'])){
                            
                         <!-- mdl-cell + mdl-card -->
                         <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card">
-                            <div class="mdl-card__title" id="fadedBlue" onclick="appear()">
+                            <div class="mdl-card__title" id='fadedBlue'>
                                 <h2 class="mdl-card__title-text">Filter (click me)</h2> </div>
-                            <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter" style="display: none">
+                            <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter">
                                 <form method="get">
                                     Last name: <input name="ln"> <br>
                                     City: <select name="city">

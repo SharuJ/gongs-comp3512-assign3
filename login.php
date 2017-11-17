@@ -22,6 +22,8 @@
 </script>
 <?php
 include 'includes/config.php';
+//$usersDb = new UsersGateway($connection);
+//$usersLoginDb = new UsersGateway($connection);
 // include "session.php";
 session_start(); // Starting Session
 $error=''; // Variable To Store Error Message
@@ -35,12 +37,18 @@ else{
     $password=$_POST['password'];
     
     // Selecting Database
+    // include "includes/config.php";
+    // $usersloginDb = new UsersLoginGateway($connection);
+    // $usersDb = new UsersGateway($connection);
     
-    $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $login = $usersloginDb->getByForeignKey($username);
+    // foreach ($login as $row)
+    // {
+     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "select UserID, UserName, Password, Salt, State, DateJoined, DateLastModified from UsersLogin where UserName='$username'";
     $result = $pdo-> query ($sql);
-    //while ($row = $result->fetch()){
+    
     $row = $result->fetch();
         $salt = $row['Salt'];
         $pass = md5($_POST['password'].$salt);
@@ -48,12 +56,14 @@ else{
             $_SESSION['userid']= $row['UserID']; // Initializing Session
             $sql2 = "select UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email from Users where Email='$username'";
             $result2 = $pdo-> query($sql2);
-            //while ($row = $result2->fetch()){
+            // $user = $usersDb->getByForeignKey($username);
+            // foreach ($user as $row)
+            // {
                 $row2 = $result2->fetch();
                 $_SESSION['firstname']=$row2['FirstName'];
                 $_SESSION['lastname']=$row2['LastName'];
                 $_SESSION['email']=$row2['Email'];
-            //}
+            
             if(isset($_GET['name']))
             {
                 header("Location: ". $_GET['name'].".php"); //browse-employees
@@ -62,12 +72,16 @@ else{
             else{
                 header("Location: index.php"); // Redirecting To Other Page
             }
+          //} //$user foreach loop end
         } else {
             $error = "Incorrect Password or Username";
-        }
-    //}
+        
+        } 
+        
+    //} //$login foreach loop end
+    
     $pdo = null; // Closing Connection
-    }
+    } //try end
 
 catch (PDOException $e)
         {
