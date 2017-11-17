@@ -14,8 +14,8 @@
     				var	fields	=	document.querySelectorAll(cssSelector);
     				for	(var i=0; i<fields.length; i++)
     				{
-    								fields[i].addEventListener("focus",	setBackground);
-    								fields[i].addEventListener("blur",	setBackground);
+						fields[i].addEventListener("focus",	setBackground);
+						fields[i].addEventListener("blur",	setBackground);
     				}
     }); 
 
@@ -26,69 +26,69 @@ include 'includes/config.php';
 //$usersLoginDb = new UsersGateway($connection);
 // include "session.php";
 session_start(); // Starting Session
-$error=''; // Variable To Store Error Message
-if (isset($_POST['submit'])) {
-    if (empty($_POST['username']) || empty($_POST['password'])) {
+$error = ''; // Variable To Store Error Message
+if (isset($_POST['submit']))
+{
+    if (empty($_POST['username']) || empty($_POST['password']))
+    {
         $error = "Incorrect Password or Username";
     }
-else{
-    try {
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    
-    // Selecting Database
-    // include "includes/config.php";
-    // $usersloginDb = new UsersLoginGateway($connection);
-    // $usersDb = new UsersGateway($connection);
-    
-    // $login = $usersloginDb->getByForeignKey($username);
-    // foreach ($login as $row)
-    // {
-     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "select UserID, UserName, Password, Salt, State, DateJoined, DateLastModified from UsersLogin where UserName='$username'";
-    $result = $pdo-> query ($sql);
-    
-    $row = $result->fetch();
-        $salt = $row['Salt'];
-        $pass = md5($_POST['password'].$salt);
-        if ($row['Password'] == $pass) {
-            $_SESSION['userid']= $row['UserID']; // Initializing Session
-            $sql2 = "select UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email from Users where Email='$username'";
-            $result2 = $pdo-> query($sql2);
-            // $user = $usersDb->getByForeignKey($username);
-            // foreach ($user as $row)
-            // {
-                $row2 = $result2->fetch();
-                $_SESSION['firstname']=$row2['FirstName'];
-                $_SESSION['lastname']=$row2['LastName'];
-                $_SESSION['email']=$row2['Email'];
-            
-            if(isset($_GET['name']))
-            {
-                header("Location: ". $_GET['name'].".php"); //browse-employees
-                echo $_GET['name'];
-            }
-            else{
-                header("Location: index.php"); // Redirecting To Other Page
-            }
-          //} //$user foreach loop end
-        } else {
-            $error = "Incorrect Password or Username";
-        
-        } 
-        
-    //} //$login foreach loop end
-    
-    $pdo = null; // Closing Connection
-    } //try end
+    else
+    {
 
-catch (PDOException $e)
+        // Selecting Database
+        // include "includes/config.php";
+        // $usersloginDb = new UsersLoginGateway($connection);
+        // $usersDb = new UsersGateway($connection);
+        // $login = $usersloginDb->getByForeignKey($username);
+        // foreach ($login as $row)
+        // {
+        //$pdo      = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //$sql    = "select UserID, UserName, Password, Salt, State, DateJoined, DateLastModified from UsersLogin where UserName='$username'";
+        //$result = $pdo->query($sql);
+        //$row    = $result->fetch();
+        
+        include "includes/config.php";
+        $userLoginDb = new UsersLoginGateway($connection); 
+        $username = $_POST['username'];
+        $login = $userLoginDb->getByForeignKey($username);
+        foreach ($login as $row)
         {
-            die($e->getMessage());
+            $salt   = $row["Salt"];
+            $pass   = md5($_POST['password'] . $salt);
+            if ($row['Password'] == $pass)
+            {
+                $_SESSION['userid']    = $row['UserID']; // Initializing Session
+                
+                
+                //$sql2 = "select UserID, FirstName, LastName, Address, City, Region, Country, Postal, Phone, Email from Users where Email='$username'";
+                //$result2 = $pdo->query($sql2);
+                //$row2                  = $result2->fetch();
+                
+                $usersDb = new UsersGateway($connection);
+                $user = $usersDb->getByForeignKey($username);
+                foreach ($user as $row)
+                {
+                    $_SESSION['firstname'] = $row['FirstName'];
+                    $_SESSION['lastname']  = $row['LastName'];
+                    $_SESSION['email']     = $row['Email'];
+                    if (isset($_GET['name']))
+                    {
+                        header("Location: " . $_GET['name'] . ".php");
+                    }
+                    else
+                    {
+                        header("Location: index.php"); // Redirecting To Other Page
+                    }
+                }
+            }
+            else
+            {
+                $error = "Incorrect Password or Username";
+            }
         }
-}
-}
 
+    }
+}
 ?>
- 

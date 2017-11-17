@@ -57,7 +57,7 @@ function displayInfo() /* display requested univeristy information */
              <div id="map">
                  <script>
                  //to javascript
-    
+    // used this website:  https://developers.google.com/maps/documentation/javascript/ to do the google map
       function initMap() {
           var latitude = parseFloat("<?php echo $row['Latitude']; ?>");
           var longitude = parseFloat("<?php echo $row['Longitude']; ?>");

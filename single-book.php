@@ -22,7 +22,7 @@ function displayInfo() /* display requested book information */
         echo ('<center><img id = "bookCover" src="/book-images/medium/' . $row["ISBN10"] . '.jpg" alt="book cover" ><br></center>');
 
 ?>
-        
+      <!--used this website: https://www.w3schools.com/howto/howto_css_modal_images.asp to create a modal for the popup book cover  -->
        <div id="myModal" class="modal">
           <!--<span class="close">&times;</span>-->
           <img class="modal-content" id="img01">
@@ -39,7 +39,7 @@ function displayInfo() /* display requested book information */
             
             img.onclick = function() {
                 modal.style.display = "block";
-                modalImg.src = <?php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'" ?>;
+                modalImg.src = <?php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'"?>;
                 //alert(modalImg.src);
             }
             

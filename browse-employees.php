@@ -165,13 +165,16 @@ if(!isset($_SESSION['email'])){
     
     <script type="text/javascript">
         
-        //i  broke this
-    document.getElementById("fadedBlue").addEventListener("click", displayDate);
-    
-    function displayDate() {
-        document.getElementById("filter").innerHTML = Date();
-    }
-        
+        function appear()
+        {
+            var x = document.getElementById("filter");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            
+        }
     </script>
     
 </head>
@@ -189,9 +192,10 @@ if(!isset($_SESSION['email'])){
                            
                         <!-- mdl-cell + mdl-card -->
                         <div class="mdl-cell mdl-cell--12-col card-lesson mdl-card">
-                            <div class="mdl-card__title" id='fadedBlue'>
+                            <div class="mdl-card__title" id='fadedBlue' onclick="appear()">
+                          
                                 <h2 class="mdl-card__title-text">Filter (click me)</h2> </div>
-                            <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter">
+                            <div class="mdl-card__supporting-text mdl-color--grey-50" id="filter" style="display: none">
                                 <form method="get">
                                     Last name: <input name="ln"> <br>
                                     City: <select name="city">
