@@ -1,60 +1,78 @@
-<?php
-session_start();
-include 'includes/config.php';
-include 'login.php';
+<script>
 
-//echo $_GET['name'];
-?>
-
-
-<!DOCTYPE HTML> 
-<html> 
-<head>
-    <title>Page Login</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script   src="https://code.jquery.com/jquery-1.7.2.min.js" ></script>
-    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-</head>
-<body id="body-color"> 
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header" id="fireBrick">
-    <div class="mdl-layout__header-row">
-     <h1 class="mdl-layout-title"><span>CRM</span> Admin</h1>
-    </div>
-  </header>
-
-  <main class="mdl-layout__content">
-    <section class="page-content">
+    function setBackground(e){
+        if (e.type == "focus") {
+            e.target.style.backgroundColor = "BBE9EB";
+        }
+        else if (e.type == "blur") {
+            e.target.style.backgroundColor = "white";
+        }
+    }
     
-      <div class="mdl-cell mdl-cell--2-col card-lesson mdl-card  mdl-shadow--2dp">
-			<div class="mdl-card__title" id="lightPeriwinkle">
-				<h2 class="mdl-card__title-text">Login</h2>
-			</div>
-	  	<div class="mdl-card__supporting-text">
-				<form action="./login.php?name=<?php echo $_GET['name'] ?>"  method="post">
-				                
-                                <label>Username :</label>
-                                <input id="username" name="username" placeholder="Enter Username" type="text" required >
-                                <hr>
-                                <label>Password :</label>
-                                <input id="password" name="password" placeholder="**********" type="password" required >
-                                <hr>
-                                <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
-                                <!--<input name="submit" type="submit" value=" Login ">-->
-                                <span><?php echo $error; ?></span>
-                            </form>
-			</div>
+    window.addEventListener("load",	function(){
+    				var	cssSelector	=	"input[name=username],input[name=password]";
+    				var	fields	=	document.querySelectorAll(cssSelector);
+    				for	(var i=0; i<fields.length; i++)
+    				{
+						fields[i].addEventListener("focus",	setBackground);
+						fields[i].addEventListener("blur",	setBackground);
+    				}
+    }); 
 
-		</div>
-		
-     </div>          
+</script>
+<?php
+include 'includes/config.php';
+session_start(); // Starting Session
+$error = ''; // Variable To Store Error Message
+if (isset($_POST['submit']))
+{
+    if (empty($_POST['username']) || empty($_POST['password']))
+    {
+        $error = "Incorrect Password or Username";
+    }
+    else
+    {
+        include "includes/config.php";
+        $userLoginDb = new UsersLoginGateway($connection); 
+        $username = $_POST['username'];
+        $login = $userLoginDb->getByForeignKey($username);
+        if (empty($login))
+        {
+            echo ("Useerr NO founndnd");
+        }
+        else
+        {
+            foreach ($login as $row)
+            {
+                $salt   = $row["Salt"];
+                $pass   = md5($_POST['password'] . $salt);
+                if ($row['Password'] == $pass)
+                {
+                    $_SESSION['userid'] = $row['UserID']; // Initializing Session
+                    $usersDb = new UsersGateway($connection);
+                    $user = $usersDb->getByForeignKey($username);
+                    foreach ($user as $row)
+                    {
+                        $_SESSION['firstname'] = $row['FirstName'];
+                        $_SESSION['lastname']  = $row['LastName'];
+                        $_SESSION['email']     = $row['Email'];
+                        if (!empty($_GET['name']))
+                        {
+                            header("Location: " . $_GET['name']);
+                        }
+                        else
+                        {
+                            header("Location: index.php"); // Redirecting To Other Page
+                        }
+                    }
+                }
+                else
+                {
+                    $error = "Incorrect Password or Username";
+                }
+            }
+        }
 
-      </section>
-  </main>
-</div>
-</body>
+    }
+}
+?>

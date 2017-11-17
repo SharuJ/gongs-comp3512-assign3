@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
     <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <link rel="stylesheet" href="css/styles.css"> </head>
+    <link rel="stylesheet" href="css/styles.css"> 
+    <script>alert("We are a group of three! Profile is still under construction!");</script>
+</head>
 
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer

@@ -1,3 +1,16 @@
+<?php
+
+    // session_start();
+    
+    // if(!isset($_SESSION['email'])){
+        
+    //     header("Location: signin.php?name=index");
+    // }
+    
+    include "includes/checkSession.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,10 +26,7 @@
     <link rel="stylesheet" href="css/styles.css"> </head>
 
 <body>
-     <?php 
-     // include 'includes/header.inc.php';
-     //include 'includes/left-nav.inc.php';
-     ?>
+
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
         mdl-layout--fixed-header" id="midnightBlue">
         <?php include 'includes/header.inc.php'; ?>

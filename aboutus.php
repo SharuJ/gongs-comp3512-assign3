@@ -1,10 +1,11 @@
 <?php
-session_start();
+// session_start();
 
-if(!isset($_SESSION['email'])){
+// if(!isset($_SESSION['email'])){
     
-    header("Location: signin.php?name=aboutus");
-}
+//     header("Location: signin.php?name=aboutus");
+// }
+include "includes/checkSession.php";
 
 ?>
 <!DOCTYPE html>
@@ -41,16 +42,16 @@ if(!isset($_SESSION['email'])){
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedPink">
                             <h2 class="mdl-card__title-text">Group Members</h2> </div>
-                        <div class="mdl-card__supporting-text"> Sharunitha Jaisankar </div>
-                        <div class="mdl-card__supporting-text"> Stephen Johnson </div>
-                        <div class="mdl-card__supporting-text"> Yasaswani Sai Polasu </div> 
+                        <div class="mdl-card__supporting-text"> <b>Sharunitha Jaisankar</b><br>(worked on everything)</div>
+                        <div class="mdl-card__supporting-text"> <b>Stephen Johnson</b><br>(worked on everything)</div>
+                        <div class="mdl-card__supporting-text"> <b>Yasaswani Sai Polasu</b><br>(worked on everything)</div> 
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightPeriwinkle">
                             <h2 class="mdl-card__title-text">Sources</h2> </div>
                         <div class="mdl-card__supporting-text"> <b>Icons sourced from:<br> <a href="https://material.io/icons">https://material.io/icons</a><br>
                         <br>Book covers sourced from:<br> <a href="https://images-na.ssl-images-amazon.com/images/I/619-JrSIOeL._UX250_.jpg">Randy Connolly</a><br>
-                        <br>Profile image sourced from:<br> <a href="https://www.cbsnews.com/news/tiger-woods-had-five-drugs-in-system-during-dui-arrest-toxicology-report-says/">Palm Beach County Sheriff's Office</a></b>
+                        <br>Profile image sourced from:<br> <a href="https://www.youtube.com/user/mlgHwnT/">Sugar Pine 7</a></b>
                             <br>
                             <br><b>Color scheme inspired by:<br></b> <a href="http://www.imdb.com/name/nm0027572/">Wes Anderson's</a> <a href="http://www.imdb.com/title/tt2278388/"><i>The Grand Budapest Hotel</i></a> </div>
                     </div>

@@ -20,8 +20,8 @@ class UsersGateway extends TableGateway {
             return "Email";
     }
     
-    protected function getUserInfo() {
-        return "Select FirstName, LastName, Email from Users";
-    }
+    // protected function getUserInfo() {
+    //     return "Select FirstName, LastName, Email from Users";
+    // }
 }
 ?>

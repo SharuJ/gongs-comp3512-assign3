@@ -19,8 +19,8 @@ class UsersLoginGateway extends TableGateway {
             return "UserName";
     }
     
-    protected function getLoginInfo() {
-        return "Select UserName, Password, Salt from Users";
-    }
+    // protected function getLoginInfo() {
+    //     return "Select UserName, Password, Salt from Users";
+    // }
 }
 ?>
