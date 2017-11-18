@@ -1,13 +1,13 @@
 <?php
 
-    // session_start();
+   // session_start();
     
     // if(!isset($_SESSION['email'])){
         
     //     header("Location: signin.php?name=index");
     // }
     
-    include "includes/checkSession.php";
+    //include "includes/checkSession.php";
 
 ?>
 

@@ -69,8 +69,7 @@
                             });
                         }
                     </script>
-                <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgOg-dKVI4dgMyBcTKOWj3xxS1jKipA3E&callback=initMap">
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgOg-dKVI4dgMyBcTKOWj3xxS1jKipA3E&callback=initMap">
                 </script>
                 <?php //back to php
             }

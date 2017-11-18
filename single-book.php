@@ -43,7 +43,7 @@
                 
                 img.onclick = function() {
                     modal.style.display = "block";
-                    modalImg.src = <? php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'" ?>;
+                    modalImg.src = <?php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'"?>;
                     //alert(modalImg.src);
                 }
                 

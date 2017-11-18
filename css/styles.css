@@ -137,7 +137,7 @@ main header h4 {
   width: 100%;
 }
 
-
+/*assisted by: https://www.w3schools.com/howto/howto_css_modal_images.asp to create a modal for the popup book cover*/
 #bookCover {
   border-radius: 5px;
   cursor: pointer;
@@ -223,39 +223,7 @@ main header h4 {
   }
 }
 
-/* The Close Button */
 
-/*.close {*/
-
-/*    position: absolute;*/
-
-/*    top: 15px;*/
-
-/*    right: 35px;*/
-
-/*    color: #f1f1f1;*/
-
-/*    font-size: 40px;*/
-
-/*    font-weight: bold;*/
-
-/*    transition: 0.3s;*/
-
-/*}*/
-
-/*.close:hover,*/
-
-/*.close:focus {*/
-
-/*    color: #bbb;*/
-
-/*    text-decoration: none;*/
-
-/*    cursor: pointer;*/
-
-/*}*/
-
-/* 100% Image Width on Smaller Screens */
 
 @media only screen and (max-width: 700px) {
   .modal-content {
@@ -283,5 +251,96 @@ main header h4 {
 
 #login
 {
-  margin:0 auto;
+  margin: 0 auto;
+  width: 400px;
+  text-align: center;
 }
+
+body
+{
+  background-image: url("/images/mural.jpg");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+} 
+
+#demo-2{
+  padding-right: 120px;
+  margin-top: 5px ;
+ 
+  margin-bottom: -25px;
+  
+}
+
+
+input {
+	outline: none;
+}
+input[type=search] {
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	font-family: inherit;
+	font-size: 100%;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+	display: none; 
+}
+
+
+input[type=search] {
+	background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+	border: solid 1px #ccc;
+	padding: 9px 10px 9px 32px;
+	width: 55px;
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+input[type=search]:focus {
+	width: 130px;
+	background-color: #fff;
+	border-color: #66CC75;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+
+input:-moz-placeholder {
+	color: #999;
+}
+input::-webkit-input-placeholder {
+	color: #999;
+}
+
+/* Demo 2 */
+#demo-2 input[type=search] {
+	width: 15px;
+	padding-left: 10px;
+	color: transparent;
+	cursor: pointer;
+}
+#demo-2 input[type=search]:hover {
+	background-color: #fff;
+}
+#demo-2 input[type=search]:focus {
+	width: 130px;
+	padding-left: 32px;
+	color: #000;
+	background-color: #fff;
+	cursor: auto;
+}
+#demo-2 input:-moz-placeholder {
+	color: transparent;
+}
+#demo-2 input::-webkit-input-placeholder {
+	color: grey;
+} 
+

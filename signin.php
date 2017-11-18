@@ -10,13 +10,13 @@
     }
     
     window.addEventListener("load",	function(){
-    				var	cssSelector	=	"input[name=username],input[name=password]";
-    				var	fields	=	document.querySelectorAll(cssSelector);
-    				for	(var i=0; i<fields.length; i++)
-    				{
-						fields[i].addEventListener("focus",	setBackground);
-						fields[i].addEventListener("blur",	setBackground);
-    				}
+    	var	cssSelector	=	"input[name=username],input[name=password]";
+    	var	fields	=	document.querySelectorAll(cssSelector);
+    	for	(var i=0; i<fields.length; i++)
+    	{
+    		fields[i].addEventListener("focus",	setBackground);
+    		fields[i].addEventListener("blur",	setBackground);
+    	}
     }); 
 
 </script>
@@ -38,7 +38,11 @@ if (isset($_POST['submit']))
         $login = $userLoginDb->getByForeignKey($username);
         if (empty($login))
         {
-            echo ("Useerr NO founndnd");
+            $error = "Incorrect username or password!";
+          
+          echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
+           
+            
         }
         else
         {
@@ -68,11 +72,16 @@ if (isset($_POST['submit']))
                 }
                 else
                 {
-                    $error = "Incorrect Password or Username";
+                    $error = "Incorrect username or password!";
+                    
+                      echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
+                    
                 }
             }
+           
         }
 
     }
+   
 }
 ?>

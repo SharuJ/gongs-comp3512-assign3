@@ -53,7 +53,7 @@ include "includes/checkSession.php";
                         <br>Book covers sourced from:<br> <a href="https://images-na.ssl-images-amazon.com/images/I/619-JrSIOeL._UX250_.jpg">Randy Connolly</a><br>
                         <br>Profile image sourced from:<br> <a href="https://www.youtube.com/user/mlgHwnT/">Sugar Pine 7</a></b>
                             <br>
-                            <br><b>Color scheme inspired by:<br></b> <a href="http://www.imdb.com/name/nm0027572/">Wes Anderson's</a> <a href="http://www.imdb.com/title/tt2278388/"><i>The Grand Budapest Hotel</i></a> </div>
+                            <br><b>Color scheme and login background mural sourced from:<br></b> <a href="http://www.imdb.com/name/nm0027572/">Wes Anderson's</a> <a href="http://www.imdb.com/title/tt2278388/"><i>The Grand Budapest Hotel</i></a> </div>
                     </div>
                 </div>
             </section>

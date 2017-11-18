@@ -1,10 +1,5 @@
 <?php
     include "includes/checkSession.php"; 
-    // session_start();
-    // if (!isset($_SESSION['email']))
-    // {
-    //     header("Location: signin.php?name='browse-employees'");
-    // }
     function listName() /* programmatically loop though employees and display each name as <li> element. */ 
     {
         include "includes/config.php";

@@ -3,7 +3,9 @@
     include 'includes/config.php';
     include 'signin.php';
     //echo $_GET['name'];
-?>
+?> 
+
+
 
 
 <!DOCTYPE HTML>
@@ -19,9 +21,11 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    
+    
 </head>
 
-<body id="body-color">
+<body id="body-color" >
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header" id="fireBrick">
             <div class="mdl-layout__header-row">
@@ -33,15 +37,16 @@
                     <div class="mdl-card__title" id="lightPeriwinkle">
                         <h2 class="mdl-card__title-text">Login</h2> </div>
                     <div class="mdl-card__supporting-text">
+ 
                         <form action="./signin.php?name=<?php echo $_GET['name'] ?>" method="post">
-                            <label>Username :</label>
+                            <label>Username:</label>
                             <input id="username" name="username" placeholder="Enter Username" type="text" required>
                             <hr>
-                            <label>Password :</label>
+                            <label>Password:</label>
                             <input id="password" name="password" placeholder="**********" type="password" required>
                             <hr>
                             <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
-                            <!--<input name="submit" type="submit" value=" Login ">--><span><?php echo $error; ?></span> </form>
+                            </form>
                     </div>
                 </div>
     </div>
