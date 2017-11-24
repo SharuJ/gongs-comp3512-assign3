@@ -57,9 +57,15 @@ if (isset($_POST['submit']))
                     $user = $usersDb->getByForeignKey($username);
                     foreach ($user as $row)
                     {
-                        $_SESSION['firstname'] = $row['FirstName'];
+                        $_SESSION['firstname'] = $row['FirstName']; 
                         $_SESSION['lastname']  = $row['LastName'];
                         $_SESSION['email']     = $row['Email'];
+                        $_SESSION['region'] = $row['Region']; if ($row['Region'] == NULL){$_SESSION['region'] = "Not Provided"; }
+                        $_SESSION['address'] = $row['Address']; if ($row['Address'] == NULL){$_SESSION['address'] = "Not Provided"; }
+                        $_SESSION['city'] = $row['City']; if ($row['City'] == NULL){$_SESSION['city'] = "Not Provided"; }
+                        $_SESSION['country'] = $row['Country']; if ($row['Country'] == NULL){$_SESSION['country'] = "Not Provided"; }
+                        $_SESSION['postal'] = $row['Postal']; if ($row['Postal'] == NULL){$_SESSION['postal'] = "Not Provided"; }
+                        $_SESSION['phone'] = $row['Phone']; if ($row['Phone'] == NULL){$_SESSION['phone'] = "Not Provided"; }
                         if (!empty($_GET['name']))
                         {
                             header("Location: " . $_GET['name']);

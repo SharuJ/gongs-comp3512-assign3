@@ -40,13 +40,16 @@
  
                         <form action="./signin.php?name=<?php echo $_GET['name'] ?>" method="post">
                             <label>Username:</label>
-                            <input id="username" name="username" placeholder="Enter Username" type="text" required>
+                            <!--remove values before submission-->
+                            <input id="username" name="username" placeholder="Enter Username" type="text" required value="stanisław.wójcik@wp.pl">
                             <hr>
                             <label>Password:</label>
-                            <input id="password" name="password" placeholder="**********" type="password" required>
+                            <input id="password" name="password" placeholder="**********" type="password" required value="abcd1234">
                             <hr>
                             <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
+                            
                             </form>
+                            <a href=registration.php><button value="register" class="mdl-button mdl-js-button" id="lightPeriwinkle">Register</button></a>
                     </div>
                 </div>
     </div>

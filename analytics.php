@@ -86,8 +86,6 @@ function countToDos()
     <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
-    
-    <script>alert("We are a group of three! Analytics is still under construction!");</script>
 
 </head>
 
@@ -102,16 +100,13 @@ function countToDos()
                     <!-- mdl-cell + mdl-card -->
                     <div class="mdl-cell mdl-cell--4-col mdl-shadow--2dp">
                         <div class="mdl-card__title" id="lightPeriwinkle">
-                            <h2 class="mdl-card__title-text">Top 15 Countries</h2> </div>
+                            <h2 class="mdl-card__title-text">Total Vists</h2> </div>
                         <div class="mdl-card__supporting-text">
-                            <table class="mdl-data-table" style="width:100%">
-                                <tr>
-                                    <th>Country</th>
-                                    <th>Visitors</th>
-                                </tr>
-                                <?php orderNations() ?>
-                            </table>
-                            </div>
+                            Top 15 countries:
+                            <select>
+                                <?php dropNations ?>
+                            </select>
+                        </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
                     
