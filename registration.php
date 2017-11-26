@@ -33,8 +33,9 @@
                     <div class="mdl-card__title" id="lightPeriwinkle">
                         <h2 class="mdl-card__title-text">Register</h2> </div>
                     <div class="mdl-card__supporting-text">
- 
-                        <form action="./signin.php?name=<?php echo $_GET['name'] ?>" method="post">
+                        <!--<form action="./register.php" method="post">-->
+                       <!--name=<?php echo $_GET['name'] ?>"-->
+                        <form action="register.php" method="post">
                             <div>Required fields are marked with *</div><br>
                             <label>Firstname:</label>
                             <input id="firstname" name="firstname" placeholder="Enter Firstname" type="text">

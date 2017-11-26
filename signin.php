@@ -34,6 +34,7 @@ if (isset($_POST['submit']))
     {
         include "includes/config.php";
         $userLoginDb = new UsersLoginGateway($connection); 
+       
         $username = $_POST['username'];
         $login = $userLoginDb->getByForeignKey($username);
         if (empty($login))

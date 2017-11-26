@@ -6,6 +6,10 @@ class EmployeeToDoGateway extends TableGateway {
     
     protected function getSelectStatement() {
         return "SELECT ToDoID, EmployeeID, DateBy, Status, Priority, Description FROM EmployeeToDo";   
+    } 
+    
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
     }
     
     protected function getOrderFields() {

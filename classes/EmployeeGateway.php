@@ -8,6 +8,10 @@ class EmployeeGateway extends TableGateway {
         return "SELECT EmployeeID, FirstName, LastName, Address, City, Region, Country, Postal, Email FROM Employees";
     }
     
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
     protected function getOrderFields() {
         return 'LastName, FirstName';
     }

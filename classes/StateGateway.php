@@ -8,6 +8,10 @@ class StateGateway extends TableGateway {
         return "select StateName, StateAbbr from States";
     }
     
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
     protected function getOrderFields() {
         return 'Name';
     }

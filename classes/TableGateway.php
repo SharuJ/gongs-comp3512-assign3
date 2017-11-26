@@ -21,6 +21,7 @@ abstract class TableGateway {
     
     protected abstract function getForeignKeyName();
 
+    protected abstract function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
     // Returns all the records in the table
     public function getAll($sortFields=null) {
         $sql = $this->getSelectStatement();
@@ -99,6 +100,13 @@ abstract class TableGateway {
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
         
+    }
+    
+    public function insertUser($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+        $sql = $this->getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
+        echo($sql);
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return "SUCCESS";
     }
 }
 ?>

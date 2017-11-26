@@ -7,6 +7,10 @@ class UsersLoginGateway extends TableGateway {
         return "select UserID, UserName, Password, Salt, State, DateJoined, DateLastModified from UsersLogin";
     }
     
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
     protected function getOrderFields() {
         return 'UserName';
     }

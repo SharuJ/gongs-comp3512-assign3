@@ -8,6 +8,10 @@ class ImprintGateway extends TableGateway {
         return "SELECT ImprintID,  Imprint FROM Imprints";
     }
     
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
     protected function getOrderFields() {
         return 'Imprint';
     }

@@ -8,6 +8,10 @@ class SubcategoryGateway extends TableGateway {
         return "SELECT SubcategoryID, CategoryID, SubcategoryName FROM Subcategories";
     }
     
+     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
     protected function getOrderFields() {
         return 'SubcategoryName';
     }
