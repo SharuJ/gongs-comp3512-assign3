@@ -8,7 +8,11 @@ class SubcategoryGateway extends TableGateway {
         return "SELECT SubcategoryID, CategoryID, SubcategoryName FROM Subcategories";
     }
     
-     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+     protected function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
+    protected function getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified){
          return "nothing";
     }
     

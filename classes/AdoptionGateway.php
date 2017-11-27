@@ -8,9 +8,12 @@ class AdoptionGateway extends TableGateway {
         return "select Name, Universities.UniversityID from Books INNER JOIN AdoptionBooks ON Books.BookID = AdoptionBooks.BookID INNER JOIN Adoptions ON AdoptionBooks.AdoptionID = Adoptions.AdoptionID INNER JOIN Universities ON Adoptions.UniversityID = Universities.UniversityID";
     }
     
-    protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+    protected function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
          return "nothing";
     }
+     protected function getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified){
+         return "nothing";
+     }
     
     protected function getOrderFields() {
         return 'Name';

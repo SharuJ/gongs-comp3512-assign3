@@ -8,7 +8,11 @@ class MessagesGateway extends TableGateway {
         return "SELECT MessageDate, Category, Content, FirstName, LastName FROM EmployeeMessages LEFT JOIN Contacts ON EmployeeMessages.ContactID = Contacts.ContactID";   
     }
     
-     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+     protected function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    
+    protected function getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified){
          return "nothing";
     }
     

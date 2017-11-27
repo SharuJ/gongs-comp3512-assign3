@@ -8,7 +8,10 @@ class BookGateway extends TableGateway {
         return "select ISBN10, ISBN13, Title, CopyrightYear, SubcategoryName, Imprint, Status, BindingType, TrimSize, PageCountsEditorialEst, Description from Books LEFT JOIN Subcategories ON Books.SubcategoryID = Subcategories.SubcategoryID LEFT JOIN Imprints ON Books.ImprintID = Imprints.ImprintID LEFT JOIN Statuses ON Books.ProductionStatusID = Statuses.StatusID LEFT JOIN BindingTypes ON Books.BindingTypeID = BindingTypes.BindingTypeID";
     }
     
-     protected function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+     protected function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+         return "nothing";
+    }
+    protected function getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified){
          return "nothing";
     }
     

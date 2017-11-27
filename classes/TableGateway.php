@@ -21,7 +21,9 @@ abstract class TableGateway {
     
     protected abstract function getForeignKeyName();
 
-    protected abstract function getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
+    protected abstract function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
+    
+    protected abstract function getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
     // Returns all the records in the table
     public function getAll($sortFields=null) {
         $sql = $this->getSelectStatement();
@@ -102,11 +104,33 @@ abstract class TableGateway {
         
     }
     
-    public function insertUser($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
-        $sql = $this->getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
+    
+    
+    public function insertUser($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
+        $sql = $this->getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
         echo($sql);
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        
+        //$sql2 =  "insert into UsersLogin (UserID, UserName, Password, Salt, DateJoined, DateLastModified) values ('$num', '$ema', '$lastN', '$add', '$ci', '$reg', '$coun',  '$post', '$pho', '$ema')";
         return "SUCCESS";
+    } 
+    
+    public function insertUserLogin($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified){
+        $sql = $this->getUsersLoginInsertStatement($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
+        echo($sql);
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        
+        //$sql2 =  "insert into UsersLogin (UserID, UserName, Password, Salt, DateJoined, DateLastModified) values ('$num', '$ema', '$lastN', '$add', '$ci', '$reg', '$coun',  '$post', '$pho', '$ema')";
+        return "SUCCESS2";
+    } 
+    
+    public function findMaxIdNum(){
+        $sql = "SELECT UserID FROM Users ORDER BY UserID DESC LIMIT 1";
+        echo($sql);
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        $row = $statement->fetch();
+        return $row[0];
+        
     }
 }
 ?>

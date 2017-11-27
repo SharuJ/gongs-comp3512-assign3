@@ -35,7 +35,34 @@
             else
                 fields[i].classList.remove("error");
         }
-    };
+        
+        //checkPasswords();
+        
+        
+    }; 
+    
+  
+    
+    //  function checkPasswords(){
+         
+         
+    //      var firstPass = document.getElementById("password").value;
+    //     var confirmPass = document.getElementById("confirm-password").value;
+        
+    //     if(firstPass == confirmPass){
+    //         //return true;
+    //     }
+    //     else{
+    //         alert("Both of the passwords to do not match!");
+    //         document.getElementById("password").value = "";
+    //         document.getElementById("confirm-password").value= "";
+    //          document.getElementById("password").focus(); 
+    //          return false;
+    //     }
+         
+    //  };
+     
+    //  window.addEventListener("submit", checkPasswords);
 
 </script> 
 
@@ -55,6 +82,7 @@ if (isset($_POST['submit']))
         include "includes/config.php";
         //$userLoginDb = new UsersLoginGateway($connection); 
         $regDb = new RegistrationGateway($connection);
+        date_default_timezone_set("Canada/Mountain"); 
         $userN = $_POST['firstname'];
         $lastN = $_POST['lastname'];
         $add = $_POST['address'];
@@ -64,11 +92,24 @@ if (isset($_POST['submit']))
         $post = $_POST['postal'];
         $pho = $_POST['phone'];
         $ema = $_POST['email'];
+        $userPass = $_POST['password'];
+        $salt = MD5(microtime());
+        $dateJoined = date("Y-m-d h:i:sa");
+        $dateLastModified = date("Y-m-d h:i:sa");
+        $finalPass = MD5($userPass.$salt);
         
         //echo ( $lastN );
         //$sql = $regDb->getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
-        $insert = $regDb->insertUser($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
-        echo($insert);
+         $num =  $regDb->findMaxIdNum();
+        echo($num);
+        $num++;
+        
+        $insert = $regDb->insertUser($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
+        
+        echo($insert); 
+       $insert2 = $regDb->insertUserLogin($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
+       echo($insert2);
+        
         //$login = $userLoginDb->getByForeignKey($username);
         // if (empty($login))
         // {
