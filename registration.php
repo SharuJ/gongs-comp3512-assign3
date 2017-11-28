@@ -35,7 +35,7 @@
                     <div class="mdl-card__supporting-text">
                         <!--<form action="./register.php" method="post">-->
                        <!--name=<?php echo $_GET['name'] ?>"-->
-                        <form action="register.php" method="post">
+                        <form action="register.php" method="post" onsubmit="return checkPasswords();">
                             <div>Required fields are marked with *</div><br>
                             <label>Firstname:</label>
                             <input id="firstname" name="firstname" placeholder="Enter Firstname" type="text">
