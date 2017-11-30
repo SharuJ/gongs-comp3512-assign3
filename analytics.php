@@ -1,8 +1,9 @@
 <?php
 require_once("includes/config.php");
 
-function orderNations()
+function dropNations()
 {
+    //I THINK WE GOTTA PUT THIS IN A JSON SERVICE
     try {
         $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -11,8 +12,7 @@ function orderNations()
                     GROUP BY CountryCode ORDER BY count desc limit 15;";
         $result = $pdo->query($sql);
         while ($row = $result->fetch()) {
-            echo ('<tr><td>' . $row["CountryName"]);
-            echo ('</td><td>' . $row["count"] . '</td></tr>');
+            echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
         }
         $pdo = null;
     }
@@ -71,6 +71,41 @@ function countToDos()
     }
 }
 
+function countMessages()
+{
+    try {
+        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql    = "select MessageDate from EmployeeMessages 
+                    WHERE MessageDate BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
+        $result = $pdo->query($sql);
+        echo ($result->rowCount());
+        $pdo = null;
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
+function outputOrphans()
+{
+    try {
+        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql    = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10 from AdoptionBooks left join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
+        $result = $pdo->query($sql);
+        while ($row = $result->fetch()) {
+            echo ('<tr><td>');
+            echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+            echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
+        }
+        $pdo = null;
+    }
+    catch (PDOException $e) {
+        die($e->getMessage());
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +121,19 @@ function countToDos()
     <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
+    
+    <script>
 
+        window.addEventListener("load", function() {
+            document.getElementById("nation").addEventListener("change", function() {
+               var nation = $("#nation option:selected").text(); //some jQueery
+               var count = document.getElementById("nation").value;
+               document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+    
+            });
+        });
+        
+    </script>
 </head>
 
 <body>
@@ -99,62 +146,83 @@ function countToDos()
                 <div class="mdl-grid">
                     <!-- mdl-cell + mdl-card -->
                     <div class="mdl-cell mdl-cell--4-col mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="lightPeriwinkle">
-                            <h2 class="mdl-card__title-text">Total Vists</h2> </div>
+                        <div class="mdl-card__title" id="fadedPink">
+                            <h2 class="mdl-card__title-text">Visits Per Country</h2> </div>
                         <div class="mdl-card__supporting-text">
                             Top 15 countries:
-                            <select>
-                                <?php dropNations ?>
+                            <select id="nation">
+                                <option disabled selected>Select country</option>
+                                <?php dropNations() ?>
                             </select>
-                        </div>
-                    </div>
-                    <!-- / mdl-cell + mdl-card -->
-                    
-                    
-                    <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="fireBrick">
-                            <h2 class="mdl-card__title-text mdl-color-text--white">Visits</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text">
-                            <i class="material-icons">wc</i>   
-                            <b><?php countVisits() ?></b>
+                            <br><br>
+                            <div id="space"></div>
                         </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->
                     
                     <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="fireBrick">
-                            <h2 class="mdl-card__title-text mdl-color-text--white">Unique Countries</h2>
+                    <div class="mdl-grid mdl-cell--8-col mdl-shadow--2dp">
+                        <div class="mdl-card__title mdl-cell--12-col" id="lightGrayish">
+                            <h2 class="mdl-card__title-text">Totals</h2>
                         </div>
-                        <div class="mdl-card__supporting-text">
-                            <i class="material-icons">public</i>   
-                            <b><?php countCountries() ?></b>
-                        </div>
-                    </div>
-                    <!-- / mdl-cell + mdl-card -->
-                
+                    
+                            <!-- mdl-cell + mdl-card -->
+                            <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
+                                <div class="mdl-card__title" id="midnightBlue">
+                                    <h2 class="mdl-card__title-text mdl-color-text--white">Visits</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    <i class="material-icons">wc</i>   
+                                    <b><?php countVisits() ?></b>
+                                </div>
+                            </div>
+                            <!-- / mdl-cell + mdl-card -->
+                            
+                            <!-- mdl-cell + mdl-card -->
+                            <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
+                                <div class="mdl-card__title" id="fireBrick">
+                                    <h2 class="mdl-card__title-text mdl-color-text--white">Countries</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    <i class="material-icons">public</i>   
+                                    <b><?php countCountries() ?></b>
+                                </div>
+                            </div>
+                            <!-- / mdl-cell + mdl-card -->
+                        
+                            <!-- mdl-cell + mdl-card -->
+                            <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
+                                <div class="mdl-card__title" id="midnightBlue">
+                                    <h2 class="mdl-card__title-text mdl-color-text--white">To-Dos</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    <i class="material-icons">done_all</i>   
+                                    <b><?php countToDos() ?></b>
+                                </div>
+                            </div>
+                            <!-- / mdl-cell + mdl-card -->
+                        
+                            <!-- mdl-cell + mdl-card -->
+                            <div class="mdl-cell mdl-cell--3-col mdl-shadow--2dp">
+                                <div class="mdl-card__title" id="fireBrick">
+                                    <h2 class="mdl-card__title-text mdl-color-text--white">Messages</h2>
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    <i class="material-icons">mail_outline</i>   
+                                    <b><?php countMessages() ?></b>
+                                </div>
+                            </div>
+                            <!-- / mdl-cell + mdl-card -->
+                    </div>     
+                    
                     <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="fireBrick">
-                            <h2 class="mdl-card__title-text mdl-color-text--white">Total Employee To-Dos</h2>
-                        </div>
+                    <div class="mdl-cell mdl-cell--12-col mdl-shadow--2dp">
+                        <div class="mdl-card__title" id="fadedBlue">
+                            <h2 class="mdl-card__title-text">Top Adoptees</h2> </div>
                         <div class="mdl-card__supporting-text">
-                            <i class="material-icons">done_all</i>   
-                            <b><?php countToDos() ?></b>
-                        </div>
-                    </div>
-                    <!-- / mdl-cell + mdl-card -->
-                
-                    <!-- mdl-cell + mdl-card -->
-                    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
-                        <div class="mdl-card__title" id="fireBrick">
-                            <h2 class="mdl-card__title-text mdl-color-text--white">Total Employee To-Dos</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text">
-                            <i class="material-icons">done_all</i>   
-                            <b><?php countMessages() ?></b>
+                            <table class="mdl-data-table mdl-shadow--2dp">
+                                <?php outputOrphans() ?>
+                            </table>
                         </div>
                     </div>
                     <!-- / mdl-cell + mdl-card -->

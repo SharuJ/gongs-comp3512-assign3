@@ -305,7 +305,7 @@ input[type=search] {
 input[type=search]:focus {
   width: 130px;
   background-color: #fff;
-  border-color: #66CC75;
+ border-color: #66CC75; 
 
   -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
   -moz-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
@@ -375,4 +375,7 @@ table {
     background: #FFCDD2 url(error.png) no-repeat 98% center;
     box-shadow: 0 0 5px #FF5252;
     border-color: #FF1744;    
+}
+.valid {
+  border: 3px solid #2ecc71
 }
