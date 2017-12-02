@@ -129,10 +129,41 @@ abstract class TableGateway {
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         $row = $statement->fetch();
         return $row[0];
-        
+    }
+    
+    public function findVisits() {
+        $sql = "select count(*) AS count from BookVisits";
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
+    }
+    
+    public function findNations() {
+        $sql = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
+                    LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
+                    GROUP BY CountryCode";
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
     }
     
     
+    public function findToDos() {
+        $sql = "select DateBy from EmployeeToDo 
+                WHERE DateBy BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
+    }
     
+    public function findMessages() {
+        $sql = "select MessageDate from EmployeeMessages 
+                WHERE MessageDate BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
+    }
+    
+    public function findOrphans() {
+        $sql = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10 from AdoptionBooks left join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll();
+    }
 }
 ?>

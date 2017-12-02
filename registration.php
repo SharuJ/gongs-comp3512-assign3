@@ -70,14 +70,7 @@
                             <label>*Confirm Password:</label>
                             <input class="required" id="confirm-password" name="confirm-password" placeholder="**********" type="password">
                             <hr>
-                            <?php //validating passwords. Checking to see if both passwords match. Not working yet
-                            // if ($_POST["password"] === $_POST["confirm-password"]) {
-                            //       // success!
-                            //     }
-                            //     else {
-                            //       echo 'failed :(';
-                            //     }
-                            ?>
+                            
                             
                             <button name="submit" type="submit" value=" Submit " class="mdl-button mdl-js-button" id="lightPeriwinkle">Submit</button>
                             

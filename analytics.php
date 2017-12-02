@@ -1,108 +1,59 @@
 <?php
 require_once("includes/config.php");
+include "includes/checkSession.php";
 
 function dropNations()
 {
-    //I THINK WE GOTTA PUT THIS IN A JSON SERVICE
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
-                    LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-                    GROUP BY CountryCode ORDER BY count desc limit 15;";
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) {
-            echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    include "includes/config.php";
+    $visitsDb = new VisitsGateway($connection);
+    $visit = $visitsDb->findWithFilter();
+    foreach ($visit as $row) 
+        echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
+    
 }
 
 function countVisits()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select count(*) AS count from BookVisits;";
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) {
-            echo ($row["count"]);
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    include "includes/config.php";
+    $visitsDb = new VisitsGateway($connection);
+    $visit = $visitsDb->findVisits();
+    foreach ($visit as $row) 
+        echo ($row["count"]);
 }
 
 function countCountries()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
-                    LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-                    GROUP BY CountryCode";
-        $result = $pdo->query($sql);
-        echo ($result->rowCount());
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    include "includes/config.php";
+    $visitsDb = new VisitsGateway($connection);
+    $visit = $visitsDb->findNations();
+    echo (sizeof($visit));
 }
 
 function countToDos()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select DateBy from EmployeeToDo 
-                    WHERE DateBy BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
-        $result = $pdo->query($sql);
-        echo ($result->rowCount());
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    include "includes/config.php";
+    $toDoDb = new EmployeeToDoGateway($connection);
+    $toDo = $toDoDb->findToDos();
+    echo (sizeof($toDo));
 }
 
 function countMessages()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select MessageDate from EmployeeMessages 
-                    WHERE MessageDate BETWEEN '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
-        $result = $pdo->query($sql);
-        echo ($result->rowCount());
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
-    }
+    include "includes/config.php";
+    $messagesDb = new MessagesGateway($connection);
+    $message = $messagesDb->findMessages();
+    echo (sizeof($message));
 }
 
 function outputOrphans()
 {
-    try {
-        $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql    = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10 from AdoptionBooks left join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
-        $result = $pdo->query($sql);
-        while ($row = $result->fetch()) {
-            echo ('<tr><td>');
-            echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
-            echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
-        }
-        $pdo = null;
-    }
-    catch (PDOException $e) {
-        die($e->getMessage());
+    include "includes/config.php";
+    $adoptionDb = new AdoptionGateway($connection);
+    $orphan = $adoptionDb->findOrphans();
+    foreach ($orphan as $row)  {
+        echo ('<tr><td>');
+        echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+        echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
     }
 }
 
@@ -118,7 +69,7 @@ function outputOrphans()
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     
@@ -130,6 +81,16 @@ function outputOrphans()
                var count = document.getElementById("nation").value;
                document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
     
+            });
+        });
+        
+        $(document).ready(function(){
+            var nations = $("#nation");
+            $.getJSON("webService.php", function(data){
+                $.each(data,function(key, val){
+                    var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+                    nations.append(country);
+                });
             });
         });
         
