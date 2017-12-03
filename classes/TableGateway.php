@@ -132,7 +132,7 @@ abstract class TableGateway {
     }
     
     public function findVisits() {
-        $sql = "select count(*) AS count from BookVisits";
+        $sql = "select count(*) AS count from BookVisits; //where DateViewed between '2017-06-00 00:00:00' and '2017-06-30 23:59:00'";
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
     }
@@ -140,9 +140,13 @@ abstract class TableGateway {
     public function findNations() {
         $sql = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
                     LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-                    GROUP BY CountryCode";
+                    GROUP BY CountryCode"; //ORDER BY count DESC
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
-        return $statement->fetchAll();
+        return $statement->fetchAll();  
+        
+        //     $sql    = "select BookVisits.CountryCode as CountryCode, CountryName, count(*) AS count from BookVisits 
+    //                 LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
+    //                 GROUP BY CountryCode ORDER BY count DESC";
     }
     
     
@@ -164,6 +168,10 @@ abstract class TableGateway {
         $sql = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10 from AdoptionBooks left join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
-    }
+    } 
+    
+   
+    
+    
 }
 ?>

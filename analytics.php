@@ -2,48 +2,48 @@
 require_once("includes/config.php");
 include "includes/checkSession.php";
 
-function dropNations()
-{
-    include "includes/config.php";
-    $visitsDb = new VisitsGateway($connection);
-    $visit = $visitsDb->findWithFilter();
-    foreach ($visit as $row) 
-        echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
+// function dropNations()
+// {
+//     include "includes/config.php";
+//     $visitsDb = new VisitsGateway($connection);
+//     $visit = $visitsDb->findWithFilter();
+//     foreach ($visit as $row) 
+//         echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
     
-}
+// }
 
-function countVisits()
-{
-    include "includes/config.php";
-    $visitsDb = new VisitsGateway($connection);
-    $visit = $visitsDb->findVisits();
-    foreach ($visit as $row) 
-        echo ($row["count"]);
-}
+// function countVisits()
+// {
+//     include "includes/config.php";
+//     $visitsDb = new VisitsGateway($connection);
+//     $visit = $visitsDb->findVisits();
+//     foreach ($visit as $row) 
+//         echo ($row["count"]);
+// }
 
-function countCountries()
-{
-    include "includes/config.php";
-    $visitsDb = new VisitsGateway($connection);
-    $visit = $visitsDb->findNations();
-    echo (sizeof($visit));
-}
+// function countCountries()
+// {
+//     include "includes/config.php";
+//     $visitsDb = new VisitsGateway($connection);
+//     $visit = $visitsDb->findNations();
+//     echo (sizeof($visit));
+// }
 
-function countToDos()
-{
-    include "includes/config.php";
-    $toDoDb = new EmployeeToDoGateway($connection);
-    $toDo = $toDoDb->findToDos();
-    echo (sizeof($toDo));
-}
+// function countToDos()
+// {
+//     include "includes/config.php";
+//     $toDoDb = new EmployeeToDoGateway($connection);
+//     $toDo = $toDoDb->findToDos();
+//     echo (sizeof($toDo));
+// }
 
-function countMessages()
-{
-    include "includes/config.php";
-    $messagesDb = new MessagesGateway($connection);
-    $message = $messagesDb->findMessages();
-    echo (sizeof($message));
-}
+// function countMessages()
+// {
+//     include "includes/config.php";
+//     $messagesDb = new MessagesGateway($connection);
+//     $message = $messagesDb->findMessages();
+//     echo (sizeof($message));
+// }
 
 function outputOrphans()
 {
@@ -66,7 +66,7 @@ function outputOrphans()
     <title>Analytics</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -79,6 +79,7 @@ function outputOrphans()
             document.getElementById("nation").addEventListener("change", function() {
                var nation = $("#nation option:selected").text(); //some jQueery
                var count = document.getElementById("nation").value;
+               
                document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
     
             });
@@ -86,13 +87,54 @@ function outputOrphans()
         
         $(document).ready(function(){
             var nations = $("#nation");
-            $.getJSON("webService.php", function(data){
+            $.getJSON("service-topCountries.php", function(data){
+                
                 $.each(data,function(key, val){
                     var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
                     nations.append(country);
                 });
+            }); 
+            
+            
+            $.getJSON("service-totals.php", function(data){
+                var place = $("#cvisits");
+                var place1 = $("#ccountries");
+                var place2 = $("#ctodo");
+                var place3 = $("#cmessage")
+                
+                //$.each(data,function(key, val){
+                    //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+                    // $("#visits").val(val.Visits);
+                    
+                    place.text(data[0].Visits); 
+                    var countC = data[1].Countries;
+                    place1.text(countC);
+                    place2.text(data[2].Todos);
+                    place3.text(data[3].Messages);
+                    
+                //});
             });
-        });
+            
+            // $.getJSON("service-totals.php", function(data){
+            //     var placee = $("#ccountries");
+            //     //data[1];
+            //   //$.e(data,function(key, val){
+            //         //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+            //         // $("#visits").val(val.Visits);
+            //         //$row.put("Countries")
+            //         //alert(data[1].Countries);
+            //         var countC = data[1].Countries;
+            //         //{"visits": 10000}, {"countries": 31}
+            //         //var tt = textNode(countC);
+            //         //alert(countC);
+            //         alert(placee.text());
+                    
+            //   //});
+            // });
+            
+        }); 
+        
+        
         
     </script>
 </head>
@@ -113,7 +155,7 @@ function outputOrphans()
                             Top 15 countries:
                             <select id="nation">
                                 <option disabled selected>Select country</option>
-                                <?php dropNations() ?>
+                                
                             </select>
                             <br><br>
                             <div id="space"></div>
@@ -134,7 +176,7 @@ function outputOrphans()
                                 </div>
                                 <div class="mdl-card__supporting-text">
                                     <i class="material-icons">wc</i>   
-                                    <b><?php countVisits() ?></b>
+                                    <b id="cvisits"></b> 
                                 </div>
                             </div>
                             <!-- / mdl-cell + mdl-card -->
@@ -146,7 +188,8 @@ function outputOrphans()
                                 </div>
                                 <div class="mdl-card__supporting-text">
                                     <i class="material-icons">public</i>   
-                                    <b><?php countCountries() ?></b>
+                                    <b id="ccountries"></b> 
+                                   
                                 </div>
                             </div>
                             <!-- / mdl-cell + mdl-card -->
@@ -158,7 +201,9 @@ function outputOrphans()
                                 </div>
                                 <div class="mdl-card__supporting-text">
                                     <i class="material-icons">done_all</i>   
-                                    <b><?php countToDos() ?></b>
+                                    <b id="ctodo"></b> 
+                                    
+                                    
                                 </div>
                             </div>
                             <!-- / mdl-cell + mdl-card -->
@@ -170,7 +215,7 @@ function outputOrphans()
                                 </div>
                                 <div class="mdl-card__supporting-text">
                                     <i class="material-icons">mail_outline</i>   
-                                    <b><?php countMessages() ?></b>
+                                    <b id="cmessage"></b>
                                 </div>
                             </div>
                             <!-- / mdl-cell + mdl-card -->
