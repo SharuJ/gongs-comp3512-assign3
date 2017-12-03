@@ -170,8 +170,16 @@ abstract class TableGateway {
         return $statement->fetchAll();
     } 
     
+    public function serviceFindCountryVisits($cc){
+        
+        $sql = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode WHERE BookVisits.CountryCode = '$cc'";
+        echo($sql);
+        $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+         return $statement->fetchAll();
+    }
    
+     // select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode WHERE BookVisits. CountryCode = 'CA'
     
-    
+
 }
 ?>

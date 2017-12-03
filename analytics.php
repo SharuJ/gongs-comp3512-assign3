@@ -45,17 +45,17 @@ include "includes/checkSession.php";
 //     echo (sizeof($message));
 // }
 
-function outputOrphans()
-{
-    include "includes/config.php";
-    $adoptionDb = new AdoptionGateway($connection);
-    $orphan = $adoptionDb->findOrphans();
-    foreach ($orphan as $row)  {
-        echo ('<tr><td>');
-        echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
-        echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
-    }
-}
+// function outputOrphans()
+// {
+//     include "includes/config.php";
+//     $adoptionDb = new AdoptionGateway($connection);
+//     $orphan = $adoptionDb->findOrphans();
+//     foreach ($orphan as $row)  {
+//         echo ('<tr><td>');
+//         echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+//         echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
+//     }
+// }
 
 ?>
 
@@ -74,13 +74,16 @@ function outputOrphans()
     <link rel="stylesheet" href="css/styles.css">
     
     <script>
-
+       var countryCode;
         window.addEventListener("load", function() {
             document.getElementById("nation").addEventListener("change", function() {
                var nation = $("#nation option:selected").text(); //some jQueery
-               var count = document.getElementById("nation").value;
-               
-               document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+               var url = "service-countryVisits.php";
+               //var param = "{cc:" + $("#nation").val();
+               var param = "cc=" + nation;
+               //countryCode = document.getElementById("nation").value;
+               //alert(countryCode);
+               //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
     
             });
         });
@@ -90,7 +93,8 @@ function outputOrphans()
             $.getJSON("service-topCountries.php", function(data){
                 
                 $.each(data,function(key, val){
-                    var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+                    //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+                     var country = $('<option value="' + val.CountryCode + '">' + val.CountryName + '</option>'  );
                     nations.append(country);
                 });
             }); 
@@ -115,22 +119,36 @@ function outputOrphans()
                 //});
             });
             
-            // $.getJSON("service-totals.php", function(data){
-            //     var placee = $("#ccountries");
-            //     //data[1];
-            //   //$.e(data,function(key, val){
-            //         //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
-            //         // $("#visits").val(val.Visits);
-            //         //$row.put("Countries")
-            //         //alert(data[1].Countries);
-            //         var countC = data[1].Countries;
-            //         //{"visits": 10000}, {"countries": 31}
-            //         //var tt = textNode(countC);
-            //         //alert(countC);
-            //         alert(placee.text());
+            $.getJSON("service-topAdoptedBooks.php", function(data){
+                   var place4 = $("#table1");
+               
+                $.each(data,function(key, val){
                     
-            //   //});
-            // });
+                    var output = ('<tr><td>' + '<img src="/book-images/thumb/' + val.Isbn10 + '.jpg" alt="book cover"></td>' + '<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' + val.Isbn10 + '"><b>' + val.Title + '</b><br></a>Adoptions: ' + val.Count + '</td></tr>');
+     
+   
+                    place4.append(output);
+                    
+                });
+            });
+            
+            
+          
+           // $.getJSON("service-countryVisits.php",{id : 2},countryCode, function(data){
+           $.getJSON(url, param, function(data){
+                 var place5 = $("#space");
+               
+                $.each(data,function(key, val){
+                    
+                var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
+     
+                //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+                    place5.append(output);
+                    //alert(countryCode);
+                });
+            });
+            
+          
             
         }); 
         
@@ -226,8 +244,8 @@ function outputOrphans()
                         <div class="mdl-card__title" id="fadedBlue">
                             <h2 class="mdl-card__title-text">Top Adoptees</h2> </div>
                         <div class="mdl-card__supporting-text">
-                            <table class="mdl-data-table mdl-shadow--2dp">
-                                <?php outputOrphans() ?>
+                            <table id="table1" class="mdl-data-table mdl-shadow--2dp">
+                               
                             </table>
                         </div>
                     </div>
