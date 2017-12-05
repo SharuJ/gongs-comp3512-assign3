@@ -173,7 +173,7 @@ abstract class TableGateway {
     public function serviceFindCountryVisits($cc){
         
         $sql = "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode WHERE BookVisits.CountryCode = '$cc'";
-        echo($sql);
+        //echo($sql);
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
          return $statement->fetchAll();
     }

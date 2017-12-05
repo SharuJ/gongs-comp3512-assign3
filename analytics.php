@@ -80,7 +80,7 @@ include "includes/checkSession.php";
                var nation = $("#nation option:selected").text(); //some jQueery
                var url = "service-countryVisits.php";
                //var param = "{cc:" + $("#nation").val();
-               var param = "cc=" + nation;
+               //var param = "cc=" + nation;
                //countryCode = document.getElementById("nation").value;
                //alert(countryCode);
                //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
@@ -89,7 +89,35 @@ include "includes/checkSession.php";
         });
         
         $(document).ready(function(){
+    
+              
+            $("#visted").on('submit', function(e){
+                e.preventDefault();
+                alert("hello");
+                // assisted by the website: https://api.jquery.com/serialize/
+                console.log($(this).serialize());
+                $.getJSON("service-countryVisits.php?" + $(this).serialize(), function(data){
+                 var place5 = $("#space");
+               console.log(data);
+                //output.remove();
+                $("#space").empty();
+                $.each(data,function(key, val){
+                //var place5 = $("#space");
+                var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
+     
+                //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+                    place5.append(output);
+                    //alert(countryCode);
+                });
+               
+                
+            });
+            
+            });
+            
+            
             var nations = $("#nation");
+            //assisted by the website : http://api.jquery.com/jquery.getjson/
             $.getJSON("service-topCountries.php", function(data){
                 
                 $.each(data,function(key, val){
@@ -99,7 +127,7 @@ include "includes/checkSession.php";
                 });
             }); 
             
-            
+            //assisted by the website : http://api.jquery.com/jquery.getjson/
             $.getJSON("service-totals.php", function(data){
                 var place = $("#cvisits");
                 var place1 = $("#ccountries");
@@ -118,7 +146,7 @@ include "includes/checkSession.php";
                     
                 //});
             });
-            
+            //assisted by the website : http://api.jquery.com/jquery.getjson/
             $.getJSON("service-topAdoptedBooks.php", function(data){
                    var place4 = $("#table1");
                
@@ -135,19 +163,19 @@ include "includes/checkSession.php";
             
           
            // $.getJSON("service-countryVisits.php",{id : 2},countryCode, function(data){
-           $.getJSON(url, param, function(data){
-                 var place5 = $("#space");
+        //   $.getJSON(url, param, function(data){
+        //          var place5 = $("#space");
                
-                $.each(data,function(key, val){
+        //         $.each(data,function(key, val){
                     
-                var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
+        //         var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
      
-                //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
-                    place5.append(output);
-                    //alert(countryCode);
-                });
-            });
-            
+        //         //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+        //             place5.append(output);
+        //             //alert(countryCode);
+        //         });
+        //     });
+          
           
             
         }); 
@@ -171,10 +199,13 @@ include "includes/checkSession.php";
                             <h2 class="mdl-card__title-text">Visits Per Country</h2> </div>
                         <div class="mdl-card__supporting-text">
                             Top 15 countries:
-                            <select id="nation">
-                                <option disabled selected>Select country</option>
-                                
+                            <form id="visted" method="GET" action="service-countryVisits.php">
+                            <select name="CountryCode" id="nation">
+                                <option disabled selected>Select country</option> 
+                                <!--<input type="submit" value="Submit">-->
                             </select>
+                                 <input type="submit" value="Submit">
+                            </form>
                             <br><br>
                             <div id="space"></div>
                         </div>

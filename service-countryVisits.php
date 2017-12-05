@@ -4,10 +4,12 @@ require_once("includes/config.php");
 
 
     $row = array();
-  $cc = $_GET['cc'];
-  $countryDetails = findCountryDetails($cc);
+  $cc = $_GET['CountryCode'];
   
   
+if(isset($_GET['CountryCode'])){
+    //$row = array();
+  $countryDetails = findCountryDetails($_GET['CountryCode']);
     foreach($countryDetails as $result){
         $row[] = [
             "CountryCode" => $result["CountryCode"],
@@ -29,7 +31,7 @@ require_once("includes/config.php");
         //     "Messages" => $topMessage
         //      ];
     
-    
+}
     header('Content-Type: application/json');
     echo json_encode($row);
     
@@ -42,7 +44,9 @@ require_once("includes/config.php");
     // foreach ($visit as $row) 
     //     echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
     
-}
+} 
+
+
 
 // function countVisits()
 // {
