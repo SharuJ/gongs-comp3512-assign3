@@ -40,7 +40,7 @@ if (isset($_POST['submit']))
         if (empty($login))
         {
             $error = "Incorrect username or password!";
-          
+         
           echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
            
             
@@ -80,8 +80,9 @@ if (isset($_POST['submit']))
                 else
                 {
                     $error = "Incorrect username or password!";
-                    
-                      echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
+                     
+                            
+                     echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
                     
                 }
             }

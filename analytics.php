@@ -45,17 +45,17 @@ include "includes/checkSession.php";
 //     echo (sizeof($message));
 // }
 
-// function outputOrphans()
-// {
-//     include "includes/config.php";
-//     $adoptionDb = new AdoptionGateway($connection);
-//     $orphan = $adoptionDb->findOrphans();
-//     foreach ($orphan as $row)  {
-//         echo ('<tr><td>');
-//         echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
-//         echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Adoptions: " . $row[count] . "</td></tr>");
-//     }
-// }
+function outputOrphans()
+{
+    include "includes/config.php";
+    $adoptionDb = new AdoptionGateway($connection);
+    $orphan = $adoptionDb->findOrphans();
+    foreach ($orphan as $row)  {
+        echo ('<tr><td>');
+        echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+        echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Universities: " . $row[count] . "<br>Total quantity: " . $row[quant] . "</td></tr>");
+    }
+}
 
 ?>
 
@@ -91,9 +91,9 @@ include "includes/checkSession.php";
         $(document).ready(function(){
     
               
-            $("#visted").on('submit', function(e){
+            $("#visted").on('change', function(e){
                 e.preventDefault();
-                alert("hello");
+                //alert("hello"); 
                 // assisted by the website: https://api.jquery.com/serialize/
                 console.log($(this).serialize());
                 $.getJSON("service-countryVisits.php?" + $(this).serialize(), function(data){
@@ -113,7 +113,7 @@ include "includes/checkSession.php";
                 
             });
             
-            });
+        });
             
             
             var nations = $("#nation");
@@ -204,7 +204,7 @@ include "includes/checkSession.php";
                                 <option disabled selected>Select country</option> 
                                 <!--<input type="submit" value="Submit">-->
                             </select>
-                                 <input type="submit" value="Submit">
+                                 <!--<input type="submit" value="Submit">-->
                             </form>
                             <br><br>
                             <div id="space"></div>
@@ -276,7 +276,7 @@ include "includes/checkSession.php";
                             <h2 class="mdl-card__title-text">Top Adoptees</h2> </div>
                         <div class="mdl-card__supporting-text">
                             <table id="table1" class="mdl-data-table mdl-shadow--2dp">
-                               
+                               <?php outputOrphans() ?>
                             </table>
                         </div>
                     </div>

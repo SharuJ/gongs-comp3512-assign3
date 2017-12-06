@@ -165,7 +165,7 @@ abstract class TableGateway {
     }
     
     public function findOrphans() {
-        $sql = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10 from AdoptionBooks left join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
+        $sql = "select count(AdoptionID) as count, AdoptionBooks.bookId, title, isbn10, sum(Quantity) as quant from AdoptionBooks inner join Books on Books.BookID = AdoptionBooks.BookID group by BookId order by count desc limit 10";
         $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
         return $statement->fetchAll();
     } 

@@ -1,7 +1,7 @@
 <?php
-    
+    //I uncommented this now
     // dashboard does not require sign in
-    //include "includes/checkSession.php"; 
+    include "includes/checkSession.php"; 
 
 ?>
 

@@ -30,28 +30,40 @@
             </div>
             
             <script> 
-                // Get the modal
-                var modal = document.getElementById('myModal');
+                // // Get the modal
+                // var modal = document.getElementById('myModal');
                 
-                // Get the image and insert it inside the modal - use its "alt" text as a caption
-                var img = document.getElementById('bookCover');
-                var modalImg = document.getElementById("img01");
+                // // Get the image and insert it inside the modal - use its "alt" text as a caption
+                // var img = document.getElementById('bookCover');
+                // var modalImg = document.getElementById("img01");
                 
-                img.onclick = function() {
-                    modal.style.display = "block";
-                    // there is a parsing error, but it still runs. when I print out the commented alert it shows the right path for the large image
-                    modalImg.src = <?php echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'"?> ;
-                    //alert(modalImg.src);
-                }
+                // img.onclick = function() {
+                //     modal.style.display = "block";
+                //     // there is a parsing error, but it still runs. when I print out the commented alert it shows the right path for the large image
+                    // modalImg.src = <?php //echo "'/book-images/large/" . $row["ISBN10"] . ".jpg'"?> ;
+                //     //alert(modalImg.src);
+                // }
                 
-                // Get the <span> element that closes the modal
-                var span = document.getElementById("img01");
-                //document.getElementsByID("close")[0];
+                // // Get the <span> element that closes the modal
+                // var span = document.getElementById("img01");
+                // //document.getElementsByID("close")[0];
                 
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() { 
-                    modal.style.display = "none";
-                }
+                // // When the user clicks on <span> (x), close the modal
+                // span.onclick = function() { 
+                //     modal.style.display = "none";
+                // }
+                   
+                       $('#bookCover').click(function() {  
+                            var img = $(this).attr("src");
+                            var appear = "<div id='appearondiv' onclick='closeImg()'></div>";
+                            $('body').append('appear');
+                           
+                        });
+                    
+                        function closeImg() {
+                            $('#appearondiv').remove()
+                        }
+                
                 
             </script>
      

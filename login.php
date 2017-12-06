@@ -38,7 +38,8 @@
                         <h2 class="mdl-card__title-text">Login</h2> </div>
                     <div class="mdl-card__supporting-text">
  
-                        <form action="./signin.php?name=<?php echo $_GET['name'] ?>" method="post">
+                        <form id="lgin" name="login" action="./signin.php?name=<?php echo $_GET['name'] ?>" method="post">
+                            <div id="msg"></div>
                             <label>Username:</label>
                             <!--remove values before submission-->
                             <input id="username" name="username" placeholder="Enter Username" type="text" required value="stanisław.wójcik@wp.pl">
