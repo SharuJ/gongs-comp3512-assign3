@@ -15,7 +15,7 @@
     <title>Page Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
     <link rel="stylesheet" href="css/styles.css">
@@ -47,7 +47,7 @@
                             <label>Password:</label>
                             <input id="password" name="password" placeholder="**********" type="password" required value="abcd1234">
                             <hr>
-                            <?php echo $error ?>
+                            <?php echo ("ERROR:" . $_POST["error"]) ?>
                             <br>
                             <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
                             

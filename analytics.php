@@ -45,17 +45,17 @@ include "includes/checkSession.php";
 //     echo (sizeof($message));
 // }
 
-function outputOrphans()
-{
-    include "includes/config.php";
-    $adoptionDb = new AdoptionGateway($connection);
-    $orphan = $adoptionDb->findOrphans();
-    foreach ($orphan as $row)  {
-        echo ('<tr><td>');
-        echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
-        echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Universities: " . $row[count] . "<br>Total quantity: " . $row[quant] . "</td></tr>");
-    }
-}
+// function outputOrphans()
+// {
+//     include "includes/config.php";
+//     $adoptionDb = new AdoptionGateway($connection);
+//     $orphan = $adoptionDb->findOrphans();
+//     foreach ($orphan as $row)  {
+//         echo ('<tr><td>');
+//         echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+//         echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Universities: " . $row[count] . "<br>Total quantity: " . $row[quant] . "</td></tr>");
+//     }
+// }
 
 ?>
 
@@ -152,9 +152,9 @@ function outputOrphans()
                
                 $.each(data,function(key, val){
                     
-                    var output = ('<tr><td>' + '<img src="/book-images/thumb/' + val.Isbn10 + '.jpg" alt="book cover"></td>' + '<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' + val.Isbn10 + '"><b>' + val.Title + '</b><br></a>Adoptions: ' + val.Count + '</td></tr>');
+                    var output = ('<tr><td>' + '<img src="/book-images/thumb/' + val.Isbn10 + '.jpg" alt="book cover"></td>' + '<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' + val.Isbn10 + '"><b>' + val.Title + '</b><br></a>Universities: ' + val.Count + '<br>Total quantity: ' + val.Quantity + '</td></tr>');
      
-   
+                                                                                                                                                                                                                                                                                                                   
                     place4.append(output);
                     
                 });
@@ -276,7 +276,7 @@ function outputOrphans()
                             <h2 class="mdl-card__title-text">Top Adoptees</h2> </div>
                         <div class="mdl-card__supporting-text">
                             <table id="table1" class="mdl-data-table mdl-shadow--2dp">
-                               <?php outputOrphans() ?>
+                              
                             </table>
                         </div>
                     </div>

@@ -178,6 +178,20 @@ abstract class TableGateway {
          return $statement->fetchAll();
     }
    
+   public function checkUser($ema){
+       $sql = "select UserID, UserName from UsersLogin where UserName = '$ema'"; 
+       //echo($sql);
+       $statement = DatabaseHelper::runQuery($this->connection, $sql, null);
+        return $statement->fetchAll(); 
+        
+        //$count = mysql_num_rows($statement);
+        //echo($count);
+        //return $count;
+        
+        
+        
+         
+   }
      // select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode WHERE BookVisits. CountryCode = 'CA'
     
 

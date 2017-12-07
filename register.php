@@ -73,6 +73,12 @@
      //window.addEventListener("submit", checkPasswords);
       //window.on("submit", checkPasswords);
     
+//     window.addEventListener("load",	function(){
+//     // var message = document.querySelector("#error"); 
+//      //message.innerHTML = 'The UserName already exists';
+     
+//      document.getElementById("error").innerHTML = "HI";
+//  });    
 
 </script> 
 
@@ -83,10 +89,12 @@ session_start(); // Starting Session
 $error = ''; // Variable To Store Error Message
 if (isset($_POST['submit']))
 {
+    //print_r($_POST);
     
         include "includes/config.php";
         //$userLoginDb = new UsersLoginGateway($connection); 
         $regDb = new RegistrationGateway($connection);
+        $uloginDb = new UsersLoginGateway($connection);
         date_default_timezone_set("Canada/Mountain"); 
         $userN = $_POST['firstname'];
         $lastN = $_POST['lastname'];
@@ -105,14 +113,35 @@ if (isset($_POST['submit']))
         $dateLastModified = date("Y-m-d");
         $finalPass = MD5($userPass.$salt);
        
-       
-       
+       $checkU = $uloginDb->checkUser($ema);
+       //echo('<script> console.log($checkU.length); </script>');
+       //echo($checkU);
+        if(count($checkU) > 0){
         //echo ( $lastN );
         //$sql = $regDb->getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
-         $num =  $regDb->findMaxIdNum();
+        // $num =  $regDb->findMaxIdNum();
         //echo($num);
-        $num++;
-        
+       // $num++;
+        //  $_SESSION['uN'] = $_POST['firstname'];
+        //  $_SESSION['lN'] = $_POST['lastname'];
+        //  $_SESSION['aD'] = $_POST['address'];
+        //  $_SESSION['cI'] = $_POST['city'];
+        //  $_SESSION['rG'] = $_POST['region'];
+        //  $_SESSION['cN'] = $_POST['country'];
+        //  $_SESSION['pT'] = $_POST['postal'];
+        //  $_SESSION['pH'] = $_POST['phone'];
+         //$_SESSION['Em'] = $_POST['firstname'];
+    //   $checkU = $uloginDb->checkUser($ema);
+    //   echo('<script> console.log($checkU.length); </script>');
+      
+           
+          
+           header ('Location: registration.php' );
+           //echo('<script> alert("hi");</script>');
+           
+       }else{
+         $num =  $regDb->findMaxIdNum();
+         $num++;
         $insert = $regDb->insertUser($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
         
         //echo($insert); 
@@ -130,8 +159,8 @@ if (isset($_POST['submit']))
        else{
            echo('<script> checkPasswords(); </script>');
        }
-        
-       
+    
+ }
    
 }
 ?>

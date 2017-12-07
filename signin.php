@@ -23,12 +23,12 @@
 <?php
 include 'includes/config.php';
 session_start(); // Starting Session
-$error = ''; // Variable To Store Error Message
+$_POST["error"] = "1";
 if (isset($_POST['submit']))
 {
     if (empty($_POST['username']) || empty($_POST['password']))
     {
-        $error = "Incorrect Password or Username";
+        $_POST["error"] = "2";
     }
     else
     {
@@ -39,11 +39,9 @@ if (isset($_POST['submit']))
         $login = $userLoginDb->getByForeignKey($username);
         if (empty($login))
         {
-            $error = "Incorrect username or password!";
-         
-          echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
-           
-            
+            //echo ("<script> alert('".$_POST["error"]."'); location.href= 'login.php'; </script>");
+            $_POST["error"] = "3";
+            header("Location: login.php");
         }
         else
         {
@@ -73,13 +71,14 @@ if (isset($_POST['submit']))
                         }
                         else
                         {
+                            $_POST["error"] = "4";
                             header("Location: index.php"); // Redirecting To Other Page
                         }
                     }
                 }
                 else
                 {
-                    $error = "Incorrect username or password!";
+                    $_POST["error"] = "5";
                     header("Location: login.php");
                             
                     //  echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");

@@ -12,7 +12,8 @@ require_once("includes/config.php");
             "Title" => $result["title"],
             "Isbn10" => $result["isbn10"],
             // "CountryName" => $result["CountryName"],
-            "Count" => $result["count"]
+            "Count" => $result["count"],
+            "Quantity" => $result["quant"]
             ];
     }
     
@@ -54,5 +55,15 @@ function outputOrphans()
     // }
 }
 
-
+// function outputOrphans()
+// {
+//     include "includes/config.php";
+//     $adoptionDb = new AdoptionGateway($connection);
+//     $orphan = $adoptionDb->findOrphans();
+//     foreach ($orphan as $row)  {
+//         echo ('<tr><td>');
+//         echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
+//         echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Universities: " . $row[count] . "<br>Total quantity: " . $row[quant] . "</td></tr>");
+//     }
+// }
 ?>
