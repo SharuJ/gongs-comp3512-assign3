@@ -23,12 +23,12 @@
 <?php
 include 'includes/config.php';
 session_start(); // Starting Session
-$_POST["error"] = "1";
+// $_POST["error"] = "1";
 if (isset($_POST['submit']))
 {
     if (empty($_POST['username']) || empty($_POST['password']))
     {
-        $_POST["error"] = "2";
+        // $_POST["error"] = "2";
     }
     else
     {
@@ -40,7 +40,7 @@ if (isset($_POST['submit']))
         if (empty($login))
         {
             //echo ("<script> alert('".$_POST["error"]."'); location.href= 'login.php'; </script>");
-            $_POST["error"] = "3";
+            //$_POST["error"] = "3";
             header("Location: login.php");
         }
         else
@@ -71,14 +71,14 @@ if (isset($_POST['submit']))
                         }
                         else
                         {
-                            $_POST["error"] = "4";
+                           // $_POST["error"] = "4";
                             header("Location: index.php"); // Redirecting To Other Page
                         }
                     }
                 }
                 else
                 {
-                    $_POST["error"] = "5";
+                   // $_POST["error"] = "5";
                     header("Location: login.php");
                             
                     //  echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
