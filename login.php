@@ -47,6 +47,8 @@
                             <label>Password:</label>
                             <input id="password" name="password" placeholder="**********" type="password" required value="abcd1234">
                             <hr>
+                            <?php echo $error ?>
+                            <br>
                             <button name="submit" type="submit" value=" Login " class="mdl-button mdl-js-button" id="lightPeriwinkle">Login</button>
                             
                             </form>
