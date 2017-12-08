@@ -49,9 +49,10 @@
                         // assisted by: https://developers.google.com/maps/documentation/javascript/ to do the google map
                         function initMap()
                         {
+                            //Changing Longitude and Latitude to floating point numbers
                             var latitude = parseFloat("<?php echo $row['Latitude']; ?>");
                             var longitude = parseFloat("<?php echo $row['Longitude']; ?>");
-                            var uluru = {lat: latitude, lng: longitude };
+                            var uluru = {lat: latitude, lng: longitude }; //Setting position
                             var map = new google.maps.Map(document.getElementById('map'), {
                             zoom: 12,
                             center: uluru

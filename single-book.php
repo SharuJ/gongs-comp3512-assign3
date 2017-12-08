@@ -77,7 +77,8 @@
         
             
 <script> 
-                        
+     
+    //Image enlarging now does not use Modal. 
     window.addEventListener("load", function() {
         document.getElementById("bookCover").addEventListener("click", function() {
             document.getElementById("popup").style.display = "block";

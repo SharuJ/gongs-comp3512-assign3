@@ -4,10 +4,11 @@ class VisitsGateway extends TableGateway {
         parent::__construct($connect);
     }
     
+    // Subquery thanks to https://stackoverflow.com/questions/7786570/get-another-order-after-limit-with-mysql
     protected function getSelectStatement() {
-        return "select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
+        return "select top.CountryCode, CountryName, count from (select BookVisits.CountryCode, CountryName, count(*) AS count from BookVisits 
                 LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-                GROUP BY CountryCode";
+                GROUP BY CountryCode order by count desc limit 15) as top";
     }
     
     protected function getInsertStatement($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema){
@@ -30,7 +31,7 @@ class VisitsGateway extends TableGateway {
     }
     
     protected function orderStatement() {
-        return " ORDER BY count desc limit 15";
+        return " ORDER BY CountryName";
     }
     
 }

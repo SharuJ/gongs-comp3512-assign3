@@ -90,7 +90,8 @@ include "includes/checkSession.php";
         
         $(document).ready(function(){
     
-              
+            
+            //Displays the coutry selected from the dropdown and the total visits for that country.
             $("#visted").on('change', function(e){
                 e.preventDefault();
                 //alert("hello"); 
@@ -118,6 +119,7 @@ include "includes/checkSession.php";
             
             var nations = $("#nation");
             //assisted by the website : http://api.jquery.com/jquery.getjson/
+            //function that appends countries to the Countries dropdown box, and setting each country's value to its country code
             $.getJSON("service-topCountries.php", function(data){
                 
                 $.each(data,function(key, val){
@@ -128,6 +130,7 @@ include "includes/checkSession.php";
             }); 
             
             //assisted by the website : http://api.jquery.com/jquery.getjson/
+            //Loading JSON data from the .php page
             $.getJSON("service-totals.php", function(data){
                 var place = $("#cvisits");
                 var place1 = $("#ccountries");
@@ -138,6 +141,7 @@ include "includes/checkSession.php";
                     //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
                     // $("#visits").val(val.Visits);
                     
+                //Accessing Visits, Countries, Todos, and Messages from the returned JSON data
                     place.text(data[0].Visits); 
                     var countC = data[1].Countries;
                     place1.text(countC);
@@ -150,11 +154,12 @@ include "includes/checkSession.php";
             $.getJSON("service-topAdoptedBooks.php", function(data){
                    var place4 = $("#table1");
                
+               //Display Top Adoptees with image linking to Single Book page, 
+               //number of universities that adopted the book and the quantity
                 $.each(data,function(key, val){
                     
                     var output = ('<tr><td>' + '<img src="/book-images/thumb/' + val.Isbn10 + '.jpg" alt="book cover"></td>' + '<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' + val.Isbn10 + '"><b>' + val.Title + '</b><br></a>Universities: ' + val.Count + '<br>Total quantity: ' + val.Quantity + '</td></tr>');
      
-                                                                                                                                                                                                                                                                                                                   
                     place4.append(output);
                     
                 });
@@ -206,7 +211,7 @@ include "includes/checkSession.php";
                             </select>
                                  <!--<input type="submit" value="Submit">-->
                             </form>
-                            <br><br>
+                            <br>
                             <div id="space"></div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
     //include 'signin.php';
     //echo $_GET['name'];
 ?> 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 
     function setBackground(e){
@@ -85,13 +85,13 @@ if (isset($_POST['submit']))
                     $user = $usersDb->getByForeignKey($username);
                     foreach ($user as $row)
                     {
-                        $_SESSION['firstname'] = $row['FirstName']; 
+                        $_SESSION['firstname'] = $row['FirstName']; if ($row['FirstName'] == NULL){$_SESSION['firstname'] = "Not Provided"; }
                         $_SESSION['lastname']  = $row['LastName'];
                         $_SESSION['email']     = $row['Email'];
                         $_SESSION['region'] = $row['Region']; if ($row['Region'] == NULL){$_SESSION['region'] = "Not Provided"; }
                         $_SESSION['address'] = $row['Address']; if ($row['Address'] == NULL){$_SESSION['address'] = "Not Provided"; }
                         $_SESSION['city'] = $row['City']; if ($row['City'] == NULL){$_SESSION['city'] = "Not Provided"; }
-                        $_SESSION['country'] = $row['Country']; if ($row['Country'] == NULL){$_SESSION['country'] = "Not Provided"; }
+                        $_SESSION['country'] = $row['Country'];  }
                         $_SESSION['postal'] = $row['Postal']; if ($row['Postal'] == NULL){$_SESSION['postal'] = "Not Provided"; }
                         $_SESSION['phone'] = $row['Phone']; if ($row['Phone'] == NULL){$_SESSION['phone'] = "Not Provided"; }
                         if (!empty($_GET['name']))
@@ -105,8 +105,8 @@ if (isset($_POST['submit']))
                         }
                     }
                 }
-                else
-                {
+                // else
+                // {
                    // $_POST["error"] = "5";
                     //header("Location: login.php");
                             
@@ -126,14 +126,14 @@ if (isset($_POST['submit']))
                 
 
                   
-                }
+                //}
             }
            
         }
 
     }
    
-}
+//}
 ?>
 
 
@@ -169,12 +169,14 @@ if (isset($_POST['submit']))
  
                         <form id="lgin" name="login" action="login.php?name=<?php echo $_GET['name'] ?>" method="post">
                             <div id="msg"></div>
-                            <label>Username:</label>
+                            <label>Username:</label>                                                               
+                            <!--value="stanisław.wójcik@wp.pl"-->
                             <!--remove values before submission-->
-                            <input id="username" name="username" placeholder="Enter Username" type="text" required value="stanisław.wójcik@wp.pl">
-                            <hr>
+                            <input id="username" name="username" placeholder="Enter Username" type="text" required value="">
+                            <hr>                                                                                    
+                            <!--value="abcd1234"-->
                             <label>Password:</label>
-                            <input id="password" name="password" placeholder="**********" type="password" required value="abcd1234">
+                            <input id="password" name="password" placeholder="**********" type="password" required value="">
                             <hr>
                             <div id="err"></div>
                             

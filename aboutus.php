@@ -32,7 +32,7 @@ include "includes/checkSession.php";
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedBlue">
                             <h2 class="mdl-card__title-text">Link to GitHub</h2> </div>
-                        <div class="mdl-card__supporting-text">Click <a href="https://github.com/SharuJ/gongs-comp3512-assign3"> here </a> to view our GitHub page</div>
+                        <div class="mdl-card__supporting-text">Click <a href="https://github.com/SharuJ/gongs-comp3512-assign3"> here</a> to view our GitHub page</div>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col  mdl-shadow--2dp">
                         <div class="mdl-card__title" id="fadedPink">

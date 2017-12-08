@@ -1,3 +1,7 @@
+<!--THIS PAGE IS NO LONGER IN COMMISION-->
+<!--HAS BEEN MERGED INTO LOGIN.PHP-->
+<!--FOR ERROR MESSAGE'S SAKE-->
+
 <script>
 
     function setBackground(e){

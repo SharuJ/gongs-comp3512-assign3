@@ -114,7 +114,7 @@ if (isset($_POST['submit']))
         $pho = $_POST['phone'];
         $ema = $_POST['email'];
         $userPass = $_POST['password'];
-        //$conPass = $_POST['confirm-password'];
+        $conPass = $_POST['confirm-password'];
         $salt = MD5(microtime());
         //$dateJoined = date("Y-m-d h:i:sa");
         $dateJoined = date("Y-m-d");
@@ -151,14 +151,83 @@ if (isset($_POST['submit']))
   $(document).ready(function(){
   $('#error').css("color", "red");      
   $('#error').text("The email that you have entered already exits. Please enter a different email address!");
-  
+    
+    $('form>#email').css({
+        borderColor: "#FF1744",
+        boxShadow: "0px 0px 5px #FF5252",
+        backgroundColor: "#FFCDD2"
+    });
+    
+    // window.addEventListener("keyup", function(){
+    //     $('form>#email').css({
+    //     borderColor: "",
+    //     boxShadow: "",
+    //     backgroundColor: "#FFCDD2"
+    // });
+    // });
+    
   });
+  
+  
+  
   </script>
   
   
            
    <?php        
-       }else{
+       }
+       else{
+        //echo('<script> checkPasswords(); </script>');
+        
+          $userPass;
+        $conPass ;
+        if($userPass != $conPass){
+?>  
+<script>
+            // document.getElementById("error").innerHTML = "Both of the passwords to do not match!";
+            // document.getElementById("password").value = "";
+            // document.getElementById("confirm-password").value= "";
+            //  document.getElementById("password").focus(); 
+            
+            
+    $(document).ready(function(){
+  $('#error').css("color", "red");      
+  $('#error').text("The password and the confirm password do not match! Please enter the password again.");
+    
+    $('form>#password').css({
+        borderColor: "#FF1744",
+        boxShadow: "0px 0px 5px #FF5252",
+        backgroundColor: "#FFCDD2"
+    });
+    
+     $('form>#confirm-password').css({
+        borderColor: "#FF1744",
+        boxShadow: "0px 0px 5px #FF5252",
+        backgroundColor: "#FFCDD2"
+    });
+    
+    // window.addEventListener("keyup", function(){
+    //     $('form>#email').css({
+    //     borderColor: "",
+    //     boxShadow: "",
+    //     backgroundColor: "#FFCDD2"
+    // });
+     
+    //  $('form>#confirm-password').css({
+    //     borderColor: "",
+    //     boxShadow: "",
+    //     backgroundColor: "#FFCDD2"
+    // });
+    // });
+    
+  });
+            
+            
+             
+</script>             
+<?php            
+        } else {
+
          $num =  $regDb->findMaxIdNum();
          $num++;
         $insert = $regDb->insertUser($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
@@ -170,14 +239,18 @@ if (isset($_POST['submit']))
       
       
           
-            
+             
             
        if ($insert = "SUCCESS" && $insert2 = "SUCCESS"){
            header ('Location: login.php' );
        }
        else{
-           echo('<script> checkPasswords(); </script>');
-       }
+          
+           
+        
+        //   echo('<script> checkPasswords(); </script>');
+       } 
+    }
     
  }
    
@@ -214,6 +287,9 @@ if (isset($_POST['submit']))
                     <div class="mdl-card__title" id="lightPeriwinkle">
                         <h2 class="mdl-card__title-text">Register</h2> </div>
                     <div class="mdl-card__supporting-text">
+                        
+                        <a href=login.php><button class="mdl-button mdl-js-button" id="lightPeriwinkle">Back to login</button></a>
+                        <br><br>
                         <!--<form action="./register.php" method="post">-->
                        <!--name=<?php //echo $_GET['name'] ?>"-->
                        <!--register.php-->
