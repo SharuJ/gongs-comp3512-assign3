@@ -106,7 +106,11 @@ main header h4 {
 }
 
 #pro {
-  background: url('/images/icons/ic_account_box_black_48dp_2x.png') bottom right 15% no-repeat #7496D2;
+  background: url('/images/icons/ic_account_box_black_48dp_2x.png') bottom right 15% no-repeat #b01416;
+}
+
+#anal {
+  background: url('/images/icons/ic_assessment_white_48dp_2x.png') bottom right 15% no-repeat #311c47;
 }
 
 #thumbCover {

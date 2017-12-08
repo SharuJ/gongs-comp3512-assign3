@@ -66,9 +66,9 @@
                     </div>
                     
             <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                        <div id="pro" class="mdl-card__title mdl-card--expand"> </div>
-                        <div class="mdl-card__supporting-text"> This page displays the information from the Users table in a sensible, attractive way. </div>
-                        <div class="mdl-card__actions mdl-card--border"> <a href="profile.php" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                        <div id="anal" class="mdl-card__title mdl-card--expand"> </div>
+                        <div class="mdl-card__supporting-text"> This page displays analytic information for the site. </div>
+                        <div class="mdl-card__actions mdl-card--border"> <a href="analytics.php" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                               Analytics
                             </a> </div>
                     </div>    
