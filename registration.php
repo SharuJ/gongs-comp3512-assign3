@@ -1,7 +1,7 @@
 <?php
     session_start();
     include 'includes/config.php';
-    //include 'register.php';
+    
 ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -11,8 +11,8 @@
         }
         else if (e.type == "blur") {
             e.target.style.backgroundColor = "white";
-            // this is creating a problem i think, so i commented it out
-            //checkForEmptyFields(e);
+            
+            
         }
         else if (e.type == "keyup") {
             e.target.classList.remove("error");
@@ -53,45 +53,17 @@
     
   
     
-     function checkPasswords(){
-         
-         
-         var firstPass = document.getElementById("password").value;
-        var confirmPass = document.getElementById("confirm-password").value;
-        
-        if(firstPass != confirmPass){
-            alert("Both of the passwords to do not match!");
-            document.getElementById("password").value = "";
-            document.getElementById("confirm-password").value= "";
-             document.getElementById("password").focus(); 
-             return false;
-        }
-        else{
-            return true;
-        }
-         
-     };
-     
-     //window.addEventListener("submit", checkPasswords);
-      //window.on("submit", checkPasswords);
-    
-//     window.addEventListener("load",	function(){
-//     // var message = document.querySelector("#error"); 
-//      //message.innerHTML = 'The UserName already exists';
-     
-//      document.getElementById("error").innerHTML = "HI";
-//  });    
+       
 
 </script> 
 
  
  <?php
-//include 'includes/config.php';
-//session_start(); // Starting Session
-// Variable To Store Error Message
+
+
 if (isset($_POST['submit']))
 {
-    //print_r($_POST);
+    //grabing the users data and storing them in variables
     
         include "includes/config.php";
         //$userLoginDb = new UsersLoginGateway($connection); 
@@ -115,33 +87,16 @@ if (isset($_POST['submit']))
         $dateLastModified = date("Y-m-d");
         $finalPass = MD5($userPass.$salt);
        
+       //returns the email that the user enters if it is in the table already
        $checkU = $uloginDb->checkUser($ema);
-       //echo('<script> console.log($checkU.length); </script>');
-       //echo($checkU);
+       
         if(count($checkU) > 0){
-        //echo ( $lastN );
-        //$sql = $regDb->getInsertStatement($userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
-        // $num =  $regDb->findMaxIdNum();
-        //echo($num);
-       // $num++;
-        //  $_SESSION['uN'] = $_POST['firstname'];
-        //  $_SESSION['lN'] = $_POST['lastname'];
-        //  $_SESSION['aD'] = $_POST['address'];
-        //  $_SESSION['cI'] = $_POST['city'];
-        //  $_SESSION['rG'] = $_POST['region'];
-        //  $_SESSION['cN'] = $_POST['country'];
-        //  $_SESSION['pT'] = $_POST['postal'];
-        //  $_SESSION['pH'] = $_POST['phone'];
-         //$_SESSION['Em'] = $_POST['firstname'];
-    //   $checkU = $uloginDb->checkUser($ema);
-    //   echo('<script> console.log($checkU.length); </script>');
-      
-           
+        
           
   ?>         
   
   <script> 
-
+// if the email that the user entered into the register form is already in the table then it displays the error message
   $(document).ready(function(){
   $('#error').css("color", "red");      
   $('#error').text("The email that you have entered already exits. Please enter a different email address!");
@@ -152,13 +107,7 @@ if (isset($_POST['submit']))
         backgroundColor: "#FFCDD2"
     });
     
-    // window.addEventListener("keyup", function(){
-    //     $('form>#email').css({
-    //     borderColor: "",
-    //     boxShadow: "",
-    //     backgroundColor: "#FFCDD2"
-    // });
-    // });
+   
     
   });
   
@@ -171,19 +120,15 @@ if (isset($_POST['submit']))
    <?php        
        }
        else{
-        //echo('<script> checkPasswords(); </script>');
         
-          $userPass;
+        
+        $userPass;
         $conPass ;
         if($userPass != $conPass){
 ?>  
 <script>
-            // document.getElementById("error").innerHTML = "Both of the passwords to do not match!";
-            // document.getElementById("password").value = "";
-            // document.getElementById("confirm-password").value= "";
-            //  document.getElementById("password").focus(); 
             
-            
+     // if the users password and confirm password are not the same then this error message will be displayed       
     $(document).ready(function(){
   $('#error').css("color", "red");      
   $('#error').text("The password and the confirm password do not match! Please enter the password again.");
@@ -200,19 +145,7 @@ if (isset($_POST['submit']))
         backgroundColor: "#FFCDD2"
     });
     
-    // window.addEventListener("keyup", function(){
-    //     $('form>#email').css({
-    //     borderColor: "",
-    //     boxShadow: "",
-    //     backgroundColor: "#FFCDD2"
-    // });
-     
-    //  $('form>#confirm-password').css({
-    //     borderColor: "",
-    //     boxShadow: "",
-    //     backgroundColor: "#FFCDD2"
-    // });
-    // });
+
     
   });
             
@@ -221,22 +154,23 @@ if (isset($_POST['submit']))
 </script>             
 <?php            
         } else {
-
+         // finding the max UserID number and then increments the next UserID number 
          $num =  $regDb->findMaxIdNum();
          $num++;
+         // the user's data will be stored into the User table
         $insert = $regDb->insertUser($num, $userN, $lastN, $add, $ci, $reg, $coun, $post, $pho,  $ema);
         
-        //echo($insert); 
+         // the user's data will be stored into the UsersLogin table
        $insert2 = $regDb->insertUserLogin($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
-      // echo($insert2);
       
-
+      
+         // if both of the insert and insert2 return SUCCESS (which means the the user' data is stored in both tables) then it will redirect them to the login page
        if ($insert = "SUCCESS" && $insert2 = "SUCCESS"){
            header ('Location: login.php' );
        }
        else{
 
-        //   echo('<script> checkPasswords(); </script>');
+        
        } 
     }
     
@@ -278,12 +212,13 @@ if (isset($_POST['submit']))
                         
                         <a href=login.php><button class="mdl-button mdl-js-button" id="lightPeriwinkle">Back to login</button></a>
                         <br><br>
-                        <!--<form action="./register.php" method="post">-->
-                       <!--name=<?php //echo $_GET['name'] ?>"-->
-                       <!--register.php-->
+                        
+                       
+                       
                         <form id="register" action="#" method="post" > 
-                        <!--onsubmit=""return checkPasswords();-->
-                        <!--assisted by the website https://stackoverflow.com/questions/5198304/how-to-keep-form-values-after-post for populating post data back to the form-->
+                        
+                        <!--https://stackoverflow.com/questions/5198304/how-to-keep-form-values-after-post-->
+                        <!--assisted by the website https://stackoverflow.com/questions/5198304/how-to-keep-form-values-after-post , for populating post data back to the form-->
                         <div id="error" ></div>
                             <div>Required fields are marked with *</div><br>
                             

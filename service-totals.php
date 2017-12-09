@@ -4,19 +4,19 @@ require_once("includes/config.php");
 
 
     $row = array();
-  
+  // having variables that store the data from the funtions
   $topVisit = countVisits();
   $topCountry = countCountries();
   $topTodo = countToDos();
   $topMessage = countMessages();
-  
+  // puting the data from the above variables into an array
     foreach($topVisit as $result){
         $row[] = [
             "Visits" => $result["count"]
             
             ];
     }
-    //($topCountry as $result=){
+    
         $row[] = [
               "Countries" => $topCountry
             ]; 
@@ -29,23 +29,22 @@ require_once("includes/config.php");
             "Messages" => $topMessage
              ];
     
-    
+    // telling the browser that it will recieve JSON content
     header('Content-Type: application/json');
+    // the associatve array will be converted into JSON
     echo json_encode($row);
-
+    
+// gets the total visits
 function countVisits()
 {
     include "includes/config.php";
     $visitsDb = new VisitsGateway($connection);
     $visit = $visitsDb->findVisits();
     return $visit;
-    // foreach ($visit as $row) 
-    //     echo ($row["count"]);
+    
 } 
-//"CountryCode" => $result["CountryCode"],
-            // "CountryName" => $result["CountryName"],
-            //"Count" => $result["count"]
 
+// gets the total todos
 function countToDos()
 {
     include "includes/config.php";
@@ -54,6 +53,7 @@ function countToDos()
     return (sizeof($toDo));
 }
 
+//gets the total messages
 function countMessages()
 {
     include "includes/config.php";
@@ -62,37 +62,19 @@ function countMessages()
     return (sizeof($message));
 }
 
-
+//gets the total countries
 function countCountries()
 {
-    // try {
-    //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-    //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //     $sql    = "select BookVisits.CountryCode as CountryCode, CountryName, count(*) AS count from BookVisits 
-    //                 LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-    //                 GROUP BY CountryCode ORDER BY count DESC";
+    
     include 'includes/config.php'; 
     $visitsDb = new VisitsGateway($connection);
     $visit = $visitsDb->findNations(); 
-    //return $visit;
+    
     return sizeof($visit);
 
-    //   $result = $pdo->query($sql);
-    //     $pdo = null;
-    //     return $result;
-    // }
-    // catch (PDOException $e) {
-    //     die($e->getMessage());
-    // }
+    
 }
 
-// function dropNations()
-// {
-//     include "includes/config.php";
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findWithFilter($filter1, $value1, $filter2, $value2);
 
-//   return $visit;
-//  }
 
 ?>

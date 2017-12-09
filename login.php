@@ -1,25 +1,17 @@
 <?php
     session_start();
     include 'includes/config.php';
-    //include 'signin.php';
-    //echo $_GET['name'];
+    
 ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <?php
-    //include 'includes/config.php';
-    //session_start(); // Starting Session
-    // $_POST["error"] = "1";
+    
     if (isset($_POST['submit']))
     {
         if (empty($_POST['username']) || empty($_POST['password']))
         {
-            //       <script> 
-            //   $(document).ready(function(){
-            //   $('#error').css("color", "red");      
-            //   $('#error').text("Please enter your username and password!");
-            //   });
-            //   </script>
-            // DONT NEED A ERROR MESSAGE!!
+            
+            // empty fields all ready being handled in the form (required)
         }
         else
         {
@@ -29,17 +21,17 @@
         $login = $userLoginDb->getByForeignKey($username);
         if (empty($login))
         {
-            //echo ("<script> alert('".$_POST["error"]."'); location.href= 'login.php'; </script>");
-            //$_POST["error"] = "3";
-            //header("Location: login.php");
+            
 ?> 
-<script> //to javascript
+<script> 
+//jquery for when the UserName(email) is not in the database
                 $(document).ready(function(){
                 $('#err').css("color", "red");      
                 $('#err').text("Invalid username or password!");
                 });
 </script>
-<?php //to php
+<?php 
+//to php
         }
         else
         {
@@ -47,11 +39,13 @@
             {
                 $salt   = $row["Salt"];
                 $pass   = md5($_POST['password'] . $salt);
+                //checks if the entered password and the $pass is equal 
                 if ($row['Password'] == $pass)
                 {
                     $_SESSION['userid'] = $row['UserID']; // Initializing Session
                     $usersDb = new UsersGateway($connection);
                     $user = $usersDb->getByForeignKey($username);
+                    //putting all the users data into sessions
                     foreach ($user as $row)
                     {
                         $_SESSION['firstname'] = $row['FirstName']; 
@@ -67,23 +61,21 @@
                     if (!empty($_GET['name']))
                         header("Location: " . $_GET['name']);
                     else
-                        header("Location: index.php"); // Redirecting To Other Page
+                        header("Location: index.php"); // Redirecting To index.php
                 }
             }
-            // else
-            // {
-            // $_POST["error"] = "5";
-            //header("Location: login.php");
-            //  echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
+            
 ?> 
-<script> //to javascript
+<script> 
+//jquery for error message when the passord is not correct
             $(document).ready(function(){
                 $('#err').css("color", "red");      
                 $('#err').text("Invalid username or password!");
             });
 </script>
-<?php //to php
-            //}
+<?php 
+//to php
+            
             }
     }
 }
@@ -112,11 +104,7 @@
             e.target.style.backgroundColor = "white";
         }
         
-        // function addError() {
-        //     $('#err').css("color", "red");      
-        //     $('#err').text("INVALID USERNAME OR PASSWORD!");
-        //     alert("COW");
-        // }
+        
         
         window.addEventListener("load", function() {
             
@@ -158,11 +146,10 @@
                         <form id="lgin" name="login" action="login.php?name=<?php echo $_GET['name'] ?>" method="post">
                             <div id="msg"></div>
                             <label>Username:</label>                                                               
-                            <!--value="stanisław.wójcik@wp.pl"-->
-                            <!--remove values before submission-->
+                           
                             <input id="username" name="username" placeholder="Enter Username" type="text" required value="">
                             <hr>                                                                                    
-                            <!--value="abcd1234"-->
+                            
                             <label>Password:</label>
                             <input id="password" name="password" placeholder="**********" type="password" required value="">
                             <hr>

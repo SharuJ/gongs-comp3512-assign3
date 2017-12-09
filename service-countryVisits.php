@@ -6,9 +6,10 @@ require_once("includes/config.php");
     $row = array();
   $cc = $_GET['CountryCode'];
   
-  
+  //getting the countrycode from the query string 
+  //checking if the countrycode is gotten from the query string
 if(isset($_GET['CountryCode'])){
-    //$row = array();
+    //the countrycode is passed in through the findCountryDetails() and it gets the country's code name and its visits
   $countryDetails = findCountryDetails($_GET['CountryCode']);
     foreach($countryDetails as $result){
         $row[] = [
@@ -18,21 +19,12 @@ if(isset($_GET['CountryCode'])){
             
             ];
     }
-    //($topCountry as $result=){
-        // $row[] = [
-        //       "Countries" => $topCountry
-        //     ]; 
-            
-        //  $row[] = [
-        //     "Todos" => $topTodo
-        //      ];
-        
-        //  $row[] = [
-        //     "Messages" => $topMessage
-        //      ];
+   
     
 }
+//the browser will be recieving json content
     header('Content-Type: application/json');
+// will be converting the associative array into JSON    
     echo json_encode($row);
     
     function findCountryDetails($cc)
@@ -41,65 +33,12 @@ if(isset($_GET['CountryCode'])){
     $visitsDb = new VisitsGateway($connection);
     $visits = $visitsDb->serviceFindCountryVisits($cc);
     return $visits;
-    // foreach ($visit as $row) 
-    //     echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
+   
     
 } 
 
 
 
-// function countVisits()
-// {
-//     include "includes/config.php";
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findVisits();
-//     return $visit;
-//     // foreach ($visit as $row) 
-//     //     echo ($row["count"]);
-// } 
-// //"CountryCode" => $result["CountryCode"],
-//             // "CountryName" => $result["CountryName"],
-//             //"Count" => $result["count"]
-
-// function countToDos()
-// {
-//     include "includes/config.php";
-//     $toDoDb = new EmployeeToDoGateway($connection);
-//     $toDo = $toDoDb->findToDos();
-//     return (sizeof($toDo));
-// }
-
-// function countMessages()
-// {
-//     include "includes/config.php";
-//     $messagesDb = new MessagesGateway($connection);
-//     $message = $messagesDb->findMessages();
-//     return (sizeof($message));
-// }
-
-
-// function countCountries()
-// {
-//     // try {
-//     //     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-//     //     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//     //     $sql    = "select BookVisits.CountryCode as CountryCode, CountryName, count(*) AS count from BookVisits 
-//     //                 LEFT JOIN Countries on BookVisits.CountryCode = Countries.CountryCode
-//     //                 GROUP BY CountryCode ORDER BY count DESC";
-//     include 'includes/config.php'; 
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findNations(); 
-//     //return $visit;
-//     return sizeof($visit);
-
-//     //   $result = $pdo->query($sql);
-//     //     $pdo = null;
-//     //     return $result;
-//     // }
-//     // catch (PDOException $e) {
-//     //     die($e->getMessage());
-//     // }
-// }
 
 
 ?>

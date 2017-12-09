@@ -2,60 +2,6 @@
 require_once("includes/config.php");
 include "includes/checkSession.php";
 
-// function dropNations()
-// {
-//     include "includes/config.php";
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findWithFilter();
-//     foreach ($visit as $row) 
-//         echo ('<option value=' . $row["count"] . '>' . $row["CountryName"] . '</option>');
-    
-// }
-
-// function countVisits()
-// {
-//     include "includes/config.php";
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findVisits();
-//     foreach ($visit as $row) 
-//         echo ($row["count"]);
-// }
-
-// function countCountries()
-// {
-//     include "includes/config.php";
-//     $visitsDb = new VisitsGateway($connection);
-//     $visit = $visitsDb->findNations();
-//     echo (sizeof($visit));
-// }
-
-// function countToDos()
-// {
-//     include "includes/config.php";
-//     $toDoDb = new EmployeeToDoGateway($connection);
-//     $toDo = $toDoDb->findToDos();
-//     echo (sizeof($toDo));
-// }
-
-// function countMessages()
-// {
-//     include "includes/config.php";
-//     $messagesDb = new MessagesGateway($connection);
-//     $message = $messagesDb->findMessages();
-//     echo (sizeof($message));
-// }
-
-// function outputOrphans()
-// {
-//     include "includes/config.php";
-//     $adoptionDb = new AdoptionGateway($connection);
-//     $orphan = $adoptionDb->findOrphans();
-//     foreach ($orphan as $row)  {
-//         echo ('<tr><td>');
-//         echo ('<img src="/book-images/thumb/' . $row["isbn10"] . '.jpg" alt="book cover"></td>');
-//         echo ('<td class="mdl-data-table__cell--non-numeric"><a href="single-book.php?isbn=' . $row["isbn10"] . '"><b>' . $row["title"] . "</b><br></a>Universities: " . $row[count] . "<br>Total quantity: " . $row[quant] . "</td></tr>");
-//     }
-// }
 
 ?>
 
@@ -79,11 +25,7 @@ include "includes/checkSession.php";
             document.getElementById("nation").addEventListener("change", function() {
                var nation = $("#nation option:selected").text(); //some jQueery
                var url = "service-countryVisits.php";
-               //var param = "{cc:" + $("#nation").val();
-               //var param = "cc=" + nation;
-               //countryCode = document.getElementById("nation").value;
-               //alert(countryCode);
-               //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+               
     
             });
         });
@@ -94,21 +36,21 @@ include "includes/checkSession.php";
             //Displays the country selected from the dropdown and the total visits for that country.
             $("#visted").on('change', function(e){
                 e.preventDefault();
-                //alert("hello"); 
+                
                 // assisted by the website: https://api.jquery.com/serialize/
                 console.log($(this).serialize());
                 $.getJSON("service-countryVisits.php?" + $(this).serialize(), function(data){
                  var place5 = $("#space");
                console.log(data);
-                //output.remove();
+                
                 $("#space").empty();
                 $.each(data,function(key, val){
-                //var place5 = $("#space");
+                
                 var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
      
-                //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
+                
                     place5.append(output);
-                    //alert(countryCode);
+                    
                 });
                
                 
@@ -119,38 +61,38 @@ include "includes/checkSession.php";
             
             var nations = $("#nation");
             //assisted by the website : http://api.jquery.com/jquery.getjson/
-            //function that appends countries to the Countries dropdown box, and setting each country's value to its country code
+            //appends countries to the Countries dropdown box, and setting each country's value to its country code
+            //getting the JSON data from the service-topCountries.php page and displaying in this page
             $.getJSON("service-topCountries.php", function(data){
                 
                 $.each(data,function(key, val){
-                    //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
+                    
                      var country = $('<option value="' + val.CountryCode + '">' + val.CountryName + '</option>'  );
                     nations.append(country);
                 });
             }); 
             
             //assisted by the website : http://api.jquery.com/jquery.getjson/
-            //Loading JSON data from the .php page
+            //getting the JSON data from the service-totals.php page and displaying in this page
             $.getJSON("service-totals.php", function(data){
                 var place = $("#cvisits");
                 var place1 = $("#ccountries");
                 var place2 = $("#ctodo");
                 var place3 = $("#cmessage")
                 
-                //$.each(data,function(key, val){
-                    //var country = $('<option value="' + val.Count + '">' + val.CountryName + '</option>'  );
-                    // $("#visits").val(val.Visits);
+                
                     
-                //Accessing Visits, Countries, Todos, and Messages from the returned JSON data
+                //Putting Visits, Countries, Todos, and Messages from the returned JSON data into the html
                     place.text(data[0].Visits); 
                     var countC = data[1].Countries;
                     place1.text(countC);
                     place2.text(data[2].Todos);
                     place3.text(data[3].Messages);
                     
-                //});
+                
             });
             //assisted by the website : http://api.jquery.com/jquery.getjson/
+            //getting the JSON data from the service-topAdoptedBooks.php page and displaying in this page
             $.getJSON("service-topAdoptedBooks.php", function(data){
                    var place4 = $("#table1");
                
@@ -165,23 +107,7 @@ include "includes/checkSession.php";
                 });
             });
             
-            
-          
-           // $.getJSON("service-countryVisits.php",{id : 2},countryCode, function(data){
-        //   $.getJSON(url, param, function(data){
-        //          var place5 = $("#space");
-               
-        //         $.each(data,function(key, val){
-                    
-        //         var output = ("<b>Selected country:</b> " + val.CountryName + "<br><b>Total visits:</b> " + val.Visits);
-     
-        //         //document.getElementById("space").innerHTML = "<b>Selected country:</b> " + nation + "<br><b>Total visits:</b> " + count;
-        //             place5.append(output);
-        //             //alert(countryCode);
-        //         });
-        //     });
-          
-          
+
             
         }); 
         
