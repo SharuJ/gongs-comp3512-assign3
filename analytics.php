@@ -91,7 +91,7 @@ include "includes/checkSession.php";
         $(document).ready(function(){
     
             
-            //Displays the coutry selected from the dropdown and the total visits for that country.
+            //Displays the country selected from the dropdown and the total visits for that country.
             $("#visted").on('change', function(e){
                 e.preventDefault();
                 //alert("hello"); 

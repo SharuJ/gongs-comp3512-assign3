@@ -78,7 +78,7 @@
             
 <script> 
      
-    //Image enlarging now does not use Modal. 
+    //Image enlarging now uses Javascript instead of the Modal format. 
     window.addEventListener("load", function() {
         document.getElementById("bookCover").addEventListener("click", function() {
             document.getElementById("popup").style.display = "block";

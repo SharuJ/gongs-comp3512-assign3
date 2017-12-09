@@ -2,12 +2,9 @@
     session_start();
     include 'includes/config.php';
     //include 'register.php';
-    
-    
 ?> 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-
     function setBackground(e){
         if (e.type == "focus") {
             e.target.style.backgroundColor = "CAEEAA";
@@ -16,15 +13,12 @@
             e.target.style.backgroundColor = "white";
             // this is creating a problem i think, so i commented it out
             //checkForEmptyFields(e);
-            
         }
         else if (e.type == "keyup") {
-                e.target.classList.remove("error");
-                checkForEmptyFields(e)
-            }
-        
+            e.target.classList.remove("error");
+            checkForEmptyFields(e)
+        }
     }
-    
     
     window.addEventListener("load",	function(){
     	var	cssSelector	=	"input[name=firstname],input[name=lastname],input[name=address],input[name=city],input[name=region],input[name=country],input[name=postal],input[name=phone],input[name=email],input[name=password],input[name=confirm-password]";
@@ -33,27 +27,27 @@
     	{
     		fields[i].addEventListener("focus",	setBackground);
     		fields[i].addEventListener("blur",	setBackground);
-    		
     	}
     }); 
     
     window.addEventListener("submit", checkForEmptyFields);
  
-    function checkForEmptyFields(e){
-
+    function checkForEmptyFields(e)
+    {
     	var	fields	=	document.getElementsByClassName("required");
-        
-        for (var i=0; i<fields.length; i++) {
+        for (var i=0; i<fields.length; i++)
+        {
             if (fields[i].value == null || fields[i].value == "") 
             {
                 e.preventDefault();
                 fields[i].classList.add("error");
-                
             }
             else
+            {
                 //fields[i].addEventListener("keyup",	setBackground);
                 fields[i].classList.remove("error");
-            fields[i].addEventListener("keyup",	setBackground);    
+                fields[i].addEventListener("keyup",	setBackground);    
+            }
         }
     };
     
@@ -236,18 +230,12 @@ if (isset($_POST['submit']))
        $insert2 = $regDb->insertUserLogin($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
       // echo($insert2);
       
-      
-      
-          
-             
-            
+
        if ($insert = "SUCCESS" && $insert2 = "SUCCESS"){
            header ('Location: login.php' );
        }
        else{
-          
-           
-        
+
         //   echo('<script> checkPasswords(); </script>');
        } 
     }
@@ -261,7 +249,7 @@ if (isset($_POST['submit']))
 <html>
 
 <head>
-    <title>Page Login</title>
+    <title>Registration</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

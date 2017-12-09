@@ -5,54 +5,26 @@
     //echo $_GET['name'];
 ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-
-    function setBackground(e){
-        if (e.type == "focus") {
-            e.target.style.backgroundColor = "BBE9EB";
-        }
-        else if (e.type == "blur") {
-            e.target.style.backgroundColor = "white";
-        }
-    }
-    
-    window.addEventListener("load",	function(){
-    	var	cssSelector	=	"input[name=username],input[name=password]";
-    	var	fields	=	document.querySelectorAll(cssSelector);
-    	for	(var i=0; i<fields.length; i++)
-    	{
-    		fields[i].addEventListener("focus",	setBackground);
-    		fields[i].addEventListener("blur",	setBackground);
-    	}
-    }); 
-
-</script>
 <?php
-//include 'includes/config.php';
-//session_start(); // Starting Session
-// $_POST["error"] = "1";
-if (isset($_POST['submit']))
-{
-    if (empty($_POST['username']) || empty($_POST['password']))
+    //include 'includes/config.php';
+    //session_start(); // Starting Session
+    // $_POST["error"] = "1";
+    if (isset($_POST['submit']))
     {
-       
-//       <script> 
-
-//   $(document).ready(function(){
-//   $('#error').css("color", "red");      
-//   $('#error').text("Please enter your username and password!");
-  
-//   });
-//   </script>
- 
- // DONT NEED A ERROR MESSAGE!!
- 
-    }
-    else
-    {
+        if (empty($_POST['username']) || empty($_POST['password']))
+        {
+            //       <script> 
+            //   $(document).ready(function(){
+            //   $('#error').css("color", "red");      
+            //   $('#error').text("Please enter your username and password!");
+            //   });
+            //   </script>
+            // DONT NEED A ERROR MESSAGE!!
+        }
+        else
+        {
         include "includes/config.php";
         $userLoginDb = new UsersLoginGateway($connection); 
-       
         $username = $_POST['username'];
         $login = $userLoginDb->getByForeignKey($username);
         if (empty($login))
@@ -60,17 +32,14 @@ if (isset($_POST['submit']))
             //echo ("<script> alert('".$_POST["error"]."'); location.href= 'login.php'; </script>");
             //$_POST["error"] = "3";
             //header("Location: login.php");
-?>
- <script> 
-
-  $(document).ready(function(){
-  $('#err').css("color", "red");      
-  $('#err').text("Invalid username or password!");
-  
-  });
-  </script>
-
-<?php
+?> 
+<script> //to javascript
+                $(document).ready(function(){
+                $('#err').css("color", "red");      
+                $('#err').text("Invalid username or password!");
+                });
+</script>
+<?php //to php
         }
         else
         {
@@ -85,7 +54,7 @@ if (isset($_POST['submit']))
                     $user = $usersDb->getByForeignKey($username);
                     foreach ($user as $row)
                     {
-                        $_SESSION['firstname'] = $row['FirstName']; if ($row['FirstName'] == NULL){$_SESSION['firstname'] = "Not Provided"; }
+                        $_SESSION['firstname'] = $row['FirstName']; 
                         $_SESSION['lastname']  = $row['LastName'];
                         $_SESSION['email']     = $row['Email'];
                         $_SESSION['region'] = $row['Region']; if ($row['Region'] == NULL){$_SESSION['region'] = "Not Provided"; }
@@ -93,49 +62,33 @@ if (isset($_POST['submit']))
                         $_SESSION['city'] = $row['City']; if ($row['City'] == NULL){$_SESSION['city'] = "Not Provided"; }
                         $_SESSION['country'] = $row['Country'];  }
                         $_SESSION['postal'] = $row['Postal']; if ($row['Postal'] == NULL){$_SESSION['postal'] = "Not Provided"; }
-                        $_SESSION['phone'] = $row['Phone']; if ($row['Phone'] == NULL){$_SESSION['phone'] = "Not Provided"; }
-                        if (!empty($_GET['name']))
-                        {
-                            header("Location: " . $_GET['name']);
-                        }
-                        else
-                        {
-                           // $_POST["error"] = "4";
-                            header("Location: index.php"); // Redirecting To Other Page
-                        }
+                        $_SESSION['phone'] = $row['Phone']; if ($row['Phone'] == NULL){$_SESSION['phone'] = "Not Provided";
                     }
+                    if (!empty($_GET['name']))
+                        header("Location: " . $_GET['name']);
+                    else
+                        header("Location: index.php"); // Redirecting To Other Page
                 }
-                // else
-                // {
-                   // $_POST["error"] = "5";
-                    //header("Location: login.php");
-                            
-                    //  echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
-?>
-
- <script> 
-
-  $(document).ready(function(){
-  $('#err').css("color", "red");      
-  $('#err').text("Invalid username or password!");
-  
-  });
-  </script>
-
-<?php
-                
-
-                  
-                //}
             }
-           
-        }
-
+            // else
+            // {
+            // $_POST["error"] = "5";
+            //header("Location: login.php");
+            //  echo ("<script> alert('".$error."'); location.href= 'login.php'; </script>");
+?> 
+<script> //to javascript
+            $(document).ready(function(){
+                $('#err').css("color", "red");      
+                $('#err').text("Invalid username or password!");
+            });
+</script>
+<?php //to php
+            //}
+            }
     }
-   
+}
 //}
 ?>
-
 
 <!DOCTYPE HTML>
 <html>
@@ -150,7 +103,42 @@ if (isset($_POST['submit']))
     <link rel="stylesheet" href="css/styles.css">
     <!--<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>-->
     <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script>
     
+        function setBackground(e){
+        if (e.type == "focus") 
+            e.target.style.backgroundColor = "BBE9EB";
+        else if (e.type == "blur") 
+            e.target.style.backgroundColor = "white";
+        }
+        
+        // function addError() {
+        //     $('#err').css("color", "red");      
+        //     $('#err').text("INVALID USERNAME OR PASSWORD!");
+        //     alert("COW");
+        // }
+        
+        window.addEventListener("load", function() {
+            
+            var	cssSelector	=	"input[name=username],input[name=password]";
+            var	fields	=	document.querySelectorAll(cssSelector);
+            for	(var i=0; i<fields.length; i++)
+            {
+            fields[i].addEventListener("focus",	setBackground);
+            fields[i].addEventListener("blur",	setBackground);
+            }
+            
+            //  The textual error message disappears once the user starts typing into the user name or password fields.
+            for	(var i=0; i<fields.length; i++)
+            {
+                fields[i].addEventListener("keydown", function() {
+                    $('#err').text("");
+                });
+            }
+            
+        });
+        
+    </script>
     
 </head>
 

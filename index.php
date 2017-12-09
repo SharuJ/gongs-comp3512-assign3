@@ -1,6 +1,6 @@
 <?php
 
-    // dashboard does not require sign in
+    // dashboard does not require sign in, yes it does
     include "includes/checkSession.php"; 
 
 ?>

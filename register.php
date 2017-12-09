@@ -10,8 +10,6 @@
         }
         else if (e.type == "blur") {
             e.target.style.backgroundColor = "white";
-            // this is creating a problem i think, so i commented it out
-            //checkForEmptyFields(e);
             
         }
         else if (e.type == "keyup") {
@@ -152,10 +150,6 @@ if (isset($_POST['submit']))
        $insert2 = $regDb->insertUserLogin($num, $ema, $finalPass, $salt, $dateJoined, $dateLastModified);
       // echo($insert2);
       
-      
-      
-          
-            
             
        if ($insert = "SUCCESS" && $insert2 = "SUCCESS"){
            header ('Location: login.php' );
