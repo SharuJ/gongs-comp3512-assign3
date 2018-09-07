@@ -53,34 +53,7 @@
     
   
     
-    //  function checkPasswords(){
-         
-         
-    //      var firstPass = document.getElementById("password").value;
-    //     var confirmPass = document.getElementById("confirm-password").value;
-        
-    //     if(firstPass != confirmPass){
-    //         alert("Both of the passwords to do not match!");
-    //         document.getElementById("password").value = "";
-    //         document.getElementById("confirm-password").value= "";
-    //          document.getElementById("password").focus(); 
-    //          return false;
-    //     }
-    //     else{
-    //         return true;
-    //     }
-         
-    //  };
-     
-     //window.addEventListener("submit", checkPasswords);
-      //window.on("submit", checkPasswords);
-    
-//     window.addEventListener("load",	function(){
-//     // var message = document.querySelector("#error"); 
-//      //message.innerHTML = 'The UserName already exists';
-     
-//      document.getElementById("error").innerHTML = "HI";
-//  });    
+   
 
 </script> 
 

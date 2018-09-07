@@ -26,7 +26,7 @@
             echo ("</li></a>");
         }
     }
-    function displayInfo() /* display requested univeristy information */ 
+    function displayInfo() /* display requested univeristy information and its location on map*/ 
     {
         include "includes/config.php";
         $uniDb = new UniversityGateway($connection);

@@ -11,7 +11,7 @@
         if (empty($_POST['username']) || empty($_POST['password']))
         {
             
-            // empty fields all ready being handled in the form (required)
+            // empty fields aleady being handled in the form (required)
         }
         else
         {
@@ -104,7 +104,7 @@
             e.target.style.backgroundColor = "white";
         }
         
-        
+        // adding the addeventlistner for username and password fields for applying css
         
         window.addEventListener("load", function() {
             

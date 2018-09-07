@@ -11,8 +11,6 @@
         }
         else if (e.type == "blur") {
             e.target.style.backgroundColor = "white";
-            
-            
         }
         else if (e.type == "keyup") {
             e.target.classList.remove("error");
@@ -44,7 +42,7 @@
             }
             else
             {
-                //fields[i].addEventListener("keyup",	setBackground);
+                
                 fields[i].classList.remove("error");
                 fields[i].addEventListener("keyup",	setBackground);    
             }

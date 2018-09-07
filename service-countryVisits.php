@@ -20,7 +20,6 @@ if(isset($_GET['CountryCode'])){
             ];
     }
    
-    
 }
 //the browser will be recieving json content
     header('Content-Type: application/json');
@@ -37,6 +36,7 @@ if(isset($_GET['CountryCode'])){
     
 } 
 
+    
 
 
 

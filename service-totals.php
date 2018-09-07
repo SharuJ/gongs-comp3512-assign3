@@ -62,6 +62,7 @@ function countMessages()
     return (sizeof($message));
 }
 
+
 //gets the total countries
 function countCountries()
 {
@@ -71,8 +72,7 @@ function countCountries()
     $visit = $visitsDb->findNations(); 
     
     return sizeof($visit);
-
-    
+ 
 }
 
 
